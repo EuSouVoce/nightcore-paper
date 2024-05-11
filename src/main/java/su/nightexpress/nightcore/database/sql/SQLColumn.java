@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.database.sql;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.database.DatabaseType;
 import su.nightexpress.nightcore.database.sql.column.ColumnType;
 
@@ -11,7 +12,9 @@ public class SQLColumn {
     private final ColumnType type;
     private final int length;
 
-    public SQLColumn(@NotNull final String name, @NotNull final ColumnType type, final int length) { this(name, "`" + name + "`", type, length); }
+    public SQLColumn(@NotNull final String name, @NotNull final ColumnType type, final int length) {
+        this(name, "`" + name + "`", type, length);
+    }
 
     public SQLColumn(@NotNull final String name, @NotNull final String nameEscaped, @NotNull final ColumnType type, final int length) {
         this.name = name;
@@ -24,7 +27,9 @@ public class SQLColumn {
     public static SQLColumn of(@NotNull final String name, @NotNull final ColumnType type) { return SQLColumn.of(name, type, -1); }
 
     @NotNull
-    public static SQLColumn of(@NotNull final String name, @NotNull final ColumnType type, final int length) { return new SQLColumn(name, type, length); }
+    public static SQLColumn of(@NotNull final String name, @NotNull final ColumnType type, final int length) {
+        return new SQLColumn(name, type, length);
+    }
 
     @NotNull
     public SQLColumn asLowerCase() {

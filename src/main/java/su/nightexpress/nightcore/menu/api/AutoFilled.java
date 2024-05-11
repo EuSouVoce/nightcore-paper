@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.menu.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.menu.MenuViewer;
 import su.nightexpress.nightcore.menu.item.ItemOptions;
 import su.nightexpress.nightcore.menu.item.MenuItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public interface AutoFilled<I> extends Menu {
 

@@ -2,6 +2,7 @@ package su.nightexpress.nightcore.command.experimental.builder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.command.experimental.flag.CommandFlag;
 import su.nightexpress.nightcore.util.wrapper.UniPermission;
 

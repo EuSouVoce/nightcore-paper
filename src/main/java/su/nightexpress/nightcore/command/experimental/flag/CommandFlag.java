@@ -3,6 +3,7 @@ package su.nightexpress.nightcore.command.experimental.flag;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.util.Placeholders;
 
@@ -19,7 +20,9 @@ public abstract class CommandFlag {
         this.permission = permission;
     }
 
-    public boolean hasPermission(@NotNull final CommandSender sender) { return this.permission == null || sender.hasPermission(this.permission); }
+    public boolean hasPermission(@NotNull final CommandSender sender) {
+        return this.permission == null || sender.hasPermission(this.permission);
+    }
 
     @NotNull
     public String getName() { return this.name; }

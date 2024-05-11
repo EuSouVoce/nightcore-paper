@@ -1,14 +1,19 @@
 package su.nightexpress.nightcore.command.impl;
 
-import org.bukkit.command.*;
-import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.command.api.NightPluginCommand;
-import su.nightexpress.nightcore.util.text.NightMessage;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.command.api.NightPluginCommand;
+import su.nightexpress.nightcore.util.text.NightMessage;
 
 public class WrappedCommand extends Command implements PluginIdentifiableCommand {
 

@@ -1,12 +1,13 @@
 package su.nightexpress.nightcore.menu;
 
+import java.util.function.UnaryOperator;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.util.text.NightMessage;
 
-import java.util.function.UnaryOperator;
+import su.nightexpress.nightcore.util.text.NightMessage;
 
 public class MenuOptions {
 

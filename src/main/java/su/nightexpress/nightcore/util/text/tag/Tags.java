@@ -1,6 +1,16 @@
 package su.nightexpress.nightcore.util.text.tag;
 
-import su.nightexpress.nightcore.util.text.tag.impl.*;
+import su.nightexpress.nightcore.util.text.tag.impl.ClickTag;
+import su.nightexpress.nightcore.util.text.tag.impl.ColorTag;
+import su.nightexpress.nightcore.util.text.tag.impl.FontStyleTag;
+import su.nightexpress.nightcore.util.text.tag.impl.FontTag;
+import su.nightexpress.nightcore.util.text.tag.impl.GradientTag;
+import su.nightexpress.nightcore.util.text.tag.impl.HexColorTag;
+import su.nightexpress.nightcore.util.text.tag.impl.HoverTag;
+import su.nightexpress.nightcore.util.text.tag.impl.LineBreakTag;
+import su.nightexpress.nightcore.util.text.tag.impl.ResetTag;
+import su.nightexpress.nightcore.util.text.tag.impl.ShortHexColorTag;
+import su.nightexpress.nightcore.util.text.tag.impl.TranslateTag;
 
 public class Tags {
     //@formatter:off

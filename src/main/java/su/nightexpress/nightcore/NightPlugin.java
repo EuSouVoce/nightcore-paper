@@ -1,19 +1,24 @@
 package su.nightexpress.nightcore;
 
+import java.io.File;
+import java.util.function.Predicate;
+
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.command.CommandManager;
 import su.nightexpress.nightcore.command.api.NightPluginCommand;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.config.PluginDetails;
 import su.nightexpress.nightcore.language.LangManager;
 import su.nightexpress.nightcore.menu.impl.AbstractMenu;
-import su.nightexpress.nightcore.util.*;
+import su.nightexpress.nightcore.util.FileUtil;
+import su.nightexpress.nightcore.util.Lists;
+import su.nightexpress.nightcore.util.Plugins;
+import su.nightexpress.nightcore.util.Reflex;
+import su.nightexpress.nightcore.util.Version;
 import su.nightexpress.nightcore.util.wrapper.UniPermission;
-
-import java.io.File;
-import java.util.function.Predicate;
 
 public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin {
 

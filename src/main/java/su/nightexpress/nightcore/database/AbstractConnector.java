@@ -1,12 +1,14 @@
 package su.nightexpress.nightcore.database;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.NightCorePlugin;
-
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+import su.nightexpress.nightcore.NightCorePlugin;
 
 public abstract class AbstractConnector {
 

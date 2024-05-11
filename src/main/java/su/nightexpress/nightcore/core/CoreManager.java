@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.core;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCore;
 import su.nightexpress.nightcore.core.listener.CoreListener;
 import su.nightexpress.nightcore.dialog.DialogListener;

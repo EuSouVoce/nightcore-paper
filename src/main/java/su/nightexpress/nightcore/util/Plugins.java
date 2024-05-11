@@ -2,6 +2,7 @@ package su.nightexpress.nightcore.util;
 
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCore;
 
 public class Plugins {

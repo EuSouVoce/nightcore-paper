@@ -1,14 +1,23 @@
 package su.nightexpress.nightcore.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.bukkit.Bukkit;
 import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Lists {
 
@@ -187,16 +196,20 @@ public class Lists {
     }
 
     @NotNull
-    public static <T extends Enum<T>> T shifted(@NotNull final Enum<T> numeration, final int shift) { return Lists.shifted(numeration, shift, null); }
+    public static <T extends Enum<T>> T shifted(@NotNull final Enum<T> numeration, final int shift) {
+        return Lists.shifted(numeration, shift, null);
+    }
 
     @NotNull
-    private static <T extends Enum<T>> T shifted(@NotNull final Enum<T> numeration, final int shift, @Nullable final Predicate<T> predicate) {
+    private static <T extends Enum<T>> T shifted(@NotNull final Enum<T> numeration, final int shift,
+            @Nullable final Predicate<T> predicate) {
         final T[] values = numeration.getDeclaringClass().getEnumConstants();
         return Lists.shifted(values, numeration/* .ordinal() */, shift, predicate);
     }
 
     @NotNull
-    private static <T extends Enum<T>> T shifted(final T[] values, @NotNull final Enum<T> origin, final int shift, @Nullable final Predicate<T> predicate) {
+    private static <T extends Enum<T>> T shifted(final T[] values, @NotNull final Enum<T> origin, final int shift,
+            @Nullable final Predicate<T> predicate) {
         if (predicate != null) {
             final T source = origin.getDeclaringClass().cast(origin);
             final List<T> filtered = new ArrayList<>(Arrays.asList(values));

@@ -1,5 +1,7 @@
 package su.nightexpress.nightcore.dialog;
 
+import java.util.HashSet;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -7,12 +9,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCore;
 import su.nightexpress.nightcore.manager.AbstractListener;
 import su.nightexpress.nightcore.util.Colorizer;
 import su.nightexpress.nightcore.util.NumberUtil;
-
-import java.util.HashSet;
 
 @SuppressWarnings("deprecation")
 public class DialogListener extends AbstractListener<NightCore> {

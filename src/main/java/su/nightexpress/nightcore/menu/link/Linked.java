@@ -2,6 +2,7 @@ package su.nightexpress.nightcore.menu.link;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.menu.MenuViewer;
 import su.nightexpress.nightcore.menu.api.Menu;
 

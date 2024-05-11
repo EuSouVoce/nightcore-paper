@@ -1,6 +1,9 @@
 package su.nightexpress.nightcore.language;
 
+import java.io.File;
+
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.language.entry.LangEntry;
@@ -9,8 +12,6 @@ import su.nightexpress.nightcore.manager.SimpleManager;
 import su.nightexpress.nightcore.util.Plugins;
 import su.nightexpress.nightcore.util.Reflex;
 import su.nightexpress.nightcore.util.StringUtil;
-
-import java.io.File;
 
 public class LangManager extends SimpleManager<NightCorePlugin> {
 
@@ -52,7 +53,8 @@ public class LangManager extends SimpleManager<NightCorePlugin> {
                 return langCode;
             }
 
-            this.plugin.warn("Locale file for '" + langCode + "' language not found. Using default '" + LangManager.DEFAULT_LANGUAGE + "' locale.");
+            this.plugin.warn(
+                    "Locale file for '" + langCode + "' language not found. Using default '" + LangManager.DEFAULT_LANGUAGE + "' locale.");
             return LangManager.DEFAULT_LANGUAGE;
         }
         return langCode;

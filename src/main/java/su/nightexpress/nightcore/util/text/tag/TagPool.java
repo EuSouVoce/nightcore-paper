@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.util.text.tag;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.util.Placeholders;
-import su.nightexpress.nightcore.util.text.tag.api.Tag;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.util.Placeholders;
+import su.nightexpress.nightcore.util.text.tag.api.Tag;
 
 public class TagPool {
 

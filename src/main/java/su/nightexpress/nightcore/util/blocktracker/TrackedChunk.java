@@ -1,11 +1,12 @@
 package su.nightexpress.nightcore.util.blocktracker;
 
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import it.unimi.dsi.fastutil.ints.IntSet;
 import org.bukkit.block.Block;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 
 public class TrackedChunk {
 

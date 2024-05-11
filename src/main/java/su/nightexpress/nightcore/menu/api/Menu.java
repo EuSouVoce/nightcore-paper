@@ -1,5 +1,10 @@
 package su.nightexpress.nightcore.menu.api;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -7,13 +12,12 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.menu.MenuOptions;
 import su.nightexpress.nightcore.menu.MenuViewer;
 import su.nightexpress.nightcore.menu.click.ClickResult;
 import su.nightexpress.nightcore.menu.item.MenuItem;
-
-import java.util.*;
 
 public interface Menu {
 

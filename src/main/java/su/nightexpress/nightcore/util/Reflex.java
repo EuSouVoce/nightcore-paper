@@ -1,19 +1,25 @@
 package su.nightexpress.nightcore.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class Reflex {
 
     public static Class<?> getClass(@NotNull final String path, @NotNull final String name) { return Reflex.getClass(path + "." + name); }
 
-    public static Class<?> getInnerClass(@NotNull final String path, @NotNull final String name) { return Reflex.getClass(path + "$" + name); }
+    public static Class<?> getInnerClass(@NotNull final String path, @NotNull final String name) {
+        return Reflex.getClass(path + "$" + name);
+    }
 
     private static Class<?> getClass(@NotNull final String path) {
         try {

@@ -1,18 +1,24 @@
 package su.nightexpress.nightcore.database;
 
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.NightDataPlugin;
-import su.nightexpress.nightcore.manager.AbstractManager;
-import su.nightexpress.nightcore.core.CoreConfig;
-import su.nightexpress.nightcore.database.listener.UserListener;
-import su.nightexpress.nightcore.util.Players;
-
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.NightDataPlugin;
+import su.nightexpress.nightcore.core.CoreConfig;
+import su.nightexpress.nightcore.database.listener.UserListener;
+import su.nightexpress.nightcore.manager.AbstractManager;
+import su.nightexpress.nightcore.util.Players;
 
 public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extends DataUser> extends AbstractManager<P> {
 

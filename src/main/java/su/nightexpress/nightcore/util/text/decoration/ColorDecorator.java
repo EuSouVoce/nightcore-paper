@@ -1,10 +1,11 @@
 package su.nightexpress.nightcore.util.text.decoration;
 
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.BaseComponent;
+import java.awt.Color;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public class ColorDecorator implements Decorator {
 

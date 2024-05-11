@@ -1,11 +1,14 @@
 package su.nightexpress.nightcore.util.text.tag.impl;
 
+import java.awt.Color;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.util.text.decoration.*;
-import su.nightexpress.nightcore.util.text.tag.api.Tag;
 
-import java.awt.*;
+import su.nightexpress.nightcore.util.text.decoration.ColorDecorator;
+import su.nightexpress.nightcore.util.text.decoration.DecoratorParser;
+import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;
+import su.nightexpress.nightcore.util.text.tag.api.Tag;
 
 public class HexColorTag extends Tag implements DecoratorParser {
 

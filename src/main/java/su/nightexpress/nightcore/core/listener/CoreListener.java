@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.server.ServiceRegisterEvent;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCore;
 import su.nightexpress.nightcore.integration.VaultHook;
 import su.nightexpress.nightcore.manager.AbstractListener;

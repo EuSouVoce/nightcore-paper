@@ -1,23 +1,33 @@
 package su.nightexpress.nightcore.menu.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.ConfigValue;
 import su.nightexpress.nightcore.config.FileConfig;
-import su.nightexpress.nightcore.menu.api.AutoFilled;
 import su.nightexpress.nightcore.menu.MenuOptions;
+import su.nightexpress.nightcore.menu.api.AutoFilled;
 import su.nightexpress.nightcore.menu.click.ClickAction;
 import su.nightexpress.nightcore.menu.click.ClickType;
 import su.nightexpress.nightcore.menu.item.ItemHandler;
 import su.nightexpress.nightcore.menu.item.MenuItem;
-import su.nightexpress.nightcore.util.*;
+import su.nightexpress.nightcore.util.ItemUtil;
+import su.nightexpress.nightcore.util.Lists;
+import su.nightexpress.nightcore.util.Placeholders;
+import su.nightexpress.nightcore.util.Players;
+import su.nightexpress.nightcore.util.Plugins;
+import su.nightexpress.nightcore.util.StringUtil;
 import su.nightexpress.nightcore.util.text.NightMessage;
-
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class ConfigMenu<P extends NightCorePlugin> extends AbstractMenu<P> {
 
@@ -121,7 +131,9 @@ public abstract class ConfigMenu<P extends NightCorePlugin> extends AbstractMenu
 
     public void addHandler(@NotNull final ItemHandler handler) { this.handlerMap.put(handler.getName(), handler); }
 
-    public void addHandler(@NotNull final String name, @NotNull final ClickAction action) { this.addHandler(new ItemHandler(name, action)); }
+    public void addHandler(@NotNull final String name, @NotNull final ClickAction action) {
+        this.addHandler(new ItemHandler(name, action));
+    }
 
     @Nullable
     public ItemHandler getHandler(@NotNull final String name) { return this.handlerMap.get(name.toLowerCase()); }

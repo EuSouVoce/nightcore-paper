@@ -1,13 +1,14 @@
 package su.nightexpress.nightcore.util;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.core.CoreConfig;
-import su.nightexpress.nightcore.core.CoreLang;
-
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Supplier;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.core.CoreConfig;
+import su.nightexpress.nightcore.core.CoreLang;
 
 public class NumberUtil {
 
@@ -94,15 +95,23 @@ public class NumberUtil {
 
     public static double getDouble(@NotNull final String input) { return NumberUtil.getDouble(input, 0D); }
 
-    public static double getDouble(@NotNull final String input, final double defaultValue) { return Math.abs(NumberUtil.getAnyDouble(input, defaultValue)); }
+    public static double getDouble(@NotNull final String input, final double defaultValue) {
+        return Math.abs(NumberUtil.getAnyDouble(input, defaultValue));
+    }
 
-    public static double getAnyDouble(@NotNull final String input, final double defaultValue) { return NumberUtil.parseDouble(input).orElse(defaultValue); }
+    public static double getAnyDouble(@NotNull final String input, final double defaultValue) {
+        return NumberUtil.parseDouble(input).orElse(defaultValue);
+    }
 
     public static int getInteger(@NotNull final String input) { return NumberUtil.getInteger(input, 0); }
 
-    public static int getInteger(@NotNull final String input, final int defaultValue) { return Math.abs(NumberUtil.getAnyInteger(input, defaultValue)); }
+    public static int getInteger(@NotNull final String input, final int defaultValue) {
+        return Math.abs(NumberUtil.getAnyInteger(input, defaultValue));
+    }
 
-    public static int getAnyInteger(@NotNull final String input, final int defaultValue) { return NumberUtil.parseInteger(input).orElse(defaultValue); }
+    public static int getAnyInteger(@NotNull final String input, final int defaultValue) {
+        return NumberUtil.parseInteger(input).orElse(defaultValue);
+    }
 
     @NotNull
     public static Optional<Integer> parseInteger(@NotNull final String input) {

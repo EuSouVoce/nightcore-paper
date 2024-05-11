@@ -1,7 +1,8 @@
 package su.nightexpress.nightcore.util.text.decoration;
 
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.jetbrains.annotations.NotNull;
+
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public class FontDecorator implements Decorator {
 

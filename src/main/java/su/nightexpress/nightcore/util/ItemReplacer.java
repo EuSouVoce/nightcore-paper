@@ -1,22 +1,24 @@
 package su.nightexpress.nightcore.util;
 
-import com.google.common.base.Splitter;
-import me.clip.placeholderapi.PlaceholderAPI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import com.google.common.base.Splitter;
+
+import me.clip.placeholderapi.PlaceholderAPI;
 import su.nightexpress.nightcore.language.entry.LangItem;
 import su.nightexpress.nightcore.util.placeholder.PlaceholderMap;
 import su.nightexpress.nightcore.util.text.NightMessage;
 import su.nightexpress.nightcore.util.text.tag.Tags;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 public class ItemReplacer {
 

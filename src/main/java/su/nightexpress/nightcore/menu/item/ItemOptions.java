@@ -1,13 +1,14 @@
 package su.nightexpress.nightcore.menu.item;
 
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.menu.MenuViewer;
 
-import java.util.function.BiConsumer;
-import java.util.function.Predicate;
+import su.nightexpress.nightcore.menu.MenuViewer;
 
 public class ItemOptions {
 

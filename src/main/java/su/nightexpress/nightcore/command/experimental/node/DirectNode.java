@@ -1,21 +1,26 @@
 package su.nightexpress.nightcore.command.experimental.node;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
-import su.nightexpress.nightcore.command.experimental.argument.CommandArgument;
 import su.nightexpress.nightcore.command.experimental.CommandContext;
+import su.nightexpress.nightcore.command.experimental.TabContext;
+import su.nightexpress.nightcore.command.experimental.argument.CommandArgument;
 import su.nightexpress.nightcore.command.experimental.argument.ParsedArgument;
 import su.nightexpress.nightcore.command.experimental.argument.ParsedArguments;
-import su.nightexpress.nightcore.command.experimental.TabContext;
 import su.nightexpress.nightcore.command.experimental.builder.DirectNodeBuilder;
 import su.nightexpress.nightcore.command.experimental.flag.CommandFlag;
 import su.nightexpress.nightcore.command.experimental.flag.ContentFlag;
 import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.util.Placeholders;
-
-import java.util.*;
 
 public class DirectNode extends CommandNode implements DirectExecutor {
 
@@ -25,9 +30,10 @@ public class DirectNode extends CommandNode implements DirectExecutor {
 
     private final int requiredArguments;
 
-    public DirectNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases, @NotNull final String description,
-            @Nullable final String permission, final boolean playerOnly, @NotNull final List<CommandArgument<?>> arguments,
-            @NotNull final Map<String, CommandFlag> flags, @NotNull final DirectExecutor executor) {
+    public DirectNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases,
+            @NotNull final String description, @Nullable final String permission, final boolean playerOnly,
+            @NotNull final List<CommandArgument<?>> arguments, @NotNull final Map<String, CommandFlag> flags,
+            @NotNull final DirectExecutor executor) {
         super(plugin, name, aliases, description, permission, playerOnly);
         this.arguments = Collections.unmodifiableList(arguments);
         this.flags = Collections.unmodifiableMap(flags);

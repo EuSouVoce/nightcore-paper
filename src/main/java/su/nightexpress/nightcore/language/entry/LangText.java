@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.language.entry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.language.message.LangMessage;
 import su.nightexpress.nightcore.util.Placeholders;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class LangText extends LangEntry<LangMessage> {
 

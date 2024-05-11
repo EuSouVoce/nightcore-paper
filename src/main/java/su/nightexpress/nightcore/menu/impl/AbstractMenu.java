@@ -1,5 +1,14 @@
 package su.nightexpress.nightcore.menu.impl;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -9,20 +18,19 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.api.event.PlayerOpenMenuEvent;
 import su.nightexpress.nightcore.dialog.Dialog;
-import su.nightexpress.nightcore.menu.MenuSize;
-import su.nightexpress.nightcore.menu.api.Menu;
-import su.nightexpress.nightcore.menu.link.Linked;
 import su.nightexpress.nightcore.menu.MenuOptions;
+import su.nightexpress.nightcore.menu.MenuSize;
 import su.nightexpress.nightcore.menu.MenuViewer;
+import su.nightexpress.nightcore.menu.api.Menu;
 import su.nightexpress.nightcore.menu.click.ClickResult;
 import su.nightexpress.nightcore.menu.item.ItemOptions;
 import su.nightexpress.nightcore.menu.item.MenuItem;
+import su.nightexpress.nightcore.menu.link.Linked;
 import su.nightexpress.nightcore.util.Lists;
-
-import java.util.*;
 
 public abstract class AbstractMenu<P extends NightCorePlugin> implements Menu {
 
@@ -30,9 +38,13 @@ public abstract class AbstractMenu<P extends NightCorePlugin> implements Menu {
 
     public static void closeAll() { AbstractMenu.getActiveMenus().forEach(Menu::close); }
 
-    public static void closeAll(@NotNull final NightCorePlugin plugin) { AbstractMenu.getActiveMenus().forEach(menu -> menu.close(plugin)); }
+    public static void closeAll(@NotNull final NightCorePlugin plugin) {
+        AbstractMenu.getActiveMenus().forEach(menu -> menu.close(plugin));
+    }
 
-    public static void clearAll(@NotNull final NightCorePlugin plugin) { AbstractMenu.getActiveMenus().stream().distinct().forEach(Menu::clear); }
+    public static void clearAll(@NotNull final NightCorePlugin plugin) {
+        AbstractMenu.getActiveMenus().stream().distinct().forEach(Menu::clear);
+    }
 
     public static Collection<Menu> getActiveMenus() { return new HashSet<>(AbstractMenu.PLAYER_MENUS.values()); }
 
@@ -61,7 +73,9 @@ public abstract class AbstractMenu<P extends NightCorePlugin> implements Menu {
         this(plugin, new MenuOptions(title, size, InventoryType.CHEST));
     }
 
-    public AbstractMenu(@NotNull final P plugin, @NotNull final String title, @NotNull final MenuSize size) { this(plugin, new MenuOptions(title, size)); }
+    public AbstractMenu(@NotNull final P plugin, @NotNull final String title, @NotNull final MenuSize size) {
+        this(plugin, new MenuOptions(title, size));
+    }
 
     public AbstractMenu(@NotNull final P plugin, @NotNull final MenuOptions options) {
         this.plugin = plugin;

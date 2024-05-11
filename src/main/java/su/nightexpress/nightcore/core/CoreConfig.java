@@ -1,17 +1,17 @@
 package su.nightexpress.nightcore.core;
 
-import su.nightexpress.nightcore.config.ConfigValue;
-import su.nightexpress.nightcore.util.Placeholders;
-import su.nightexpress.nightcore.util.text.NightMessage;
-import su.nightexpress.nightcore.util.text.tag.impl.ColorTag;
-import su.nightexpress.nightcore.util.wrapper.UniFormatter;
-
-import java.awt.*;
+import java.awt.Color;
 import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import su.nightexpress.nightcore.config.ConfigValue;
+import su.nightexpress.nightcore.util.Placeholders;
+import su.nightexpress.nightcore.util.text.NightMessage;
+import su.nightexpress.nightcore.util.text.tag.impl.ColorTag;
+import su.nightexpress.nightcore.util.wrapper.UniFormatter;
 
 public class CoreConfig {
 

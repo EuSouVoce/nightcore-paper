@@ -19,11 +19,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import com.destroystokyo.paper.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 

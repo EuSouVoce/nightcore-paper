@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.language.entry;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.text.NightMessage;

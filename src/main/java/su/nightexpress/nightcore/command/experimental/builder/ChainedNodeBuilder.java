@@ -1,17 +1,18 @@
 package su.nightexpress.nightcore.command.experimental.builder;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.NightCorePlugin;
-import su.nightexpress.nightcore.command.experimental.node.NodeExecutor;
-import su.nightexpress.nightcore.command.experimental.node.ChainedNode;
-import su.nightexpress.nightcore.command.experimental.node.CommandNode;
-import su.nightexpress.nightcore.command.experimental.node.DirectNode;
-import su.nightexpress.nightcore.language.entry.LangString;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.NightCorePlugin;
+import su.nightexpress.nightcore.command.experimental.node.ChainedNode;
+import su.nightexpress.nightcore.command.experimental.node.CommandNode;
+import su.nightexpress.nightcore.command.experimental.node.DirectNode;
+import su.nightexpress.nightcore.command.experimental.node.NodeExecutor;
+import su.nightexpress.nightcore.language.entry.LangString;
 
 public class ChainedNodeBuilder extends NodeBuilder<ChainedNode, ChainedNodeBuilder> {
 

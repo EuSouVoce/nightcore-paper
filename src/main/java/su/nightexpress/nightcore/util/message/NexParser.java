@@ -1,18 +1,19 @@
 package su.nightexpress.nightcore.util.message;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.util.Colorizer;
-import su.nightexpress.nightcore.util.regex.TimedMatcher;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import su.nightexpress.nightcore.util.Colorizer;
+import su.nightexpress.nightcore.util.regex.TimedMatcher;
 
 @Deprecated
 public class NexParser {

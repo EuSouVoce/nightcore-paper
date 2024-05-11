@@ -1,12 +1,13 @@
 package su.nightexpress.nightcore.config;
 
+import java.util.Locale;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.language.LangManager;
 import su.nightexpress.nightcore.util.text.tag.Tags;
-
-import java.util.Locale;
 
 public class PluginDetails {
 
@@ -19,7 +20,8 @@ public class PluginDetails {
     private Class<?> langClass;
     private Class<?> permissionsClass;
 
-    public PluginDetails(@NotNull final String name, @NotNull final String prefix, @NotNull final String[] commandAliases, @NotNull final String language) {
+    public PluginDetails(@NotNull final String name, @NotNull final String prefix, @NotNull final String[] commandAliases,
+            @NotNull final String language) {
         this.name = name;
         this.prefix = prefix;
         this.commandAliases = commandAliases;
@@ -43,7 +45,8 @@ public class PluginDetails {
                 .create("Plugin.Name", defaults.getName(), "Localized plugin name. It's used in messages and with internal placeholders.")
                 .read(config);
 
-        final String pluginPrefix = ConfigValue.create("Plugin.Prefix", defaults.getPrefix(), "Plugin prefix. Used in messages.").read(config);
+        final String pluginPrefix = ConfigValue.create("Plugin.Prefix", defaults.getPrefix(), "Plugin prefix. Used in messages.")
+                .read(config);
 
         final String[] commandAliases = ConfigValue.create("Plugin.Command_Aliases", defaults.getCommandAliases(),
                 "Command names that will be registered as main plugin commands.",

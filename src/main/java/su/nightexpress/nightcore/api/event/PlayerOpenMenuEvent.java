@@ -5,6 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.menu.api.Menu;
 
 public class PlayerOpenMenuEvent extends Event implements Cancellable {

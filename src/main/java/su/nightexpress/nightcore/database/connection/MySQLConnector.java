@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.database.connection;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.database.AbstractConnector;
 import su.nightexpress.nightcore.database.DatabaseConfig;

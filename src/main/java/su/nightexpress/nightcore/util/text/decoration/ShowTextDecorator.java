@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.util.text.decoration;
 
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.hover.content.Text;
-import org.jetbrains.annotations.NotNull;
 import su.nightexpress.nightcore.util.Lists;
 import su.nightexpress.nightcore.util.text.NightMessage;
 import su.nightexpress.nightcore.util.text.tag.Tags;
-
-import java.util.List;
 
 public class ShowTextDecorator implements Decorator {
 

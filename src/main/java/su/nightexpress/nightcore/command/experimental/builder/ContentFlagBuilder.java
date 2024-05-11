@@ -1,9 +1,10 @@
 package su.nightexpress.nightcore.command.experimental.builder;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.command.experimental.flag.ContentFlag;
-
 import java.util.function.Function;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.command.experimental.flag.ContentFlag;
 
 public class ContentFlagBuilder<T> extends FlagBuilder<ContentFlag<T>, ContentFlagBuilder<T>> {
 

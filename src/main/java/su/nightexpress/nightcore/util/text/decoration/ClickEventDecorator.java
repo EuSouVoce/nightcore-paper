@@ -1,8 +1,9 @@
 package su.nightexpress.nightcore.util.text.decoration;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
-import org.jetbrains.annotations.NotNull;
 
 public class ClickEventDecorator implements Decorator {
 

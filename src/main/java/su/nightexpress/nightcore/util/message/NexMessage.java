@@ -1,21 +1,28 @@
 package su.nightexpress.nightcore.util.message;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
 import com.google.common.base.Preconditions;
+
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import su.nightexpress.nightcore.util.Colorizer;
 import su.nightexpress.nightcore.util.Reflex;
-
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 @Deprecated
 public class NexMessage {
@@ -140,7 +147,9 @@ public class NexMessage {
         return orig;
     }
 
-    public static BaseComponent[] fromLegacyText(@NotNull final String message) { return NexMessage.fromLegacyText(message, ChatColor.WHITE); }
+    public static BaseComponent[] fromLegacyText(@NotNull final String message) {
+        return NexMessage.fromLegacyText(message, ChatColor.WHITE);
+    }
 
     public static BaseComponent[] fromLegacyText(@NotNull final String message, @NotNull final ChatColor defaultColor) {
         final ArrayList<BaseComponent> components = new ArrayList<>();

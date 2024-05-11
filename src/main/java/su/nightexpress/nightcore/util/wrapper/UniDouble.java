@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.util.wrapper;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.random.Rnd;
 

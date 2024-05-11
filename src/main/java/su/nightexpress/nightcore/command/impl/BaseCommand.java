@@ -2,6 +2,7 @@ package su.nightexpress.nightcore.command.impl;
 
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.CommandResult;
 

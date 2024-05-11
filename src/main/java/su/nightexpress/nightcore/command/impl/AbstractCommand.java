@@ -1,10 +1,20 @@
 package su.nightexpress.nightcore.command.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Stream;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.CommandFlag;
 import su.nightexpress.nightcore.command.CommandResult;
@@ -13,9 +23,6 @@ import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.core.CorePerms;
 import su.nightexpress.nightcore.util.Placeholders;
 import su.nightexpress.nightcore.util.placeholder.PlaceholderMap;
-
-import java.util.*;
-import java.util.stream.Stream;
 
 public abstract class AbstractCommand<P extends NightCorePlugin> implements NightCommand {
 
@@ -178,11 +185,17 @@ public abstract class AbstractCommand<P extends NightCorePlugin> implements Nigh
         CoreLang.ERROR_COMMAND_USAGE.getMessage(this.plugin).replace(this.replacePlaceholders()).send(sender);
     }
 
-    protected final void errorPermission(@NotNull final CommandSender sender) { CoreLang.ERROR_NO_PERMISSION.getMessage(this.plugin).send(sender); }
+    protected final void errorPermission(@NotNull final CommandSender sender) {
+        CoreLang.ERROR_NO_PERMISSION.getMessage(this.plugin).send(sender);
+    }
 
-    protected final void errorPlayer(@NotNull final CommandSender sender) { CoreLang.ERROR_INVALID_PLAYER.getMessage(this.plugin).send(sender); }
+    protected final void errorPlayer(@NotNull final CommandSender sender) {
+        CoreLang.ERROR_INVALID_PLAYER.getMessage(this.plugin).send(sender);
+    }
 
-    protected final void errorSender(@NotNull final CommandSender sender) { CoreLang.ERROR_COMMAND_PLAYER_ONLY.getMessage(this.plugin).send(sender); }
+    protected final void errorSender(@NotNull final CommandSender sender) {
+        CoreLang.ERROR_COMMAND_PLAYER_ONLY.getMessage(this.plugin).send(sender);
+    }
 
     protected final void errorNumber(@NotNull final CommandSender sender, @NotNull final String from) {
         CoreLang.ERROR_INVALID_NUMBER.getMessage(this.plugin).replace(Placeholders.GENERIC_VALUE, from).send(sender);

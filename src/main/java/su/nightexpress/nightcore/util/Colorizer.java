@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.util;
 
-import net.md_5.bungee.api.ChatColor;
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.util.regex.TimedMatcher;
-
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
+
+import net.md_5.bungee.api.ChatColor;
+import su.nightexpress.nightcore.util.regex.TimedMatcher;
 
 public class Colorizer {
     // @formatter:off

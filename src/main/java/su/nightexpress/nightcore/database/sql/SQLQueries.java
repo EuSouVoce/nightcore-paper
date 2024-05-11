@@ -1,11 +1,22 @@
 package su.nightexpress.nightcore.database.sql;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.database.AbstractConnector;
-
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.database.AbstractConnector;
 
 public class SQLQueries {
 
@@ -24,7 +35,8 @@ public class SQLQueries {
         }
     }
 
-    public static boolean hasColumn(@NotNull final AbstractConnector connector, @NotNull final String table, @NotNull final SQLColumn column) {
+    public static boolean hasColumn(@NotNull final AbstractConnector connector, @NotNull final String table,
+            @NotNull final SQLColumn column) {
         final String sql = "SELECT * FROM " + table;
         final String columnName = column.getName();
         try (Connection connection = connector.getConnection(); Statement statement = connection.createStatement()) {
@@ -48,12 +60,13 @@ public class SQLQueries {
         SQLQueries.executeStatement(connector, sql, Collections.emptySet());
     }
 
-    public static void executeStatement(@NotNull final AbstractConnector connector, @NotNull final String sql, @NotNull final Collection<String> values1) {
+    public static void executeStatement(@NotNull final AbstractConnector connector, @NotNull final String sql,
+            @NotNull final Collection<String> values1) {
         SQLQueries.executeStatement(connector, sql, values1, Collections.emptySet());
     }
 
-    public static void executeStatement(@NotNull final AbstractConnector connector, @NotNull final String sql, @NotNull final Collection<String> values1,
-            @NotNull final Collection<String> values2) {
+    public static void executeStatement(@NotNull final AbstractConnector connector, @NotNull final String sql,
+            @NotNull final Collection<String> values1, @NotNull final Collection<String> values2) {
 
         try (Connection connection = connector.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 

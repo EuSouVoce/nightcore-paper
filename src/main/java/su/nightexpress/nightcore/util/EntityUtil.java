@@ -1,5 +1,10 @@
 package su.nightexpress.nightcore.util;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.block.BlockFace;
@@ -10,13 +15,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCore;
 import su.nightexpress.nightcore.util.random.Rnd;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class EntityUtil {
 
@@ -53,7 +54,9 @@ public class EntityUtil {
 
     public static AtomicInteger getEntityCounter() { return EntityUtil.entityCounter; }
 
-    public static int nextEntityId() { return EntityUtil.entityCounter == null ? Rnd.nextInt(9999) : EntityUtil.entityCounter.incrementAndGet(); }
+    public static int nextEntityId() {
+        return EntityUtil.entityCounter == null ? Rnd.nextInt(9999) : EntityUtil.entityCounter.incrementAndGet();
+    }
 
     public static double getAttribute(@NotNull final LivingEntity entity, @NotNull final Attribute attribute) {
         final AttributeInstance instance = entity.getAttribute(attribute);
@@ -71,7 +74,8 @@ public class EntityUtil {
     }
 
     @NotNull
-    public static Map<EquipmentSlot, ItemStack> getEquippedItems(@NotNull final LivingEntity entity, @NotNull final EquipmentSlot... slots) {
+    public static Map<EquipmentSlot, ItemStack> getEquippedItems(@NotNull final LivingEntity entity,
+            @NotNull final EquipmentSlot... slots) {
         final EntityEquipment equipment = entity.getEquipment();
         if (equipment == null)
             return Collections.emptyMap();

@@ -1,8 +1,13 @@
 package su.nightexpress.nightcore.command.experimental;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.experimental.builder.ChainedNodeBuilder;
 import su.nightexpress.nightcore.command.experimental.builder.DirectNodeBuilder;
@@ -13,10 +18,6 @@ import su.nightexpress.nightcore.command.experimental.node.DirectNode;
 import su.nightexpress.nightcore.command.impl.WrappedCommand;
 import su.nightexpress.nightcore.util.CommandUtil;
 import su.nightexpress.nightcore.util.Lists;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
 
 public class RootCommand<P extends NightCorePlugin, S extends CommandNode> implements ServerCommand {
 
@@ -59,8 +60,8 @@ public class RootCommand<P extends NightCorePlugin, S extends CommandNode> imple
     }
 
     @NotNull
-    public static <T extends NightCorePlugin, S extends CommandNode, B extends NodeBuilder<S, B>> RootCommand<T, S> build(@NotNull final T plugin,
-            @NotNull final B builder) {
+    public static <T extends NightCorePlugin, S extends CommandNode, B extends NodeBuilder<S, B>> RootCommand<T, S> build(
+            @NotNull final T plugin, @NotNull final B builder) {
         return new RootCommand<>(plugin, builder.build());
     }
 
@@ -81,7 +82,8 @@ public class RootCommand<P extends NightCorePlugin, S extends CommandNode> imple
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label, final String[] args) {
+    public List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label,
+            final String[] args) {
         if (args.length == 0)
             return Collections.emptyList();
 
@@ -94,7 +96,8 @@ public class RootCommand<P extends NightCorePlugin, S extends CommandNode> imple
     }
 
     @Override
-    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label, @NotNull final String[] args) {
+    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label,
+            @NotNull final String[] args) {
         final CommandContext commandContext = new CommandContext(this.plugin, sender, label, args);
 
         return this.node.run(commandContext);

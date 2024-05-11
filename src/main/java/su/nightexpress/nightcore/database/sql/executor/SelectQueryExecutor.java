@@ -1,15 +1,20 @@
 package su.nightexpress.nightcore.database.sql.executor;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.database.AbstractConnector;
-import su.nightexpress.nightcore.database.sql.*;
-
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.database.AbstractConnector;
+import su.nightexpress.nightcore.database.sql.SQLColumn;
+import su.nightexpress.nightcore.database.sql.SQLCondition;
+import su.nightexpress.nightcore.database.sql.SQLExecutor;
+import su.nightexpress.nightcore.database.sql.SQLQueries;
+import su.nightexpress.nightcore.database.sql.SQLValue;
 
 public final class SelectQueryExecutor<T> extends SQLExecutor<List<T>> {
 
@@ -70,7 +75,8 @@ public final class SelectQueryExecutor<T> extends SQLExecutor<List<T>> {
         if (columns.isEmpty())
             columns = "*";
 
-        final String wheres = this.wheres.stream().map(where -> where.getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
+        final String wheres = this.wheres.stream()
+                .map(where -> where.getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
                 .collect(Collectors.joining(" AND "));
 
         final String sql = "SELECT " + columns + " FROM " + this.getTable() + (wheres.isEmpty() ? "" : " WHERE " + wheres);

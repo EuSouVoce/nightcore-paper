@@ -1,8 +1,10 @@
+
 package su.nightexpress.nightcore.util.text.tag.impl;
 
-import net.md_5.bungee.api.chat.ClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import net.md_5.bungee.api.chat.ClickEvent;
 import su.nightexpress.nightcore.util.StringUtil;
 import su.nightexpress.nightcore.util.text.decoration.ClickEventDecorator;
 import su.nightexpress.nightcore.util.text.decoration.Decorator;

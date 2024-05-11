@@ -1,8 +1,18 @@
 package su.nightexpress.nightcore.command.experimental.node;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.experimental.CommandContext;
 import su.nightexpress.nightcore.command.experimental.TabContext;
@@ -12,17 +22,15 @@ import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.util.Placeholders;
 import su.nightexpress.nightcore.util.StringUtil;
 
-import java.util.*;
-
 public class ChainedNode extends CommandNode {
 
     private final String localized;
     private final Map<String, CommandNode> commandMap;
     private final NodeExecutor fallback;
 
-    public ChainedNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases, @NotNull final String description,
-            @Nullable final String localized, @Nullable final String permission, final boolean playerOnly, @Nullable final NodeExecutor fallback,
-            @NotNull final Map<String, CommandNode> commandMap) {
+    public ChainedNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases,
+            @NotNull final String description, @Nullable final String localized, @Nullable final String permission,
+            final boolean playerOnly, @Nullable final NodeExecutor fallback, @NotNull final Map<String, CommandNode> commandMap) {
         super(plugin, name, aliases, description, permission, playerOnly);
         this.localized = localized == null ? StringUtil.capitalizeUnderscored(name) : localized;
         this.commandMap = new HashMap<>();

@@ -2,6 +2,7 @@ package su.nightexpress.nightcore.menu.item;
 
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.menu.MenuViewer;
 import su.nightexpress.nightcore.menu.click.ClickAction;
 
@@ -22,7 +23,8 @@ public class MenuItem {
         this(itemStack, priority, slots, new ItemOptions(), new ItemHandler());
     }
 
-    public MenuItem(@NotNull final ItemStack itemStack, final int priority, final int[] slots, @NotNull final ItemOptions options, @NotNull final ItemHandler handler) {
+    public MenuItem(@NotNull final ItemStack itemStack, final int priority, final int[] slots, @NotNull final ItemOptions options,
+            @NotNull final ItemHandler handler) {
         this.setItemStack(itemStack);
         this.setPriority(priority);
         this.setSlots(slots);

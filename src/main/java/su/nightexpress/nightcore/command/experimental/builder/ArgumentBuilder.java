@@ -1,16 +1,17 @@
 package su.nightexpress.nightcore.command.experimental.builder;
 
+import java.util.List;
+import java.util.function.Function;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.command.experimental.TabContext;
 import su.nightexpress.nightcore.command.experimental.argument.CommandArgument;
 import su.nightexpress.nightcore.language.entry.LangString;
 import su.nightexpress.nightcore.language.entry.LangText;
 import su.nightexpress.nightcore.language.message.LangMessage;
 import su.nightexpress.nightcore.util.wrapper.UniPermission;
-
-import java.util.List;
-import java.util.function.Function;
 
 public class ArgumentBuilder<T> {
 

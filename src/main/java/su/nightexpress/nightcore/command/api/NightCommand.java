@@ -1,16 +1,17 @@
 package su.nightexpress.nightcore.command.api;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.command.CommandFlag;
 import su.nightexpress.nightcore.language.entry.LangString;
 import su.nightexpress.nightcore.util.placeholder.Placeholder;
-
-import java.util.Collection;
-import java.util.List;
 
 public interface NightCommand extends Placeholder {
 
@@ -56,7 +57,9 @@ public interface NightCommand extends Placeholder {
     @Nullable
     String getPermission();
 
-    default void setPermission(@Nullable final Permission permission) { this.setPermission(permission == null ? null : permission.getName()); }
+    default void setPermission(@Nullable final Permission permission) {
+        this.setPermission(permission == null ? null : permission.getName());
+    }
 
     void setPermission(@Nullable String permission);
 

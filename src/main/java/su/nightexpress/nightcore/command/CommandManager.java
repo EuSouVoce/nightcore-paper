@@ -1,7 +1,11 @@
 package su.nightexpress.nightcore.command;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightPlugin;
 import su.nightexpress.nightcore.command.api.NightPluginCommand;
 import su.nightexpress.nightcore.command.base.HelpSubCommand;
@@ -13,9 +17,6 @@ import su.nightexpress.nightcore.command.impl.BaseCommand;
 import su.nightexpress.nightcore.manager.SimpleManager;
 import su.nightexpress.nightcore.util.CommandUtil;
 import su.nightexpress.nightcore.util.Lists;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class CommandManager extends SimpleManager<NightPlugin> {
 
@@ -127,5 +128,7 @@ public class CommandManager extends SimpleManager<NightPlugin> {
         return false;
     }
 
-    public boolean unregisterCommand(@NotNull final ServerCommand command) { return this.serverCommands.remove(command) && command.unregister(); }
+    public boolean unregisterCommand(@NotNull final ServerCommand command) {
+        return this.serverCommands.remove(command) && command.unregister();
+    }
 }

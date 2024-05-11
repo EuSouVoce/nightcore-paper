@@ -1,8 +1,10 @@
 package su.nightexpress.nightcore.integration;
 
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -10,12 +12,11 @@ import org.bukkit.event.server.ServiceRegisterEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.util.Plugins;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
+import su.nightexpress.nightcore.util.Plugins;
 
 public class VaultHook {
 
@@ -114,22 +115,30 @@ public class VaultHook {
     }
 
     @NotNull
-    public static String getPrefix(@NotNull final Player player) { return VaultHook.hasChat() ? VaultHook.chat.getPlayerPrefix(player) : ""; }
+    public static String getPrefix(@NotNull final Player player) {
+        return VaultHook.hasChat() ? VaultHook.chat.getPlayerPrefix(player) : "";
+    }
 
     @NotNull
-    public static String getSuffix(@NotNull final Player player) { return VaultHook.hasChat() ? VaultHook.chat.getPlayerSuffix(player) : ""; }
+    public static String getSuffix(@NotNull final Player player) {
+        return VaultHook.hasChat() ? VaultHook.chat.getPlayerSuffix(player) : "";
+    }
 
     public static double getBalance(@NotNull final Player player) { return VaultHook.economy.getBalance(player); }
 
     public static double getBalance(@NotNull final OfflinePlayer player) { return VaultHook.economy.getBalance(player); }
 
-    public static boolean addMoney(@NotNull final Player player, final double amount) { return VaultHook.addMoney((OfflinePlayer) player, amount); }
+    public static boolean addMoney(@NotNull final Player player, final double amount) {
+        return VaultHook.addMoney((OfflinePlayer) player, amount);
+    }
 
     public static boolean addMoney(@NotNull final OfflinePlayer player, final double amount) {
         return VaultHook.economy.depositPlayer(player, amount).transactionSuccess();
     }
 
-    public static boolean takeMoney(@NotNull final Player player, final double amount) { return VaultHook.takeMoney((OfflinePlayer) player, amount); }
+    public static boolean takeMoney(@NotNull final Player player, final double amount) {
+        return VaultHook.takeMoney((OfflinePlayer) player, amount);
+    }
 
     public static boolean takeMoney(@NotNull final OfflinePlayer player, final double amount) {
         return VaultHook.economy.withdrawPlayer(player, Math.abs(amount)).transactionSuccess();

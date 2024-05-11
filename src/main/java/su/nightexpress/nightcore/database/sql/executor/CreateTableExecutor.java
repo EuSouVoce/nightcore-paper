@@ -1,17 +1,18 @@
 package su.nightexpress.nightcore.database.sql.executor;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.database.DatabaseType;
-import su.nightexpress.nightcore.database.AbstractConnector;
-import su.nightexpress.nightcore.database.sql.SQLColumn;
-import su.nightexpress.nightcore.database.sql.SQLExecutor;
-import su.nightexpress.nightcore.database.sql.SQLQueries;
-import su.nightexpress.nightcore.database.sql.column.ColumnFormer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.database.AbstractConnector;
+import su.nightexpress.nightcore.database.DatabaseType;
+import su.nightexpress.nightcore.database.sql.SQLColumn;
+import su.nightexpress.nightcore.database.sql.SQLExecutor;
+import su.nightexpress.nightcore.database.sql.SQLQueries;
+import su.nightexpress.nightcore.database.sql.column.ColumnFormer;
 
 public final class CreateTableExecutor extends SQLExecutor<Void> {
 

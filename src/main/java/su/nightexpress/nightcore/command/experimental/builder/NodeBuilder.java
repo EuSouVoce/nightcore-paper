@@ -1,13 +1,14 @@
 package su.nightexpress.nightcore.command.experimental.builder;
 
+import java.util.stream.Stream;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.experimental.node.CommandNode;
 import su.nightexpress.nightcore.language.entry.LangString;
 import su.nightexpress.nightcore.util.wrapper.UniPermission;
-
-import java.util.stream.Stream;
 
 public abstract class NodeBuilder<S extends CommandNode, B extends NodeBuilder<S, B>> {
 

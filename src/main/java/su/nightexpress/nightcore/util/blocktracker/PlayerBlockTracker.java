@@ -1,6 +1,13 @@
 package su.nightexpress.nightcore.util.blocktracker;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Predicate;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.NamespacedKey;
@@ -9,10 +16,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.util.Plugins;
 
-import java.util.*;
-import java.util.function.Predicate;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import su.nightexpress.nightcore.util.Plugins;
 
 public final class PlayerBlockTracker {
 
@@ -121,8 +127,12 @@ public final class PlayerBlockTracker {
     }
 
     @Nullable
-    private static TrackedWorld getTrackedWorldOf(@NotNull final Block block) { return PlayerBlockTracker.TRACKED_WORLD_MAP.get(block.getWorld().getUID()); }
+    private static TrackedWorld getTrackedWorldOf(@NotNull final Block block) {
+        return PlayerBlockTracker.TRACKED_WORLD_MAP.get(block.getWorld().getUID());
+    }
 
     @Nullable
-    private static TrackedWorld getTrackedWorldOf(@NotNull final Chunk chunk) { return PlayerBlockTracker.TRACKED_WORLD_MAP.get(chunk.getWorld().getUID()); }
+    private static TrackedWorld getTrackedWorldOf(@NotNull final Chunk chunk) {
+        return PlayerBlockTracker.TRACKED_WORLD_MAP.get(chunk.getWorld().getUID());
+    }
 }

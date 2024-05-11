@@ -1,12 +1,14 @@
+
 package su.nightexpress.nightcore.util.text.tag.impl;
+
+import java.awt.Color;
+
+import org.jetbrains.annotations.NotNull;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.jetbrains.annotations.NotNull;
 import su.nightexpress.nightcore.util.text.decoration.Decorator;
 import su.nightexpress.nightcore.util.text.tag.api.Tag;
-
-import java.awt.*;
 
 public class ColorTag extends Tag implements Decorator {
 
@@ -14,7 +16,9 @@ public class ColorTag extends Tag implements Decorator {
 
     public ColorTag(@NotNull final String name, @NotNull final String hex) { this(name, new String[0], hex); }
 
-    public ColorTag(@NotNull final String name, @NotNull final String[] aliases, @NotNull final String hex) { this(name, aliases, Color.decode(hex)); }
+    public ColorTag(@NotNull final String name, @NotNull final String[] aliases, @NotNull final String hex) {
+        this(name, aliases, Color.decode(hex));
+    }
 
     public ColorTag(@NotNull final Color color) { this(color, new String[0]); }
 

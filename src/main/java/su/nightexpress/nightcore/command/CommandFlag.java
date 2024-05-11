@@ -1,12 +1,13 @@
 package su.nightexpress.nightcore.command;
 
+import java.util.function.Function;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.util.Colorizer;
 import su.nightexpress.nightcore.util.NumberUtil;
-
-import java.util.function.Function;
 
 public class CommandFlag<T> {
 

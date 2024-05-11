@@ -1,13 +1,14 @@
 package su.nightexpress.nightcore.util.placeholder;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.util.Pair;
-import su.nightexpress.nightcore.util.StringUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.util.Pair;
+import su.nightexpress.nightcore.util.StringUtil;
 
 public class PlaceholderMap {
 

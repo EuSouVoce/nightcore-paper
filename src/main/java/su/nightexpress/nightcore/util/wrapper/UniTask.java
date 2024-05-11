@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.util.wrapper;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 
 public class UniTask {
@@ -14,7 +15,9 @@ public class UniTask {
 
     public UniTask(@NotNull final NightCorePlugin plugin, @NotNull final Runnable runnable) { this(plugin, runnable, 0L); }
 
-    public UniTask(@NotNull final NightCorePlugin plugin, @NotNull final Runnable runnable, final long interval) { this(plugin, runnable, interval, false); }
+    public UniTask(@NotNull final NightCorePlugin plugin, @NotNull final Runnable runnable, final long interval) {
+        this(plugin, runnable, interval, false);
+    }
 
     public UniTask(@NotNull final NightCorePlugin plugin, @NotNull final Runnable runnable, final long interval, final boolean async) {
         this.plugin = plugin;

@@ -1,8 +1,9 @@
 package su.nightexpress.nightcore.database.sql.executor;
 
 import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.database.DatabaseType;
+
 import su.nightexpress.nightcore.database.AbstractConnector;
+import su.nightexpress.nightcore.database.DatabaseType;
 import su.nightexpress.nightcore.database.sql.SQLExecutor;
 import su.nightexpress.nightcore.database.sql.SQLQueries;
 

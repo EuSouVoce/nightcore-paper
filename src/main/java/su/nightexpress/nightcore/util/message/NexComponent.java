@@ -1,17 +1,22 @@
 package su.nightexpress.nightcore.util.message;
 
-import net.md_5.bungee.api.chat.*;
-import net.md_5.bungee.api.chat.hover.content.Item;
-import net.md_5.bungee.api.chat.hover.content.Text;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.ItemTag;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Item;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import su.nightexpress.nightcore.util.Colorizer;
 import su.nightexpress.nightcore.util.ItemNbt;
-
-import java.util.List;
 
 @Deprecated
 public class NexComponent {

@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.language.entry;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.ConfigValue;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.StringUtil;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
 
 public class LangEnum<E extends Enum<E>> {
 
@@ -23,7 +24,9 @@ public class LangEnum<E extends Enum<E>> {
     }
 
     @NotNull
-    public static <E extends Enum<E>> LangEnum<E> of(@NotNull final String path, @NotNull final Class<E> clazz) { return new LangEnum<>(path, clazz); }
+    public static <E extends Enum<E>> LangEnum<E> of(@NotNull final String path, @NotNull final Class<E> clazz) {
+        return new LangEnum<>(path, clazz);
+    }
 
     public void load(@NotNull final NightCorePlugin plugin) {
         final FileConfig config = plugin.getLang();

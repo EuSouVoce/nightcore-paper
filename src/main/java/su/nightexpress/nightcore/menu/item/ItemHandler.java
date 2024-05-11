@@ -1,16 +1,17 @@
 package su.nightexpress.nightcore.menu.item;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.menu.api.Menu;
-import su.nightexpress.nightcore.menu.MenuViewer;
-import su.nightexpress.nightcore.menu.click.ClickAction;
-import su.nightexpress.nightcore.util.Placeholders;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.menu.MenuViewer;
+import su.nightexpress.nightcore.menu.api.Menu;
+import su.nightexpress.nightcore.menu.click.ClickAction;
+import su.nightexpress.nightcore.util.Placeholders;
 
 public class ItemHandler {
     // @formatter:off

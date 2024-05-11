@@ -1,10 +1,18 @@
 package su.nightexpress.nightcore.database.serialize;
 
-import com.google.gson.*;
-import org.bukkit.inventory.ItemStack;
-import su.nightexpress.nightcore.util.ItemNbt;
-
 import java.lang.reflect.Type;
+
+import org.bukkit.inventory.ItemStack;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+
+import su.nightexpress.nightcore.util.ItemNbt;
 
 public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeserializer<ItemStack> {
 
@@ -16,7 +24,8 @@ public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeser
     }
 
     @Override
-    public ItemStack deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException {
+    public ItemStack deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context)
+            throws JsonParseException {
         final JsonObject object = json.getAsJsonObject();
         return ItemNbt.decompress(object.get("data64").getAsString());
     }

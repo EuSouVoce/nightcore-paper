@@ -1,5 +1,9 @@
 package su.nightexpress.nightcore.util;
 
+import java.nio.ByteBuffer;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -10,16 +14,13 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.nio.ByteBuffer;
-import java.util.Optional;
-import java.util.UUID;
-
 public class PDCUtil {
 
     public static final PersistentDataType<byte[], UUID> UUID = new UUIDDataType();
 
     @NotNull
-    public static <Z> Optional<Z> get(@NotNull final ItemStack holder, @NotNull final PersistentDataType<?, Z> type, @NotNull final NamespacedKey key) {
+    public static <Z> Optional<Z> get(@NotNull final ItemStack holder, @NotNull final PersistentDataType<?, Z> type,
+            @NotNull final NamespacedKey key) {
         final ItemMeta meta = holder.getItemMeta();
         if (meta == null)
             return Optional.empty();
@@ -77,14 +78,16 @@ public class PDCUtil {
         PDCUtil.set(holder, PersistentDataType.STRING, key, value);
     }
 
-    public static void set(@NotNull final ItemStack holder, @NotNull final NamespacedKey key, @Nullable final UUID value) { PDCUtil.set(holder, PDCUtil.UUID, key, value); }
+    public static void set(@NotNull final ItemStack holder, @NotNull final NamespacedKey key, @Nullable final UUID value) {
+        PDCUtil.set(holder, PDCUtil.UUID, key, value);
+    }
 
     public static void set(@NotNull final PersistentDataHolder holder, @NotNull final NamespacedKey key, @Nullable final UUID value) {
         PDCUtil.set(holder, PDCUtil.UUID, key, value);
     }
 
-    public static <T, Z> void set(@NotNull final ItemStack item, @NotNull final PersistentDataType<T, Z> dataType, @NotNull final NamespacedKey key,
-            @Nullable final Z value) {
+    public static <T, Z> void set(@NotNull final ItemStack item, @NotNull final PersistentDataType<T, Z> dataType,
+            @NotNull final NamespacedKey key, @Nullable final Z value) {
         ItemUtil.editMeta(item, meta -> PDCUtil.set(meta, dataType, key, value));
     }
 
@@ -159,7 +162,9 @@ public class PDCUtil {
     }
 
     @NotNull
-    public static Optional<UUID> getUUID(@NotNull final ItemStack holder, @NotNull final NamespacedKey key) { return PDCUtil.get(holder, PDCUtil.UUID, key); }
+    public static Optional<UUID> getUUID(@NotNull final ItemStack holder, @NotNull final NamespacedKey key) {
+        return PDCUtil.get(holder, PDCUtil.UUID, key);
+    }
 
     @NotNull
     public static Optional<UUID> getUUID(@NotNull final PersistentDataHolder holder, @NotNull final NamespacedKey key) {

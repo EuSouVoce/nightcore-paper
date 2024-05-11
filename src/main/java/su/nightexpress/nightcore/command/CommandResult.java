@@ -1,11 +1,12 @@
 package su.nightexpress.nightcore.command;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.util.NumberUtil;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.util.NumberUtil;
 
 public class CommandResult {
 

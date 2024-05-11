@@ -1,17 +1,18 @@
 package su.nightexpress.nightcore.command.experimental.argument;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.command.experimental.TabContext;
 import su.nightexpress.nightcore.command.experimental.builder.ArgumentBuilder;
 import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.language.message.LangMessage;
 import su.nightexpress.nightcore.util.Placeholders;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 
 public class CommandArgument<T> {
 // @formatter:off

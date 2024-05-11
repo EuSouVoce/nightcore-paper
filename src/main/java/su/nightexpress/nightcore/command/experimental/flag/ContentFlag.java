@@ -1,18 +1,20 @@
 package su.nightexpress.nightcore.command.experimental.flag;
 
+import java.util.function.Function;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.command.experimental.argument.ParsedArgument;
 import su.nightexpress.nightcore.command.experimental.builder.ContentFlagBuilder;
-
-import java.util.function.Function;
 
 public class ContentFlag<T> extends CommandFlag {
 
     private final Function<String, T> parser;
     private final String sample;
 
-    public ContentFlag(@NotNull final String name, @NotNull final Function<String, T> parser, @Nullable final String sample, @Nullable final String permission) {
+    public ContentFlag(@NotNull final String name, @NotNull final Function<String, T> parser, @Nullable final String sample,
+            @Nullable final String permission) {
         super(name, permission);
         this.parser = parser;
         this.sample = sample == null ? "" : sample;

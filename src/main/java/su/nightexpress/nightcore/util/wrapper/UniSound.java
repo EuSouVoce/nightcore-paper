@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.config.ConfigValue;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.StringUtil;
@@ -31,7 +32,9 @@ public class UniSound {
     public static UniSound of(@NotNull final Sound sound, final float volume) { return UniSound.of(sound, volume, 1F); }
 
     @NotNull
-    public static UniSound of(@NotNull final Sound sound, final float volume, final float pitch) { return new UniSound(sound.name(), sound, volume, pitch); }
+    public static UniSound of(@NotNull final Sound sound, final float volume, final float pitch) {
+        return new UniSound(sound.name(), sound, volume, pitch);
+    }
 
     @NotNull
     public static UniSound read(@NotNull final FileConfig cfg, @NotNull final String path) {

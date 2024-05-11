@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.util;
 
+import java.util.function.UnaryOperator;
+
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.language.tag.MessageTags;
 import su.nightexpress.nightcore.util.placeholder.PlaceholderMap;
 import su.nightexpress.nightcore.util.text.tag.Tags;
-
-import java.util.function.UnaryOperator;
 
 public class Placeholders {
     // @formatter:off

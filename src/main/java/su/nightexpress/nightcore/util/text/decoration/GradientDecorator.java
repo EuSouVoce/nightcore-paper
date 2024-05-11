@@ -1,11 +1,12 @@
 package su.nightexpress.nightcore.util.text.decoration;
 
+import java.awt.Color;
+
+import org.jetbrains.annotations.NotNull;
+
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
 
 public class GradientDecorator implements Decorator {
 

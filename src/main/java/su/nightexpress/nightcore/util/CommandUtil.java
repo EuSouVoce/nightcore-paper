@@ -1,5 +1,12 @@
 package su.nightexpress.nightcore.util;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
@@ -7,12 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.command.api.NightPluginCommand;
 import su.nightexpress.nightcore.command.experimental.CommandContext;
 import su.nightexpress.nightcore.command.experimental.argument.ParsedArguments;
 import su.nightexpress.nightcore.command.impl.WrappedCommand;
-
-import java.util.*;
 
 public class CommandUtil {
 
@@ -49,7 +55,8 @@ public class CommandUtil {
         if (command == null)
             return false;
 
-        final Map<String, Command> knownCommands = (HashMap<String, Command>) Reflex.getFieldValue(CommandUtil.COMMAND_MAP, CommandUtil.FIELD_KNOWN_COMMANDS);
+        final Map<String, Command> knownCommands = (HashMap<String, Command>) Reflex.getFieldValue(CommandUtil.COMMAND_MAP,
+                CommandUtil.FIELD_KNOWN_COMMANDS);
         if (knownCommands == null)
             return false;
         if (!command.unregister(CommandUtil.COMMAND_MAP))
@@ -92,7 +99,8 @@ public class CommandUtil {
     }
 
     @Nullable
-    public static Player getPlayerOrSender(@NotNull final CommandContext context, @NotNull final ParsedArguments arguments, @NotNull final String name) {
+    public static Player getPlayerOrSender(@NotNull final CommandContext context, @NotNull final ParsedArguments arguments,
+            @NotNull final String name) {
         Player player;
         if (arguments.hasArgument(name)) {
             player = arguments.getPlayerArgument(name);

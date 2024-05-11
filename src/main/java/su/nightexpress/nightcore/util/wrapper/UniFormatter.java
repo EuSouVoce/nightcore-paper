@@ -1,12 +1,13 @@
 package su.nightexpress.nightcore.util.wrapper;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.config.FileConfig;
-
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.config.FileConfig;
 
 public class UniFormatter {
 

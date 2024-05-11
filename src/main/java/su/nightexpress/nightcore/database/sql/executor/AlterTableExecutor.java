@@ -1,18 +1,19 @@
 package su.nightexpress.nightcore.database.sql.executor;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.database.DatabaseType;
+
 import su.nightexpress.nightcore.database.AbstractConnector;
+import su.nightexpress.nightcore.database.DatabaseType;
 import su.nightexpress.nightcore.database.connection.SQLiteConnector;
 import su.nightexpress.nightcore.database.sql.SQLColumn;
 import su.nightexpress.nightcore.database.sql.SQLExecutor;
 import su.nightexpress.nightcore.database.sql.SQLQueries;
 import su.nightexpress.nightcore.database.sql.SQLValue;
 import su.nightexpress.nightcore.database.sql.column.ColumnType;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public final class AlterTableExecutor extends SQLExecutor<Void> {
 
@@ -87,7 +88,8 @@ public final class AlterTableExecutor extends SQLExecutor<Void> {
                 if (!SQLQueries.hasColumn(connector, this.getTable(), value.getColumn()))
                     return;
 
-                final String sql = "ALTER TABLE " + this.getTable() + " RENAME COLUMN " + value.getColumn().getName() + " TO " + value.getValue();
+                final String sql = "ALTER TABLE " + this.getTable() + " RENAME COLUMN " + value.getColumn().getName() + " TO "
+                        + value.getValue();
                 SQLQueries.executeStatement(connector, sql);
             });
         } else if (this.type == Type.DROP_COLUMN) {

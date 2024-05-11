@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.util;
 
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.config.ConfigValue;
-import su.nightexpress.nightcore.config.FileConfig;
-
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.config.ConfigValue;
+import su.nightexpress.nightcore.config.FileConfig;
 
 public class RankMap<T extends Number> {
 
@@ -21,7 +22,8 @@ public class RankMap<T extends Number> {
         RANK, PERMISSION
     }
 
-    public RankMap(@NotNull final Mode mode, @NotNull final String permissionPrefix, @NotNull final T defaultValue, @NotNull final Map<String, T> values) {
+    public RankMap(@NotNull final Mode mode, @NotNull final String permissionPrefix, @NotNull final T defaultValue,
+            @NotNull final Map<String, T> values) {
         this.mode = mode;
         this.permissionPrefix = permissionPrefix;
         this.defaultValue = defaultValue;
@@ -44,8 +46,8 @@ public class RankMap<T extends Number> {
     }
 
     @NotNull
-    public static <T extends Number> RankMap<T> read(@NotNull final FileConfig cfg, @NotNull final String path, @NotNull final Class<T> clazz,
-            @NotNull final T defaultValue) {
+    public static <T extends Number> RankMap<T> read(@NotNull final FileConfig cfg, @NotNull final String path,
+            @NotNull final Class<T> clazz, @NotNull final T defaultValue) {
         final Map<String, T> oldMap = new HashMap<>();
 
         if (!cfg.contains(path + ".Mode")) {

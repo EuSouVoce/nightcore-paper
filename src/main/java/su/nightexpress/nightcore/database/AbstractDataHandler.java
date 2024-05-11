@@ -1,21 +1,5 @@
 package su.nightexpress.nightcore.database;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.NightCorePlugin;
-import su.nightexpress.nightcore.database.connection.MySQLConnector;
-import su.nightexpress.nightcore.database.connection.SQLiteConnector;
-import su.nightexpress.nightcore.database.serialize.ItemStackSerializer;
-import su.nightexpress.nightcore.database.sql.SQLColumn;
-import su.nightexpress.nightcore.database.sql.SQLCondition;
-import su.nightexpress.nightcore.database.sql.SQLQueries;
-import su.nightexpress.nightcore.database.sql.SQLValue;
-import su.nightexpress.nightcore.database.sql.executor.*;
-import su.nightexpress.nightcore.manager.SimpleManager;
-import su.nightexpress.nightcore.util.wrapper.UniTask;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +8,30 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import su.nightexpress.nightcore.NightCorePlugin;
+import su.nightexpress.nightcore.database.connection.MySQLConnector;
+import su.nightexpress.nightcore.database.connection.SQLiteConnector;
+import su.nightexpress.nightcore.database.serialize.ItemStackSerializer;
+import su.nightexpress.nightcore.database.sql.SQLColumn;
+import su.nightexpress.nightcore.database.sql.SQLCondition;
+import su.nightexpress.nightcore.database.sql.SQLQueries;
+import su.nightexpress.nightcore.database.sql.SQLValue;
+import su.nightexpress.nightcore.database.sql.executor.AlterTableExecutor;
+import su.nightexpress.nightcore.database.sql.executor.CreateTableExecutor;
+import su.nightexpress.nightcore.database.sql.executor.DeleteQueryExecutor;
+import su.nightexpress.nightcore.database.sql.executor.InsertQueryExecutor;
+import su.nightexpress.nightcore.database.sql.executor.RenameTableExecutor;
+import su.nightexpress.nightcore.database.sql.executor.SelectQueryExecutor;
+import su.nightexpress.nightcore.database.sql.executor.UpdateQueryExecutor;
+import su.nightexpress.nightcore.manager.SimpleManager;
+import su.nightexpress.nightcore.util.wrapper.UniTask;
 
 public abstract class AbstractDataHandler<P extends NightCorePlugin> extends SimpleManager<P> {
 
@@ -141,13 +149,14 @@ public abstract class AbstractDataHandler<P extends NightCorePlugin> extends Sim
         return this.load(table, (resultSet -> true), Collections.emptyList(), Arrays.asList(conditions)).isPresent();
     }
 
-    public boolean contains(@NotNull final String table, @NotNull final List<SQLColumn> columns, @NotNull final SQLCondition... conditions) {
+    public boolean contains(@NotNull final String table, @NotNull final List<SQLColumn> columns,
+            @NotNull final SQLCondition... conditions) {
         return this.load(table, (resultSet -> true), columns, Arrays.asList(conditions)).isPresent();
     }
 
     @NotNull
-    public <T> Optional<T> load(@NotNull final String table, @NotNull final Function<ResultSet, T> function, @NotNull final List<SQLColumn> columns,
-            @NotNull final List<SQLCondition> conditions) {
+    public <T> Optional<T> load(@NotNull final String table, @NotNull final Function<ResultSet, T> function,
+            @NotNull final List<SQLColumn> columns, @NotNull final List<SQLCondition> conditions) {
         final List<T> list = this.load(table, function, columns, conditions, 1);
         return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
     }
@@ -163,14 +172,14 @@ public abstract class AbstractDataHandler<P extends NightCorePlugin> extends Sim
     }
 
     @NotNull
-    public <T> List<T> load(@NotNull final String table, @NotNull final Function<ResultSet, T> dataFunction, @NotNull final List<SQLColumn> columns,
-            final int amount) {
+    public <T> List<T> load(@NotNull final String table, @NotNull final Function<ResultSet, T> dataFunction,
+            @NotNull final List<SQLColumn> columns, final int amount) {
         return this.load(table, dataFunction, columns, Collections.emptyList(), amount);
     }
 
     @NotNull
-    public <T> List<T> load(@NotNull final String table, @NotNull final Function<ResultSet, T> dataFunction, @NotNull final List<SQLColumn> columns,
-            @NotNull final List<SQLCondition> conditions, final int amount) {
+    public <T> List<T> load(@NotNull final String table, @NotNull final Function<ResultSet, T> dataFunction,
+            @NotNull final List<SQLColumn> columns, @NotNull final List<SQLCondition> conditions, final int amount) {
         return SelectQueryExecutor.builder(table, dataFunction).columns(columns).where(conditions).execute(this.getConnector());
     }
 }

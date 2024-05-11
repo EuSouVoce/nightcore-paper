@@ -1,7 +1,9 @@
+
 package su.nightexpress.nightcore.util.text.tag.impl;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.util.StringUtil;
 import su.nightexpress.nightcore.util.text.decoration.FontDecorator;
 import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;

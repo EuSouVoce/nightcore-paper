@@ -1,12 +1,13 @@
 package su.nightexpress.nightcore.database;
 
+import java.util.UUID;
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.NightCorePlugin;
 
-import java.util.UUID;
+import su.nightexpress.nightcore.NightCorePlugin;
 
 public abstract class AbstractUser<P extends NightCorePlugin> implements DataUser {
 
@@ -18,7 +19,8 @@ public abstract class AbstractUser<P extends NightCorePlugin> implements DataUse
     protected long lastOnline;
     protected long cachedUntil;
 
-    public AbstractUser(@NotNull final P plugin, @NotNull final UUID uuid, @NotNull final String name, final long dateCreated, final long lastOnline) {
+    public AbstractUser(@NotNull final P plugin, @NotNull final UUID uuid, @NotNull final String name, final long dateCreated,
+            final long lastOnline) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.name = name;

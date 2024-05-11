@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.command.experimental.argument;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.command.experimental.flag.CommandFlag;
 
-import java.util.HashMap;
-import java.util.Map;
+import su.nightexpress.nightcore.command.experimental.flag.CommandFlag;
 
 public class ParsedArguments {
 
@@ -24,7 +25,9 @@ public class ParsedArguments {
         this.argumentMap.put(argument.getName(), parsedArgument);
     }
 
-    public void addFlag(@NotNull final CommandFlag flag, @NotNull final ParsedArgument<?> content) { this.flags.put(flag.getName(), content); }
+    public void addFlag(@NotNull final CommandFlag flag, @NotNull final ParsedArgument<?> content) {
+        this.flags.put(flag.getName(), content);
+    }
 
     @NotNull
     public Map<String, ParsedArgument<?>> getArgumentMap() { return this.argumentMap; }
@@ -32,7 +35,9 @@ public class ParsedArguments {
     @NotNull
     public Map<String, ParsedArgument<?>> getFlags() { return this.flags; }
 
-    public int getIntArgument(@NotNull final String name, final int defaultValue) { return this.getArgument(name, Integer.class, defaultValue); }
+    public int getIntArgument(@NotNull final String name, final int defaultValue) {
+        return this.getArgument(name, Integer.class, defaultValue);
+    }
 
     public int getIntArgument(@NotNull final String name) { return this.getArgument(name, Integer.class); }
 
@@ -115,9 +120,13 @@ public class ParsedArguments {
 
     public int getIntFlag(@NotNull final String name, final int defaultValue) { return this.getFlag(name, Integer.class, defaultValue); }
 
-    public double getDoubleFlag(@NotNull final String name, final double defaultValue) { return this.getFlag(name, Double.class, defaultValue); }
+    public double getDoubleFlag(@NotNull final String name, final double defaultValue) {
+        return this.getFlag(name, Double.class, defaultValue);
+    }
 
-    public boolean getBooleanFlag(@NotNull final String name, final boolean defaultValue) { return this.getFlag(name, Boolean.class, defaultValue); }
+    public boolean getBooleanFlag(@NotNull final String name, final boolean defaultValue) {
+        return this.getFlag(name, Boolean.class, defaultValue);
+    }
 
     @NotNull
     public String getStringFlag(@NotNull final String name, @NotNull final String defaultValue) {

@@ -1,16 +1,17 @@
 package su.nightexpress.nightcore.database.sql.executor;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.database.AbstractConnector;
 import su.nightexpress.nightcore.database.sql.SQLCondition;
 import su.nightexpress.nightcore.database.sql.SQLExecutor;
 import su.nightexpress.nightcore.database.sql.SQLQueries;
 import su.nightexpress.nightcore.database.sql.SQLValue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public final class UpdateQueryExecutor extends SQLExecutor<Void> {
 
@@ -52,9 +53,11 @@ public final class UpdateQueryExecutor extends SQLExecutor<Void> {
         if (this.values.isEmpty())
             return null;
 
-        final String values = this.values.stream().map(value -> value.getColumn().getNameEscaped() + " = ?").collect(Collectors.joining(","));
+        final String values = this.values.stream().map(value -> value.getColumn().getNameEscaped() + " = ?")
+                .collect(Collectors.joining(","));
 
-        final String wheres = this.wheres.stream().map(where -> where.getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
+        final String wheres = this.wheres.stream()
+                .map(where -> where.getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
                 .collect(Collectors.joining(" AND "));
 
         final String sql = "UPDATE " + this.getTable() + " SET " + values + (wheres.isEmpty() ? "" : " WHERE " + wheres);

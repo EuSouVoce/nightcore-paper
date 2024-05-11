@@ -1,10 +1,13 @@
 package su.nightexpress.nightcore.menu.impl;
 
+import java.util.function.Consumer;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.dialog.Dialog;
@@ -20,8 +23,6 @@ import su.nightexpress.nightcore.menu.link.ViewLink;
 import su.nightexpress.nightcore.util.ItemReplacer;
 import su.nightexpress.nightcore.util.ItemUtil;
 import su.nightexpress.nightcore.util.text.WrappedMessage;
-
-import java.util.function.Consumer;
 
 public abstract class EditorMenu<P extends NightCorePlugin, T> extends AbstractMenu<P> implements Linked<T> {
 
@@ -106,12 +107,14 @@ public abstract class EditorMenu<P extends NightCorePlugin, T> extends AbstractM
     }
 
     @NotNull
-    public MenuItem addItem(@NotNull final Material material, @NotNull final LangItem locale, final int slot, @NotNull final EditorHandler<T> handler) {
+    public MenuItem addItem(@NotNull final Material material, @NotNull final LangItem locale, final int slot,
+            @NotNull final EditorHandler<T> handler) {
         return this.addItem(new ItemStack(material), locale, slot, handler);
     }
 
     @NotNull
-    public MenuItem addItem(@NotNull final ItemStack item, @NotNull final LangItem locale, final int slot, @NotNull final EditorHandler<T> handler) {
+    public MenuItem addItem(@NotNull final ItemStack item, @NotNull final LangItem locale, final int slot,
+            @NotNull final EditorHandler<T> handler) {
         ItemReplacer.create(item).trimmed().hideFlags().readLocale(locale).writeMeta();
         final MenuItem menuItem = new MenuItem(item).setPriority(100).setSlots(slot)
                 .setHandler((viewer, event) -> handler.handle(viewer, event, this.getLink(viewer)));
@@ -149,7 +152,9 @@ public abstract class EditorMenu<P extends NightCorePlugin, T> extends AbstractM
     }
 
     @Deprecated
-    public void editObject(@NotNull final MenuViewer viewer, @NotNull final Consumer<T> consumer) { this.editObject(viewer.getPlayer(), consumer); }
+    public void editObject(@NotNull final MenuViewer viewer, @NotNull final Consumer<T> consumer) {
+        this.editObject(viewer.getPlayer(), consumer);
+    }
 
     @Deprecated
     public void editObject(@NotNull final Player player, @NotNull final Consumer<T> consumer) { consumer.accept(this.getLink(player)); }

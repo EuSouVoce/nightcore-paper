@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.language.tag.impl;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.language.message.MessageOptions;
 import su.nightexpress.nightcore.language.message.OutputType;
 import su.nightexpress.nightcore.language.tag.MessageDecorator;

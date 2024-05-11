@@ -1,12 +1,13 @@
 package su.nightexpress.nightcore.database;
 
+import java.util.stream.Stream;
+
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.ConfigValue;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.StringUtil;
-
-import java.util.stream.Stream;
 
 public class DatabaseConfig {
 
@@ -25,10 +26,11 @@ public class DatabaseConfig {
 
     private final String filename;
 
-    public DatabaseConfig(final int saveInterval, final int syncInterval, @NotNull final DatabaseType databaseType, @NotNull final String tablePrefix,
-            final boolean purgeEnabled, final int purgePeriod,
+    public DatabaseConfig(final int saveInterval, final int syncInterval, @NotNull final DatabaseType databaseType,
+            @NotNull final String tablePrefix, final boolean purgeEnabled, final int purgePeriod,
 
-            @NotNull final String username, @NotNull final String password, @NotNull final String host, @NotNull final String database, @NotNull final String urlOptions,
+            @NotNull final String username, @NotNull final String password, @NotNull final String host, @NotNull final String database,
+            @NotNull final String urlOptions,
 
             @NotNull final String filename) {
         this.saveInterval = saveInterval;

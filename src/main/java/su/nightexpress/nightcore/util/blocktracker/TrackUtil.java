@@ -12,7 +12,9 @@ public class TrackUtil {
         return (long) chunkX & 0xFFFFFFFFL | ((long) chunkZ & 0xFFFFFFFFL) << 32;
     }
 
-    public static long getChunkKeyOfBlock(@NotNull final Block block) { return TrackUtil.getChunkKey(block.getX() >> 4, block.getZ() >> 4); }
+    public static long getChunkKeyOfBlock(@NotNull final Block block) {
+        return TrackUtil.getChunkKey(block.getX() >> 4, block.getZ() >> 4);
+    }
 
     public static int getRelativeChunkPosition(@NotNull final Block block) {
         final int relX = (block.getX() % 16 + 16) % 16;

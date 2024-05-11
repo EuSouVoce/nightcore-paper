@@ -1,11 +1,12 @@
 package su.nightexpress.nightcore.manager;
 
+import java.io.File;
+
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.StringUtil;
-
-import java.io.File;
 
 public abstract class AbstractFileData<P extends NightCorePlugin> {
 
@@ -17,7 +18,9 @@ public abstract class AbstractFileData<P extends NightCorePlugin> {
 
     public AbstractFileData(@NotNull final P plugin, @NotNull final File file) { this(plugin, file, FileConfig.getName(file)); }
 
-    public AbstractFileData(@NotNull final P plugin, @NotNull final String filePath, @NotNull final String id) { this(plugin, new File(filePath), id); }
+    public AbstractFileData(@NotNull final P plugin, @NotNull final String filePath, @NotNull final String id) {
+        this(plugin, new File(filePath), id);
+    }
 
     public AbstractFileData(@NotNull final P plugin, @NotNull final File file, @NotNull final String id) {
         this.plugin = plugin;

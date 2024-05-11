@@ -1,16 +1,17 @@
 package su.nightexpress.nightcore.command.experimental.builder;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.experimental.argument.CommandArgument;
 import su.nightexpress.nightcore.command.experimental.flag.CommandFlag;
 import su.nightexpress.nightcore.command.experimental.node.DirectExecutor;
 import su.nightexpress.nightcore.command.experimental.node.DirectNode;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class DirectNodeBuilder extends NodeBuilder<DirectNode, DirectNodeBuilder> {
 

@@ -1,17 +1,18 @@
 package su.nightexpress.nightcore.database.listener;
 
+import java.util.UUID;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.NightDataPlugin;
 import su.nightexpress.nightcore.core.CoreConfig;
+import su.nightexpress.nightcore.database.AbstractUserManager;
 import su.nightexpress.nightcore.database.DataUser;
 import su.nightexpress.nightcore.manager.AbstractListener;
-import su.nightexpress.nightcore.database.AbstractUserManager;
-
-import java.util.UUID;
 
 public class UserListener<P extends NightDataPlugin<U>, U extends DataUser> extends AbstractListener<P> {
 

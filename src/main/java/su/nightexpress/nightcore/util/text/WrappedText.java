@@ -1,22 +1,27 @@
 package su.nightexpress.nightcore.util.text;
 
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.util.text.decoration.*;
-import su.nightexpress.nightcore.util.text.tag.api.Tag;
-import su.nightexpress.nightcore.util.text.tag.Tags;
-import su.nightexpress.nightcore.util.text.tag.impl.ColorTag;
-import su.nightexpress.nightcore.util.text.tag.impl.FontStyleTag;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import su.nightexpress.nightcore.util.text.decoration.ClickEventDecorator;
+import su.nightexpress.nightcore.util.text.decoration.Decorator;
+import su.nightexpress.nightcore.util.text.decoration.GradientDecorator;
+import su.nightexpress.nightcore.util.text.decoration.ShowItemDecorator;
+import su.nightexpress.nightcore.util.text.decoration.ShowTextDecorator;
+import su.nightexpress.nightcore.util.text.tag.Tags;
+import su.nightexpress.nightcore.util.text.tag.api.Tag;
+import su.nightexpress.nightcore.util.text.tag.impl.ColorTag;
+import su.nightexpress.nightcore.util.text.tag.impl.FontStyleTag;
 
 public class WrappedText {
 
@@ -138,7 +143,9 @@ public class WrappedText {
 
         public Builder style(@NotNull final FontStyleTag tag) { return this.tag(tag); }
 
-        public Builder gradient(@NotNull final Color from, @NotNull final Color to) { return this.tag(Tags.GRADIENT, new GradientDecorator(from, to)); }
+        public Builder gradient(@NotNull final Color from, @NotNull final Color to) {
+            return this.tag(Tags.GRADIENT, new GradientDecorator(from, to));
+        }
 
         public Builder showText(@NotNull final String... text) { return this.tag(Tags.HOVER, new ShowTextDecorator(text)); }
 

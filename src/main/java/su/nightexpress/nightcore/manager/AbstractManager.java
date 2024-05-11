@@ -1,13 +1,14 @@
 package su.nightexpress.nightcore.manager;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.NightCorePlugin;
-import su.nightexpress.nightcore.util.wrapper.UniTask;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.NightCorePlugin;
+import su.nightexpress.nightcore.util.wrapper.UniTask;
 
 public abstract class AbstractManager<P extends NightCorePlugin> extends SimpleManager<P> {
 

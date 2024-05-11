@@ -1,15 +1,16 @@
 package su.nightexpress.nightcore.language.tag;
 
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.language.tag.impl.NoPrefixTag;
-import su.nightexpress.nightcore.language.tag.impl.PlaceholderTag;
-import su.nightexpress.nightcore.language.tag.impl.SoundTag;
-import su.nightexpress.nightcore.language.tag.impl.OutputTag;
-import su.nightexpress.nightcore.util.text.tag.api.Tag;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.language.tag.impl.NoPrefixTag;
+import su.nightexpress.nightcore.language.tag.impl.OutputTag;
+import su.nightexpress.nightcore.language.tag.impl.PlaceholderTag;
+import su.nightexpress.nightcore.language.tag.impl.SoundTag;
+import su.nightexpress.nightcore.util.text.tag.api.Tag;
 
 public class MessageTags {
 

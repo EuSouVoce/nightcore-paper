@@ -1,9 +1,10 @@
 package su.nightexpress.nightcore.util.text.tag.impl;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.TranslatableComponent;
-import org.jetbrains.annotations.NotNull;
 import su.nightexpress.nightcore.util.text.decoration.Decorator;
 import su.nightexpress.nightcore.util.text.tag.api.Tag;
 

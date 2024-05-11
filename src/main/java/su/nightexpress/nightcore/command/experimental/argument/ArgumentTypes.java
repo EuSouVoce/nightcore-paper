@@ -1,19 +1,20 @@
 package su.nightexpress.nightcore.command.experimental.argument;
 
+import java.util.function.Function;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.command.experimental.builder.ArgumentBuilder;
 import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.util.BukkitThing;
 import su.nightexpress.nightcore.util.Lists;
 import su.nightexpress.nightcore.util.NumberUtil;
 import su.nightexpress.nightcore.util.Players;
-
-import java.util.function.Function;
 
 public class ArgumentTypes {
 

@@ -1,9 +1,9 @@
 package su.nightexpress.nightcore.util;
 
+import java.util.stream.Stream;
+
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.stream.Stream;
 
 public enum Version {
     //@formatter:off

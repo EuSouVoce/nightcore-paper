@@ -1,9 +1,5 @@
 package su.nightexpress.nightcore.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.config.FileConfig;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,6 +11,11 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Stream;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.config.FileConfig;
 
 public class FileUtil {
 
@@ -54,7 +55,9 @@ public class FileUtil {
     public static List<File> getConfigFiles(@NotNull final String path) { return FileUtil.getConfigFiles(path, false); }
 
     @NotNull
-    public static List<File> getConfigFiles(@NotNull final String path, final boolean deep) { return FileUtil.getFiles(path, FileConfig.EXTENSION, deep); }
+    public static List<File> getConfigFiles(@NotNull final String path, final boolean deep) {
+        return FileUtil.getFiles(path, FileConfig.EXTENSION, deep);
+    }
 
     @NotNull
     public static List<File> getFiles(@NotNull final String path) { return FileUtil.getFiles(path, false); }

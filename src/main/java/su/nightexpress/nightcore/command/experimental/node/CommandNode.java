@@ -1,15 +1,16 @@
 package su.nightexpress.nightcore.command.experimental.node;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.experimental.CommandContext;
 import su.nightexpress.nightcore.command.experimental.TabContext;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 public abstract class CommandNode implements NodeExecutor {
     // @formatter:off
@@ -22,8 +23,8 @@ public abstract class CommandNode implements NodeExecutor {
     // @formatter:on
     protected CommandNode parent;
 
-    public CommandNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases, @NotNull final String description,
-            @Nullable final String permission, final boolean playerOnly) {
+    public CommandNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases,
+            @NotNull final String description, @Nullable final String permission, final boolean playerOnly) {
         this.plugin = plugin;
         this.name = name.toLowerCase();
         this.aliases = Stream.of(aliases).map(String::toLowerCase).toArray(String[]::new);
@@ -51,7 +52,9 @@ public abstract class CommandNode implements NodeExecutor {
 
     protected abstract boolean onRun(@NotNull CommandContext context);
 
-    public boolean hasPermission(@NotNull final CommandSender sender) { return this.permission == null || sender.hasPermission(this.permission); }
+    public boolean hasPermission(@NotNull final CommandSender sender) {
+        return this.permission == null || sender.hasPermission(this.permission);
+    }
 
     @NotNull
     public String getNameWithParents() {

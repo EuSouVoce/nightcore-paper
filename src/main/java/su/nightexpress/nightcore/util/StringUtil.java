@@ -1,15 +1,16 @@
 package su.nightexpress.nightcore.util;
 
-import org.bukkit.Color;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.util.random.Rnd;
-import su.nightexpress.nightcore.util.regex.TimedMatcher;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
+
+import org.bukkit.Color;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.util.random.Rnd;
+import su.nightexpress.nightcore.util.regex.TimedMatcher;
 
 public class StringUtil {
 
@@ -159,7 +160,9 @@ public class StringUtil {
     public static String lowerCaseUnderscore(@NotNull final String str) { return StringUtil.lowerCaseUnderscore(str, -1); }
 
     @NotNull
-    public static String lowerCaseUnderscore(@NotNull final String str, final int length) { return StringUtil.lowerCaseAndClean(str, StringUtil.ID_PATTERN, length); }
+    public static String lowerCaseUnderscore(@NotNull final String str, final int length) {
+        return StringUtil.lowerCaseAndClean(str, StringUtil.ID_PATTERN, length);
+    }
 
     @NotNull
     public static String lowerCaseUnderscoreStrict(@NotNull final String str) { return StringUtil.lowerCaseUnderscoreStrict(str, -1); }

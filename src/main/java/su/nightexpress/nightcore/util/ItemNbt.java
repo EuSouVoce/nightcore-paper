@@ -1,12 +1,11 @@
 package su.nightexpress.nightcore.util;
 
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import su.nightexpress.nightcore.NightCore;
-
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
@@ -14,6 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.NightCore;
 
 public class ItemNbt {
     // @formatter:off

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.language.message.LangMessage;
@@ -19,7 +20,8 @@ public class CommandContext {
 
     private int argumentIndex;
 
-    public CommandContext(@NotNull final NightCorePlugin plugin, @NotNull final CommandSender sender, @NotNull final String label, final String[] args) {
+    public CommandContext(@NotNull final NightCorePlugin plugin, @NotNull final CommandSender sender, @NotNull final String label,
+            final String[] args) {
         this.plugin = plugin;
         this.sender = sender;
         this.executor = sender instanceof final Player player ? player : null;

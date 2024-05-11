@@ -1,20 +1,21 @@
 package su.nightexpress.nightcore.command.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.command.api.NightCommand;
 import su.nightexpress.nightcore.command.api.NightPluginCommand;
 import su.nightexpress.nightcore.util.Lists;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public abstract class PluginCommand<P extends NightCorePlugin> extends AbstractCommand<P> implements NightPluginCommand {
 
@@ -27,7 +28,9 @@ public abstract class PluginCommand<P extends NightCorePlugin> extends AbstractC
         super(plugin, aliases, permission);
     }
 
-    public PluginCommand(@NotNull final P plugin, @NotNull final String[] aliases, @Nullable final String permission) { super(plugin, aliases, permission); }
+    public PluginCommand(@NotNull final P plugin, @NotNull final String[] aliases, @Nullable final String permission) {
+        super(plugin, aliases, permission);
+    }
 
     @Override
     public void addDefaultCommand(@NotNull final NightCommand command) {
@@ -75,7 +78,8 @@ public abstract class PluginCommand<P extends NightCorePlugin> extends AbstractC
      */
 
     @Override
-    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label, final String[] args) {
+    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label,
+            final String[] args) {
         NightCommand command = this.findChildren(args);
         if (command instanceof final NightPluginCommand pluginCommand) {
             if (pluginCommand.getDefaultCommand() != null) {
@@ -88,7 +92,8 @@ public abstract class PluginCommand<P extends NightCorePlugin> extends AbstractC
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label, final String[] args) {
+    public List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label,
+            final String[] args) {
 
         if (!(sender instanceof final Player player) || args.length == 0)
             return Collections.emptyList();

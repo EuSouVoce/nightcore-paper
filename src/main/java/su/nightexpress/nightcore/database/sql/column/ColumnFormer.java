@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.database.sql.column;
 
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.database.DatabaseType;
 
 public interface ColumnFormer {
@@ -21,7 +22,8 @@ public interface ColumnFormer {
 
     ColumnFormer DOUBLE = (storageType, length) -> (storageType == DatabaseType.SQLITE ? "REAL NOT NULL" : "double NOT NULL");
 
-    ColumnFormer LONG = (storageType, length) -> (length < 1 || storageType == DatabaseType.SQLITE ? "BIGINT NOT NULL" : "bigint(" + length + ") NOT NULL");
+    ColumnFormer LONG = (storageType,
+            length) -> (length < 1 || storageType == DatabaseType.SQLITE ? "BIGINT NOT NULL" : "bigint(" + length + ") NOT NULL");
 
     ColumnFormer BOOLEAN = (storageType, length) -> (storageType == DatabaseType.SQLITE ? "INTEGER NOT NULL" : "tinyint(1) NOT NULL");
 

@@ -1,8 +1,8 @@
 package su.nightexpress.nightcore.util;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
+
+import org.jetbrains.annotations.NotNull;
 
 public class Pair<F, S> {
 

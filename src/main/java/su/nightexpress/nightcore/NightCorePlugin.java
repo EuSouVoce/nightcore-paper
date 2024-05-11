@@ -1,18 +1,19 @@
 package su.nightexpress.nightcore;
 
+import java.util.function.Consumer;
+
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
+
 import su.nightexpress.nightcore.command.CommandManager;
 import su.nightexpress.nightcore.command.api.NightPluginCommand;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.config.PluginDetails;
 import su.nightexpress.nightcore.language.LangManager;
 import su.nightexpress.nightcore.util.wrapper.UniTask;
-
-import java.util.function.Consumer;
 
 public interface NightCorePlugin extends Plugin {
 

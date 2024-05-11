@@ -1,14 +1,15 @@
 package su.nightexpress.nightcore.menu.api;
 
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.menu.click.ClickAction;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
+
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.menu.click.ClickAction;
 
 public class AutoFill<T> {
 

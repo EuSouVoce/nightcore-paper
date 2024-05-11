@@ -1,17 +1,18 @@
 package su.nightexpress.nightcore.command.base;
 
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.NightCorePlugin;
-import su.nightexpress.nightcore.command.impl.AbstractCommand;
-import su.nightexpress.nightcore.command.CommandResult;
-import su.nightexpress.nightcore.command.api.NightCommand;
-import su.nightexpress.nightcore.core.CoreLang;
-import su.nightexpress.nightcore.util.Placeholders;
-
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
+
+import su.nightexpress.nightcore.NightCorePlugin;
+import su.nightexpress.nightcore.command.CommandResult;
+import su.nightexpress.nightcore.command.api.NightCommand;
+import su.nightexpress.nightcore.command.impl.AbstractCommand;
+import su.nightexpress.nightcore.core.CoreLang;
+import su.nightexpress.nightcore.util.Placeholders;
 
 public class HelpSubCommand extends AbstractCommand<NightCorePlugin> {
 

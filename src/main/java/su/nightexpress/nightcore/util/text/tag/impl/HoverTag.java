@@ -1,8 +1,9 @@
 package su.nightexpress.nightcore.util.text.tag.impl;
 
-import net.md_5.bungee.api.chat.HoverEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import net.md_5.bungee.api.chat.HoverEvent;
 import su.nightexpress.nightcore.util.StringUtil;
 import su.nightexpress.nightcore.util.text.decoration.Decorator;
 import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;
@@ -24,7 +25,9 @@ public class HoverTag extends ContentTag {
      */
 
     @NotNull
-    public String enclose(@NotNull final String text, @NotNull final String hint) { return this.enclose(HoverEvent.Action.SHOW_TEXT, text, hint); }
+    public String enclose(@NotNull final String text, @NotNull final String hint) {
+        return this.enclose(HoverEvent.Action.SHOW_TEXT, text, hint);
+    }
 
     @NotNull
     public String enclose(@NotNull final HoverEvent.Action action, @NotNull final String text, @NotNull final String hint) {
