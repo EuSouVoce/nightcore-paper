@@ -12,12 +12,8 @@ public class ColumnType {
 
     private final ColumnFormer former;
 
-    public ColumnType(@NotNull ColumnFormer former) {
-        this.former = former;
-    }
+    public ColumnType(@NotNull final ColumnFormer former) { this.former = former; }
 
     @NotNull
-    public ColumnFormer getFormer() {
-        return former;
-    }
+    public ColumnFormer getFormer() { return this.former; }
 }

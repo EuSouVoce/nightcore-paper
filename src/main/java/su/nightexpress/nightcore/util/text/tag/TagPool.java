@@ -19,21 +19,17 @@ public class TagPool {
     private final Set<String> tags;
 
     @NotNull
-    public static TagPool whitelisted(@NotNull Tag... tags) {
-        return create(Mode.WHITELIST, tags);
-    }
+    public static TagPool whitelisted(@NotNull final Tag... tags) { return TagPool.create(Mode.WHITELIST, tags); }
 
     @NotNull
-    public static TagPool blacklisted(@NotNull Tag... tags) {
-        return create(Mode.BLACKLIST, tags);
-    }
+    public static TagPool blacklisted(@NotNull final Tag... tags) { return TagPool.create(Mode.BLACKLIST, tags); }
 
     @NotNull
-    public static TagPool create(@NotNull Mode mode, @NotNull Tag... tags) {
+    public static TagPool create(@NotNull final Mode mode, @NotNull final Tag... tags) {
         return new TagPool(mode, Stream.of(tags).map(Tag::getName).collect(Collectors.toSet()));
     }
 
-    public TagPool(@NotNull Mode mode, @NotNull Set<String> tags) {
+    public TagPool(@NotNull final Mode mode, @NotNull final Set<String> tags) {
         this.mode = mode;
         this.tags = new HashSet<>(tags);
     }
@@ -42,36 +38,25 @@ public class TagPool {
         WHITELIST, BLACKLIST
     }
 
-    public boolean isWhitelist() {
-        return this.getMode() == Mode.WHITELIST;
-    }
+    public boolean isWhitelist() { return this.getMode() == Mode.WHITELIST; }
 
-    public boolean isBlacklist() {
-        return this.getMode() == Mode.BLACKLIST;
-    }
+    public boolean isBlacklist() { return this.getMode() == Mode.BLACKLIST; }
 
-    public boolean isGoodTag(@NotNull Tag tag) {
-        return this.isGoodTag(tag.getName());
-    }
+    public boolean isGoodTag(@NotNull final Tag tag) { return this.isGoodTag(tag.getName()); }
 
     public boolean isGoodTag(@NotNull String name) {
         name = name.toLowerCase();
 
         if (this.isWhitelist()) {
             return this.getTags().contains(name) || this.getTags().contains(Placeholders.WILDCARD);
-        }
-        else {
+        } else {
             return !this.getTags().contains(name);
         }
     }
 
     @NotNull
-    public Mode getMode() {
-        return mode;
-    }
+    public Mode getMode() { return this.mode; }
 
     @NotNull
-    public Set<String> getTags() {
-        return tags;
-    }
+    public Set<String> getTags() { return this.tags; }
 }

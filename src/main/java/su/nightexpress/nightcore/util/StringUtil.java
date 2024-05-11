@@ -13,23 +13,20 @@ import java.util.regex.Pattern;
 
 public class StringUtil {
 
-    private static final Pattern ID_PATTERN = Pattern.compile("[<>\\%\\$\\!\\@\\#\\^\\&\\*\\(\\)\\,\\.\\'\\:\\;\\\"\\}\\]\\{\\[\\=\\+\\`\\~\\\\]");
+    private static final Pattern ID_PATTERN = Pattern
+            .compile("[<>\\%\\$\\!\\@\\#\\^\\&\\*\\(\\)\\,\\.\\'\\:\\;\\\"\\}\\]\\{\\[\\=\\+\\`\\~\\\\]");
     private static final Pattern ID_STRICT_PATTERN = Pattern.compile("[^a-zA-Zа-яА-Я_0-9]");
 
     @NotNull
     @Deprecated
-    public static String oneSpace(@NotNull String str) {
-        return str.trim().replaceAll("\\s+", " ");
-    }
+    public static String oneSpace(@NotNull final String str) { return str.trim().replaceAll("\\s+", " "); }
 
     @NotNull
     @Deprecated
-    public static String noSpace(@NotNull String str) {
-        return str.trim().replaceAll("\\s+", "");
-    }
+    public static String noSpace(@NotNull final String str) { return str.trim().replaceAll("\\s+", ""); }
 
     @NotNull
-    public static String replaceEach(@NotNull String text, @NotNull List<Pair<String, Supplier<String>>> replacements) {
+    public static String replaceEach(@NotNull final String text, @NotNull final List<Pair<String, Supplier<String>>> replacements) {
         if (text.isEmpty() || replacements.isEmpty()) {
             return text;
         }
@@ -53,8 +50,7 @@ public class StringUtil {
             // see if we need to keep searching for this
             if (tempIndex == -1) {
                 noMoreMatchesForReplIndex[i] = true;
-            }
-            else if (textIndex == -1 || tempIndex < textIndex) {
+            } else if (textIndex == -1 || tempIndex < textIndex) {
                 textIndex = tempIndex;
                 replaceIndex = i;
             }
@@ -87,8 +83,7 @@ public class StringUtil {
                 // see if we need to keep searching for this
                 if (tempIndex == -1) {
                     noMoreMatchesForReplIndex[i] = true;
-                }
-                else if (textIndex == -1 || tempIndex < textIndex) {
+                } else if (textIndex == -1 || tempIndex < textIndex) {
                     textIndex = tempIndex;
                     replaceIndex = i;
                 }
@@ -103,14 +98,16 @@ public class StringUtil {
     }
 
     @Nullable
-    public static String parseQuotedContent(@NotNull String string) {
-        char quote = string.charAt(0);
-        if (quote != '\'' && quote != '"') return null;
-        if (string.length() < 3) return null;
+    public static String parseQuotedContent(@NotNull final String string) {
+        final char quote = string.charAt(0);
+        if (quote != '\'' && quote != '"')
+            return null;
+        if (string.length() < 3)
+            return null;
 
         int indexEnd = -1;
         for (int index = 1; index < string.length(); index++) {
-            char letter = string.charAt(index);
+            final char letter = string.charAt(index);
             if (letter == '\\') {
                 index += 2;
                 continue;
@@ -120,102 +117,94 @@ public class StringUtil {
                 break;
             }
         }
-        if (indexEnd == -1) return null;
+        if (indexEnd == -1)
+            return null;
 
         return string.substring(1, indexEnd);
     }
 
     @NotNull
-    public static <T extends Enum<T>> Optional<T> getEnum(String str, @NotNull Class<T> clazz) {
+    public static <T extends Enum<T>> Optional<T> getEnum(final String str, @NotNull final Class<T> clazz) {
         try {
             return str == null ? Optional.empty() : Optional.of(Enum.valueOf(clazz, str.toUpperCase()));
-        }
-        catch (Exception exception) {
+        } catch (final Exception exception) {
             return Optional.empty();
         }
     }
 
     @NotNull
-    public static String inlineEnum(@NotNull Class<? extends Enum<?>> clazz, @NotNull String delimiter) {
+    public static String inlineEnum(@NotNull final Class<? extends Enum<?>> clazz, @NotNull final String delimiter) {
         return String.join(delimiter, Lists.getEnums(clazz));
     }
 
     @NotNull
-    public static Color getColor(@NotNull String str) {
-        String[] rgb = str.split(",");
+    public static Color getColor(@NotNull final String str) {
+        final String[] rgb = str.split(",");
         int red = NumberUtil.getInteger(rgb[0], 0);
-        if (red < 0) red = Rnd.get(255);
+        if (red < 0)
+            red = Rnd.get(255);
 
         int green = rgb.length >= 2 ? NumberUtil.getInteger(rgb[1], 0) : 0;
-        if (green < 0) green = Rnd.get(255);
+        if (green < 0)
+            green = Rnd.get(255);
 
         int blue = rgb.length >= 3 ? NumberUtil.getInteger(rgb[2], 0) : 0;
-        if (blue < 0) blue = Rnd.get(255);
+        if (blue < 0)
+            blue = Rnd.get(255);
 
         return Color.fromRGB(red, green, blue);
     }
 
     @NotNull
-    public static String lowerCaseUnderscore(@NotNull String str) {
-        return lowerCaseUnderscore(str, -1);
+    public static String lowerCaseUnderscore(@NotNull final String str) { return StringUtil.lowerCaseUnderscore(str, -1); }
+
+    @NotNull
+    public static String lowerCaseUnderscore(@NotNull final String str, final int length) { return StringUtil.lowerCaseAndClean(str, StringUtil.ID_PATTERN, length); }
+
+    @NotNull
+    public static String lowerCaseUnderscoreStrict(@NotNull final String str) { return StringUtil.lowerCaseUnderscoreStrict(str, -1); }
+
+    @NotNull
+    public static String lowerCaseUnderscoreStrict(@NotNull final String str, final int length) {
+        return StringUtil.lowerCaseAndClean(str, StringUtil.ID_STRICT_PATTERN, length);
     }
 
     @NotNull
-    public static String lowerCaseUnderscore(@NotNull String str, int length) {
-        return lowerCaseAndClean(str, ID_PATTERN, length);
-    }
-
-    @NotNull
-    public static String lowerCaseUnderscoreStrict(@NotNull String str) {
-        return lowerCaseUnderscoreStrict(str, -1);
-    }
-
-    @NotNull
-    public static String lowerCaseUnderscoreStrict(@NotNull String str, int length) {
-        return lowerCaseAndClean(str, ID_STRICT_PATTERN, length);
-    }
-
-    @NotNull
-    private static String lowerCaseAndClean(@NotNull String str, @NotNull Pattern pattern, int length) {
+    private static String lowerCaseAndClean(@NotNull final String str, @NotNull final Pattern pattern, final int length) {
         String clean = Colorizer.restrip(str).toLowerCase().replace(" ", "_");
         if (length > 0 && clean.length() > length) {
             clean = clean.substring(0, length);
         }
 
-        TimedMatcher matcher = TimedMatcher.create(pattern, clean, 200);
-        //Matcher matcher = RegexUtil.getMatcher(ID_STRICT_PATTERN, clean);
+        final TimedMatcher matcher = TimedMatcher.create(pattern, clean, 200);
+        // Matcher matcher = RegexUtil.getMatcher(ID_STRICT_PATTERN, clean);
         return matcher.replaceAll("");
     }
 
     @NotNull
-    public static String capitalizeUnderscored(@NotNull String str) {
-        return capitalizeFully(str.replace("_", " "));
-    }
+    public static String capitalizeUnderscored(@NotNull final String str) { return StringUtil.capitalizeFully(str.replace("_", " ")); }
 
     @NotNull
-    public static String capitalizeFully(@NotNull String str) {
-        return capitalize(str.toLowerCase());
-    }
+    public static String capitalizeFully(@NotNull final String str) { return StringUtil.capitalize(str.toLowerCase()); }
 
     @NotNull
-    public static String capitalize(@NotNull String str) {
-        if (str.isEmpty()) return str;
+    public static String capitalize(@NotNull final String str) {
+        if (str.isEmpty())
+            return str;
 
-        int length = str.length();
-        StringBuilder builder = new StringBuilder(length);
+        final int length = str.length();
+        final StringBuilder builder = new StringBuilder(length);
         boolean capitalizeNext = true;
 
         for (int index = 0; index < length; ++index) {
-            char letter = str.charAt(index);
+            final char letter = str.charAt(index);
             if (Character.isWhitespace(letter)) {
                 builder.append(letter);
                 capitalizeNext = true;
-            }
-            else if (capitalizeNext) {
+            } else if (capitalizeNext) {
                 builder.append(Character.toTitleCase(letter));
                 capitalizeNext = false;
-            }
-            else {
+            } else {
                 builder.append(letter);
             }
         }
@@ -223,8 +212,9 @@ public class StringUtil {
     }
 
     @NotNull
-    public static String capitalizeFirstLetter(@NotNull String original) {
-        if (original.isEmpty()) return original;
+    public static String capitalizeFirstLetter(@NotNull final String original) {
+        if (original.isEmpty())
+            return original;
         return original.substring(0, 1).toUpperCase() + original.substring(1);
     }
 }

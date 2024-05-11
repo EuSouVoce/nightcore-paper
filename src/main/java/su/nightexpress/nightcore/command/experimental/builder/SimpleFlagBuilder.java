@@ -5,19 +5,13 @@ import su.nightexpress.nightcore.command.experimental.flag.SimpleFlag;
 
 public class SimpleFlagBuilder extends FlagBuilder<SimpleFlag, SimpleFlagBuilder> {
 
-    public SimpleFlagBuilder(@NotNull String name) {
-        super(name);
-    }
+    public SimpleFlagBuilder(@NotNull final String name) { super(name); }
 
     @Override
     @NotNull
-    protected SimpleFlagBuilder getThis() {
-        return this;
-    }
+    protected SimpleFlagBuilder getThis() { return this; }
 
     @Override
     @NotNull
-    public SimpleFlag build() {
-        return new SimpleFlag(this.name, this.permission);
-    }
+    public SimpleFlag build() { return new SimpleFlag(this.name, this.permission); }
 }

@@ -8,12 +8,8 @@ public abstract class AbstractListener<P extends NightCorePlugin> implements Sim
     @NotNull
     public final P plugin;
 
-    public AbstractListener(@NotNull P plugin) {
-        this.plugin = plugin;
-    }
+    public AbstractListener(@NotNull final P plugin) { this.plugin = plugin; }
 
     @Override
-    public void registerListeners() {
-        this.plugin.getPluginManager().registerEvents(this, this.plugin);
-    }
+    public void registerListeners() { this.plugin.getPluginManager().registerEvents(this, this.plugin); }
 }

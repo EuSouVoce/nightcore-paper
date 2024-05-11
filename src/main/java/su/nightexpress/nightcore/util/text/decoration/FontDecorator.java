@@ -7,12 +7,8 @@ public class FontDecorator implements Decorator {
 
     private final String font;
 
-    public FontDecorator(@NotNull String font) {
-        this.font = font;
-    }
+    public FontDecorator(@NotNull final String font) { this.font = font; }
 
     @Override
-    public void decorate(@NotNull BaseComponent component) {
-        component.setFont(this.font);
-    }
+    public void decorate(@NotNull final BaseComponent component) { component.setFont(this.font); }
 }

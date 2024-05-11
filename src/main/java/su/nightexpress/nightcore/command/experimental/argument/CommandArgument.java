@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class CommandArgument<T> {
-
+// @formatter:off
     private final String                             name;
     private final Function<String, T>                parser;
     private final boolean                            required;
@@ -22,14 +22,10 @@ public class CommandArgument<T> {
     private final String                             permission;
     private final Function<TabContext, List<String>> samples;
     private final LangMessage                        failureMessage;
-
-    public CommandArgument(@NotNull String name,
-                           @NotNull Function<String, T> parser,
-                           boolean required,
-                           @Nullable String localized,
-                           @Nullable String permission,
-                           @Nullable LangMessage failureMessage,
-                           @Nullable Function<TabContext, List<String>> samples) {
+// @formatter:on
+    public CommandArgument(@NotNull final String name, @NotNull final Function<String, T> parser, final boolean required,
+            @Nullable final String localized, @Nullable final String permission, @Nullable final LangMessage failureMessage,
+            @Nullable final Function<TabContext, List<String>> samples) {
         this.name = name.toLowerCase();
         this.parser = parser;
         this.required = required;
@@ -40,22 +36,22 @@ public class CommandArgument<T> {
     }
 
     @NotNull
-    public static <T> ArgumentBuilder<T> builder(@NotNull String name, @NotNull Function<String, T> parser) {
+    public static <T> ArgumentBuilder<T> builder(@NotNull final String name, @NotNull final Function<String, T> parser) {
         return new ArgumentBuilder<>(name, parser);
     }
 
     @Nullable
-    public ParsedArgument<T> parse(@NotNull String str) {
-        T result = this.parser.apply(str);
+    public ParsedArgument<T> parse(@NotNull final String str) {
+        final T result = this.parser.apply(str);
         return result == null ? null : new ParsedArgument<>(result);
     }
 
-    public boolean hasPermission(@NotNull CommandSender sender) {
+    public boolean hasPermission(@NotNull final CommandSender sender) {
         return this.permission == null || sender.hasPermission(this.permission);
     }
 
     @NotNull
-    public List<String> getSamples(@NotNull TabContext context) {
+    public List<String> getSamples(@NotNull final TabContext context) {
         return this.samples == null ? Collections.emptyList() : this.samples.apply(context);
     }
 
@@ -65,7 +61,8 @@ public class CommandArgument<T> {
             localized = this.name;
         }
 
-        String format = (this.isRequired() ? CoreLang.COMMAND_ARGUMENT_FORMAT_REQUIRED : CoreLang.COMMAND_ARGUMENT_FORMAT_OPTIONAL).getString();
+        final String format = (this.isRequired() ? CoreLang.COMMAND_ARGUMENT_FORMAT_REQUIRED : CoreLang.COMMAND_ARGUMENT_FORMAT_OPTIONAL)
+                .getString();
 
         return format.replace(Placeholders.GENERIC_NAME, localized);
     }
@@ -76,31 +73,19 @@ public class CommandArgument<T> {
     }
 
     @NotNull
-    public String getName() {
-        return name;
-    }
+    public String getName() { return this.name; }
 
     @NotNull
-    public Function<String, T> getParser() {
-        return parser;
-    }
+    public Function<String, T> getParser() { return this.parser; }
 
-    public boolean isRequired() {
-        return required;
-    }
+    public boolean isRequired() { return this.required; }
 
     @NotNull
-    public String getLocalized() {
-        return this.localized == null ? this.name : this.localized;
-    }
+    public String getLocalized() { return this.localized == null ? this.name : this.localized; }
 
     @Nullable
-    public String getPermission() {
-        return permission;
-    }
+    public String getPermission() { return this.permission; }
 
     @NotNull
-    public Function<TabContext, List<String>> getSamples() {
-        return samples;
-    }
+    public Function<TabContext, List<String>> getSamples() { return this.samples; }
 }

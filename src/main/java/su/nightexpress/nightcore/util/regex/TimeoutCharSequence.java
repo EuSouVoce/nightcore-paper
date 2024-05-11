@@ -8,14 +8,14 @@ public class TimeoutCharSequence implements CharSequence {
     private final long timeout;
     private final long maxTime;
 
-    public TimeoutCharSequence(@NotNull CharSequence chars, long timeout) {
+    public TimeoutCharSequence(@NotNull final CharSequence chars, final long timeout) {
         this.chars = chars;
         this.timeout = timeout;
         this.maxTime = (System.currentTimeMillis() + timeout);
     }
 
     @Override
-    public char charAt(int index) {
+    public char charAt(final int index) {
         if (System.currentTimeMillis() > this.maxTime) {
             throw new MatcherTimeoutException(this.chars, this.timeout);
         }
@@ -23,17 +23,13 @@ public class TimeoutCharSequence implements CharSequence {
     }
 
     @Override
-    public int length() {
-        return this.chars.length();
-    }
+    public int length() { return this.chars.length(); }
 
     @Override
-    public CharSequence subSequence(int start, int end) {
+    public CharSequence subSequence(final int start, final int end) {
         return new TimeoutCharSequence(this.chars.subSequence(start, end), this.timeout);
     }
 
     @Override
-    public String toString() {
-        return this.chars.toString();
-    }
+    public String toString() { return this.chars.toString(); }
 }

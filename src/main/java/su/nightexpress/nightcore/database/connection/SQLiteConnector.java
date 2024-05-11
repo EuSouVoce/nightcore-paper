@@ -7,18 +7,14 @@ import su.nightexpress.nightcore.database.DatabaseConfig;
 
 public class SQLiteConnector extends AbstractConnector {
 
-    public SQLiteConnector(@NotNull NightCorePlugin plugin, @NotNull DatabaseConfig config) {
-        super(plugin, config);
-    }
+    public SQLiteConnector(@NotNull final NightCorePlugin plugin, @NotNull final DatabaseConfig config) { super(plugin, config); }
 
     @Override
-    protected String getURL(@NotNull DatabaseConfig config) {
-        String filePath = plugin.getDataFolder().getAbsolutePath() + "/" + config.getFilename();
+    protected String getURL(@NotNull final DatabaseConfig config) {
+        final String filePath = this.plugin.getDataFolder().getAbsolutePath() + "/" + config.getFilename();
         return "jdbc:sqlite:" + filePath;
     }
 
     @Override
-    protected void setupConfig(@NotNull DatabaseConfig config) {
-        this.config.setMaximumPoolSize(1);
-    }
+    protected void setupConfig(@NotNull final DatabaseConfig config) { this.config.setMaximumPoolSize(1); }
 }

@@ -11,29 +11,24 @@ import java.awt.*;
 @Deprecated
 public class ShortHexColorTag extends Tag implements DecoratorParser {
 
-    public ShortHexColorTag() {
-        super("#");
-    }
+    public ShortHexColorTag() { super("#"); }
 
     @Override
-    public int getWeight() {
-        return 10;
-    }
+    public int getWeight() { return 10; }
 
     @Override
-    public boolean conflictsWith(@NotNull Tag tag) {
+    public boolean conflictsWith(@NotNull final Tag tag) {
         return super.conflictsWith(tag) || tag instanceof ColorTag || tag instanceof GradientTag;
     }
 
     @Override
     @Nullable
-    public ParsedDecorator parse(@NotNull String content) {
+    public ParsedDecorator parse(@NotNull final String content) {
         Color color;
 
         try {
             color = Color.decode(content);
-        }
-        catch (NumberFormatException exception) {
+        } catch (final NumberFormatException exception) {
             return null;
         }
 

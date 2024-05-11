@@ -11,20 +11,16 @@ public abstract class FlagBuilder<F extends CommandFlag, B extends FlagBuilder<F
 
     protected String permission;
 
-    public FlagBuilder(@NotNull String name) {
-        this.name = name;
-    }
+    public FlagBuilder(@NotNull final String name) { this.name = name; }
 
     @NotNull
     protected abstract FlagBuilder<F, B> getThis();
 
     @NotNull
-    public FlagBuilder<F, B> permission(@NotNull UniPermission permission) {
-        return this.permission(permission.getName());
-    }
+    public FlagBuilder<F, B> permission(@NotNull final UniPermission permission) { return this.permission(permission.getName()); }
 
     @NotNull
-    public FlagBuilder<F, B> permission(@Nullable String permission) {
+    public FlagBuilder<F, B> permission(@Nullable final String permission) {
         this.permission = permission;
         return this.getThis();
     }

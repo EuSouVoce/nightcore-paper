@@ -16,38 +16,26 @@ public class PlayerOpenMenuEvent extends Event implements Cancellable {
 
     private boolean cancelled;
 
-    public PlayerOpenMenuEvent(@NotNull Player player, @NotNull Menu menu) {
+    public PlayerOpenMenuEvent(@NotNull final Player player, @NotNull final Menu menu) {
         this.player = player;
         this.menu = menu;
     }
 
     @NotNull
     @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+    public HandlerList getHandlers() { return PlayerOpenMenuEvent.HANDLER_LIST; }
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+    public static HandlerList getHandlerList() { return PlayerOpenMenuEvent.HANDLER_LIST; }
 
     @NotNull
-    public Player getPlayer() {
-        return player;
-    }
+    public Player getPlayer() { return this.player; }
 
     @NotNull
-    public Menu getMenu() {
-        return menu;
-    }
+    public Menu getMenu() { return this.menu; }
 
     @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
+    public boolean isCancelled() { return this.cancelled; }
 
     @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
+    public void setCancelled(final boolean cancelled) { this.cancelled = cancelled; }
 }

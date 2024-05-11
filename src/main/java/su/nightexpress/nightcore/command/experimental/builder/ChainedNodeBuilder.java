@@ -20,55 +20,51 @@ public class ChainedNodeBuilder extends NodeBuilder<ChainedNode, ChainedNodeBuil
     private String localized;
     private NodeExecutor executor;
 
-    public ChainedNodeBuilder(@NotNull NightCorePlugin plugin, @NotNull String... aliases) {
+    public ChainedNodeBuilder(@NotNull final NightCorePlugin plugin, @NotNull final String... aliases) {
         super(plugin, aliases);
         this.childrenMap = new HashMap<>();
     }
 
     @Override
     @NotNull
-    protected ChainedNodeBuilder getThis() {
-        return this;
-    }
+    protected ChainedNodeBuilder getThis() { return this; }
 
     @NotNull
-    public ChainedNodeBuilder localized(@NotNull LangString localized) {
-        return this.localized(localized.getString());
-    }
+    public ChainedNodeBuilder localized(@NotNull final LangString localized) { return this.localized(localized.getString()); }
 
     @NotNull
-    public ChainedNodeBuilder localized(@Nullable String localized) {
+    public ChainedNodeBuilder localized(@Nullable final String localized) {
         this.localized = localized;
         return this;
     }
 
     @NotNull
-    public ChainedNodeBuilder addChained(@NotNull String name, @NotNull Consumer<ChainedNodeBuilder> consumer) {
-        ChainedNodeBuilder builder = ChainedNode.builder(this.plugin, name);
+    public ChainedNodeBuilder addChained(@NotNull final String name, @NotNull final Consumer<ChainedNodeBuilder> consumer) {
+        final ChainedNodeBuilder builder = ChainedNode.builder(this.plugin, name);
         consumer.accept(builder);
         return this.child(builder);
     }
 
     @NotNull
-    public ChainedNodeBuilder addDirect(@NotNull String name, @NotNull Consumer<DirectNodeBuilder> consumer) {
-        DirectNodeBuilder builder = DirectNode.builder(this.plugin, name);
+    public ChainedNodeBuilder addDirect(@NotNull final String name, @NotNull final Consumer<DirectNodeBuilder> consumer) {
+        final DirectNodeBuilder builder = DirectNode.builder(this.plugin, name);
         consumer.accept(builder);
         return this.child(builder);
     }
 
     @NotNull
-    public <S extends CommandNode, B extends NodeBuilder<S, B>> ChainedNodeBuilder child(@NotNull B builder) {
+    public <S extends CommandNode, B extends NodeBuilder<S, B>> ChainedNodeBuilder child(@NotNull final B builder) {
         return this.child(builder.build());
     }
 
     @NotNull
-    private ChainedNodeBuilder child(@NotNull CommandNode name) {
+    private ChainedNodeBuilder child(@NotNull final CommandNode name) {
         this.childrenMap.put(name.getName(), name);
         return this;
     }
 
     @NotNull
-    public ChainedNodeBuilder fallback(@NotNull NodeExecutor executor) {
+    public ChainedNodeBuilder fallback(@NotNull final NodeExecutor executor) {
         this.executor = executor;
         return this;
     }
@@ -77,6 +73,6 @@ public class ChainedNodeBuilder extends NodeBuilder<ChainedNode, ChainedNodeBuil
     @NotNull
     public ChainedNode build() {
         return new ChainedNode(this.plugin, this.name, this.aliases, this.description, this.localized, this.permission, this.playerOnly,
-            this.executor, this.childrenMap);
+                this.executor, this.childrenMap);
     }
 }

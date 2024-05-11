@@ -11,23 +11,20 @@ public class TranslateTag extends Tag implements Decorator {
 
     public static final String NAME = "translate";
 
-    public TranslateTag() {
-        super(NAME, new String[]{"tr"});
-    }
+    public TranslateTag() { super(TranslateTag.NAME, new String[] { "tr" }); }
 
     @Override
-    public int getWeight() {
-        return Integer.MAX_VALUE - 10;
-    }
+    public int getWeight() { return Integer.MAX_VALUE - 10; }
 
     @Override
-    public void decorate(@NotNull BaseComponent component) {
-        if (!(component instanceof TextComponent textComponent)) return;
+    public void decorate(@NotNull final BaseComponent component) {
+        if (!(component instanceof final TextComponent textComponent))
+            return;
 
-        String content = textComponent.getText();
+        final String content = textComponent.getText();
         textComponent.setText("");
 
-        TranslatableComponent translatableComponent = new TranslatableComponent(content);
+        final TranslatableComponent translatableComponent = new TranslatableComponent(content);
         component.addExtra(translatableComponent);
     }
 }

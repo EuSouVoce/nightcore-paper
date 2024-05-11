@@ -15,36 +15,34 @@ public class NumberUtil {
     private final static TreeMap<Integer, Supplier<String>> NUMERIC_MAP = new TreeMap<>();
 
     static {
-        NUMERIC_MAP.put(0, () -> "");
-        NUMERIC_MAP.put(1, CoreLang.NUMBER_SHORT_THOUSAND::getString);
-        NUMERIC_MAP.put(2, CoreLang.NUMBER_SHORT_MILLION::getString);
-        NUMERIC_MAP.put(3, CoreLang.NUMBER_SHORT_BILLION::getString);
-        NUMERIC_MAP.put(4, CoreLang.NUMBER_SHORT_TRILLION::getString);
-        NUMERIC_MAP.put(5, CoreLang.NUMBER_SHORT_QUADRILLION::getString);
+        NumberUtil.NUMERIC_MAP.put(0, () -> "");
+        NumberUtil.NUMERIC_MAP.put(1, CoreLang.NUMBER_SHORT_THOUSAND::getString);
+        NumberUtil.NUMERIC_MAP.put(2, CoreLang.NUMBER_SHORT_MILLION::getString);
+        NumberUtil.NUMERIC_MAP.put(3, CoreLang.NUMBER_SHORT_BILLION::getString);
+        NumberUtil.NUMERIC_MAP.put(4, CoreLang.NUMBER_SHORT_TRILLION::getString);
+        NumberUtil.NUMERIC_MAP.put(5, CoreLang.NUMBER_SHORT_QUADRILLION::getString);
 
-        ROMAN_MAP.put(1000, "M");
-        ROMAN_MAP.put(900, "CM");
-        ROMAN_MAP.put(500, "D");
-        ROMAN_MAP.put(400, "CD");
-        ROMAN_MAP.put(100, "C");
-        ROMAN_MAP.put(90, "XC");
-        ROMAN_MAP.put(50, "L");
-        ROMAN_MAP.put(40, "XL");
-        ROMAN_MAP.put(10, "X");
-        ROMAN_MAP.put(9, "IX");
-        ROMAN_MAP.put(5, "V");
-        ROMAN_MAP.put(4, "IV");
-        ROMAN_MAP.put(1, "I");
+        NumberUtil.ROMAN_MAP.put(1000, "M");
+        NumberUtil.ROMAN_MAP.put(900, "CM");
+        NumberUtil.ROMAN_MAP.put(500, "D");
+        NumberUtil.ROMAN_MAP.put(400, "CD");
+        NumberUtil.ROMAN_MAP.put(100, "C");
+        NumberUtil.ROMAN_MAP.put(90, "XC");
+        NumberUtil.ROMAN_MAP.put(50, "L");
+        NumberUtil.ROMAN_MAP.put(40, "XL");
+        NumberUtil.ROMAN_MAP.put(10, "X");
+        NumberUtil.ROMAN_MAP.put(9, "IX");
+        NumberUtil.ROMAN_MAP.put(5, "V");
+        NumberUtil.ROMAN_MAP.put(4, "IV");
+        NumberUtil.ROMAN_MAP.put(1, "I");
     }
 
     @NotNull
-    public static String format(double value) {
-        return CoreConfig.NUMBER_FORMAT.get().format(value);
-    }
+    public static String format(final double value) { return CoreConfig.NUMBER_FORMAT.get().format(value); }
 
     @NotNull
-    public static String compact(double value) {
-        Pair<String, String> pair = formatCompact(value);
+    public static String compact(final double value) {
+        final Pair<String, String> pair = NumberUtil.formatCompact(value);
         return pair.getFirst() + pair.getSecond();
     }
 
@@ -56,35 +54,37 @@ public class NumberUtil {
             negative = true;
         }
         int index = 0;
-        while ((value / 1000) >= 1 && index < NUMERIC_MAP.size() - 1) {
+        while ((value / 1000) >= 1 && index < NumberUtil.NUMERIC_MAP.size() - 1) {
             value = value / 1000;
             index++;
         }
 
-        return Pair.of(CoreConfig.NUMBER_FORMAT.get().format(negative ? -value : value), NUMERIC_MAP.get(NUMERIC_MAP.floorKey(index)).get());
+        return Pair.of(CoreConfig.NUMBER_FORMAT.get().format(negative ? -value : value),
+                NumberUtil.NUMERIC_MAP.get(NumberUtil.NUMERIC_MAP.floorKey(index)).get());
     }
 
-    public static double round(double value) {
+    public static double round(final double value) {
         return new BigDecimal(value).setScale(2, CoreConfig.NUMBER_FORMAT.get().getRounding()).doubleValue();
     }
 
     @NotNull
-    public static String toRoman(int number) {
-        if (number <= 0) return String.valueOf(number);
+    public static String toRoman(final int number) {
+        if (number <= 0)
+            return String.valueOf(number);
 
-        int key = ROMAN_MAP.floorKey(number);
+        final int key = NumberUtil.ROMAN_MAP.floorKey(number);
         if (number == key) {
-            return ROMAN_MAP.get(number);
+            return NumberUtil.ROMAN_MAP.get(number);
         }
-        return ROMAN_MAP.get(key) + toRoman(number - key);
+        return NumberUtil.ROMAN_MAP.get(key) + NumberUtil.toRoman(number - key);
     }
 
-    public static int[] splitIntoParts(int whole, int parts) {
-        int[] arr = new int[parts];
+    public static int[] splitIntoParts(final int whole, final int parts) {
+        final int[] arr = new int[parts];
         int remain = whole;
         int partsLeft = parts;
         for (int i = 0; partsLeft > 0; i++) {
-            int size = (remain + partsLeft - 1) / partsLeft; // rounded up, aka ceiling
+            final int size = (remain + partsLeft - 1) / partsLeft; // rounded up, aka ceiling
             arr[i] = size;
             remain -= size;
             partsLeft--;
@@ -92,61 +92,47 @@ public class NumberUtil {
         return arr;
     }
 
-    public static double getDouble(@NotNull String input) {
-        return getDouble(input, 0D);
-    }
+    public static double getDouble(@NotNull final String input) { return NumberUtil.getDouble(input, 0D); }
 
-    public static double getDouble(@NotNull String input, double defaultValue) {
-        return Math.abs(getAnyDouble(input, defaultValue));
-    }
+    public static double getDouble(@NotNull final String input, final double defaultValue) { return Math.abs(NumberUtil.getAnyDouble(input, defaultValue)); }
 
-    public static double getAnyDouble(@NotNull String input, double defaultValue) {
-        return parseDouble(input).orElse(defaultValue);
-    }
+    public static double getAnyDouble(@NotNull final String input, final double defaultValue) { return NumberUtil.parseDouble(input).orElse(defaultValue); }
 
-    public static int getInteger(@NotNull String input) {
-        return getInteger(input, 0);
-    }
+    public static int getInteger(@NotNull final String input) { return NumberUtil.getInteger(input, 0); }
 
-    public static int getInteger(@NotNull String input, int defaultValue) {
-        return Math.abs(getAnyInteger(input, defaultValue));
-    }
+    public static int getInteger(@NotNull final String input, final int defaultValue) { return Math.abs(NumberUtil.getAnyInteger(input, defaultValue)); }
 
-    public static int getAnyInteger(@NotNull String input, int defaultValue) {
-        return parseInteger(input).orElse(defaultValue);
-    }
+    public static int getAnyInteger(@NotNull final String input, final int defaultValue) { return NumberUtil.parseInteger(input).orElse(defaultValue); }
 
     @NotNull
-    public static Optional<Integer> parseInteger(@NotNull String input) {
+    public static Optional<Integer> parseInteger(@NotNull final String input) {
         try {
             return Optional.of(Integer.parseInt(input));
-        }
-        catch (NumberFormatException exception) {
+        } catch (final NumberFormatException exception) {
             return Optional.empty();
         }
     }
 
     @NotNull
-    public static Optional<Double> parseDouble(@NotNull String input) {
+    public static Optional<Double> parseDouble(@NotNull final String input) {
         try {
-            double amount = Double.parseDouble(input);
+            final double amount = Double.parseDouble(input);
             if (!Double.isNaN(amount) && !Double.isInfinite(amount)) {
                 return Optional.of(amount);
             }
             return Optional.empty();
-        }
-        catch (NumberFormatException exception) {
+        } catch (final NumberFormatException exception) {
             return Optional.empty();
         }
     }
 
-    public static int[] getIntArray(@NotNull String str) {
-        String[] split = str.split(",");
-        int[] array = new int[split.length];
+    public static int[] getIntArray(@NotNull final String str) {
+        final String[] split = str.split(",");
+        final int[] array = new int[split.length];
         for (int index = 0; index < split.length; index++) {
             try {
                 array[index] = Integer.parseInt(split[index].trim());
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 array[index] = 0;
             }
         }

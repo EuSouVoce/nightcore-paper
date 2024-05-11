@@ -7,7 +7,8 @@ import org.jetbrains.annotations.Nullable;
 
 public interface NightPluginCommand extends NightCommand, TabExecutor {
 
-    @Nullable NightCommand getDefaultCommand();
+    @Nullable
+    NightCommand getDefaultCommand();
 
     void addDefaultCommand(@NotNull NightCommand command);
 
@@ -15,5 +16,5 @@ public interface NightPluginCommand extends NightCommand, TabExecutor {
 
     void setBackend(@NotNull Command backend);
 
-    //@NotNull NightCommand findChildren(@NotNull String[] args);
+    // @NotNull NightCommand findChildren(@NotNull String[] args);
 }

@@ -11,23 +11,20 @@ public class FontTag extends ContentTag {
 
     public static final String NAME = "font";
 
-    public FontTag() {
-        super(NAME);
-    }
+    public FontTag() { super(FontTag.NAME); }
 
     @Override
     @Nullable
-    public ParsedDecorator onParse(@NotNull String str) {
-        String content = StringUtil.parseQuotedContent(str);
-        if (content == null) return null;
+    public ParsedDecorator onParse(@NotNull final String str) {
+        final String content = StringUtil.parseQuotedContent(str);
+        if (content == null)
+            return null;
 
-        int length = content.length();// + 2; // 2 for quotes
+        final int length = content.length();// + 2; // 2 for quotes
 
         return new ParsedDecorator(new FontDecorator(content), length);
     }
 
     @Override
-    public int getWeight() {
-        return 0;
-    }
+    public int getWeight() { return 0; }
 }

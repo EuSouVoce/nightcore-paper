@@ -20,12 +20,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class EntityUtil {
 
-    public static final EquipmentSlot[] EQUIPMENT_SLOTS = {EquipmentSlot.HAND, EquipmentSlot.OFF_HAND, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    public static final EquipmentSlot[] EQUIPMENT_SLOTS = { EquipmentSlot.HAND, EquipmentSlot.OFF_HAND, EquipmentSlot.HEAD,
+            EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
 
     private static AtomicInteger entityCounter;
 
-    public static boolean setupEntityCounter(@NotNull NightCore core) {
-        Class<?> entityClass = Reflex.getClass("net.minecraft.world.entity", "Entity");
+    public static boolean setupEntityCounter(@NotNull final NightCore core) {
+        final Class<?> entityClass = Reflex.getClass("net.minecraft.world.entity", "Entity");
         if (entityClass == null) {
             core.error("Could not find NMS Entity class!");
             return false;
@@ -36,50 +37,49 @@ public class EntityUtil {
             fieldName = "d";
         }
 
-        Object object = Reflex.getFieldValue(entityClass, fieldName);
-        if (!(object instanceof AtomicInteger atomicInteger)) {
+        final Object object = Reflex.getFieldValue(entityClass, fieldName);
+        if (!(object instanceof final AtomicInteger atomicInteger)) {
             if (object == null) {
                 core.error("Could not find entity counter field!");
-            }
-            else core.error("Field '" + fieldName + "' in " + entityClass.getName() + " class is " + object.getClass().getName()  + " (expected AtomicInteger)");
+            } else
+                core.error("Field '" + fieldName + "' in " + entityClass.getName() + " class is " + object.getClass().getName()
+                        + " (expected AtomicInteger)");
             return false;
         }
 
-        entityCounter = atomicInteger;
+        EntityUtil.entityCounter = atomicInteger;
         return true;
     }
 
-    public static AtomicInteger getEntityCounter() {
-        return entityCounter;
-    }
+    public static AtomicInteger getEntityCounter() { return EntityUtil.entityCounter; }
 
-    public static int nextEntityId() {
-        return entityCounter == null ? Rnd.nextInt(9999) : entityCounter.incrementAndGet();
-    }
+    public static int nextEntityId() { return EntityUtil.entityCounter == null ? Rnd.nextInt(9999) : EntityUtil.entityCounter.incrementAndGet(); }
 
-    public static double getAttribute(@NotNull LivingEntity entity, @NotNull Attribute attribute) {
-        AttributeInstance instance = entity.getAttribute(attribute);
+    public static double getAttribute(@NotNull final LivingEntity entity, @NotNull final Attribute attribute) {
+        final AttributeInstance instance = entity.getAttribute(attribute);
         return instance == null ? 0D : instance.getValue();
     }
 
-    public static double getAttributeBase(@NotNull LivingEntity entity, @NotNull Attribute attribute) {
-        AttributeInstance instance = entity.getAttribute(attribute);
+    public static double getAttributeBase(@NotNull final LivingEntity entity, @NotNull final Attribute attribute) {
+        final AttributeInstance instance = entity.getAttribute(attribute);
         return instance == null ? 0D : instance.getBaseValue();
     }
 
     @NotNull
-    public static Map<EquipmentSlot, ItemStack> getEquippedItems(@NotNull LivingEntity entity) {
-        return getEquippedItems(entity, EQUIPMENT_SLOTS);
+    public static Map<EquipmentSlot, ItemStack> getEquippedItems(@NotNull final LivingEntity entity) {
+        return EntityUtil.getEquippedItems(entity, EntityUtil.EQUIPMENT_SLOTS);
     }
 
     @NotNull
-    public static Map<EquipmentSlot, ItemStack> getEquippedItems(@NotNull LivingEntity entity, @NotNull EquipmentSlot... slots) {
-        EntityEquipment equipment = entity.getEquipment();
-        if (equipment == null) return Collections.emptyMap();
+    public static Map<EquipmentSlot, ItemStack> getEquippedItems(@NotNull final LivingEntity entity, @NotNull final EquipmentSlot... slots) {
+        final EntityEquipment equipment = entity.getEquipment();
+        if (equipment == null)
+            return Collections.emptyMap();
 
-        Map<EquipmentSlot, ItemStack> map = new HashMap<>();
-        for (EquipmentSlot slot : slots) {
-            if (slot.name().equalsIgnoreCase("BODY")) continue; // from 1.20.6
+        final Map<EquipmentSlot, ItemStack> map = new HashMap<>();
+        for (final EquipmentSlot slot : slots) {
+            if (slot.name().equalsIgnoreCase("BODY"))
+                continue; // from 1.20.6
 
             map.put(slot, equipment.getItem(slot));
         }
@@ -87,18 +87,18 @@ public class EntityUtil {
     }
 
     @NotNull
-    public static Map<EquipmentSlot, ItemStack> getEquippedHands(@NotNull LivingEntity entity) {
-        return getEquippedItems(entity, EquipmentSlot.HAND, EquipmentSlot.OFF_HAND);
+    public static Map<EquipmentSlot, ItemStack> getEquippedHands(@NotNull final LivingEntity entity) {
+        return EntityUtil.getEquippedItems(entity, EquipmentSlot.HAND, EquipmentSlot.OFF_HAND);
     }
 
     @NotNull
-    public static Map<EquipmentSlot, ItemStack> getEquippedArmor(@NotNull LivingEntity entity) {
-        return getEquippedItems(entity, EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD);
+    public static Map<EquipmentSlot, ItemStack> getEquippedArmor(@NotNull final LivingEntity entity) {
+        return EntityUtil.getEquippedItems(entity, EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD);
     }
 
     @Nullable
-    public static BlockFace getDirection(@NotNull Entity entity) {
-        float yaw = Math.round(entity.getLocation().getYaw() / 90F);
+    public static BlockFace getDirection(@NotNull final Entity entity) {
+        final float yaw = Math.round(entity.getLocation().getYaw() / 90F);
 
         if ((yaw == -4.0F) || (yaw == 0.0F) || (yaw == 4.0F)) {
             return BlockFace.SOUTH;

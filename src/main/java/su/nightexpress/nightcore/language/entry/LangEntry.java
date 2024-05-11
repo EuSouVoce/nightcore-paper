@@ -9,7 +9,7 @@ public abstract class LangEntry<T> {
     protected final String path;
     protected final String defaultText;
 
-    public LangEntry(@NotNull String path, @NotNull String defaultText) {
+    public LangEntry(@NotNull final String path, @NotNull final String defaultText) {
         this.path = path;
         this.defaultText = defaultText;
     }
@@ -20,12 +20,8 @@ public abstract class LangEntry<T> {
     public abstract T load(@NotNull NightCorePlugin plugin);
 
     @NotNull
-    public String getPath() {
-        return path;
-    }
+    public String getPath() { return this.path; }
 
     @NotNull
-    public String getDefaultText() {
-        return defaultText;
-    }
+    public String getDefaultText() { return this.defaultText; }
 }

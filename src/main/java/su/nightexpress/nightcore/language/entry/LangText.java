@@ -14,25 +14,19 @@ public class LangText extends LangEntry<LangMessage> {
 
     private LangMessage message;
 
-    public LangText(@NotNull String path, @NotNull String... defaultText) {
-        super(path, String.join("\n", defaultText));
-    }
+    public LangText(@NotNull final String path, @NotNull final String... defaultText) { super(path, String.join("\n", defaultText)); }
 
     @NotNull
-    public static LangText of(@NotNull String path, @NotNull String defaultText) {
-        return new LangText(path, defaultText);
-    }
+    public static LangText of(@NotNull final String path, @NotNull final String defaultText) { return new LangText(path, defaultText); }
 
     @NotNull
-    public static LangText of(@NotNull String path, @NotNull String... defaultText) {
-        return new LangText(path, defaultText);
-    }
+    public static LangText of(@NotNull final String path, @NotNull final String... defaultText) { return new LangText(path, defaultText); }
 
     @Override
-    public boolean write(@NotNull FileConfig config) {
+    public boolean write(@NotNull final FileConfig config) {
         if (!config.contains(this.getPath())) {
-            String textDefault = this.getDefaultText();
-            String[] textSplit = textDefault.split("\n");
+            final String textDefault = this.getDefaultText();
+            final String[] textSplit = textDefault.split("\n");
             config.set(this.getPath(), textSplit.length > 1 ? Arrays.asList(textSplit) : textDefault);
             return true;
         }
@@ -41,12 +35,12 @@ public class LangText extends LangEntry<LangMessage> {
 
     @Override
     @NotNull
-    public LangMessage load(@NotNull NightCorePlugin plugin) {
-        FileConfig config = plugin.getLang();
+    public LangMessage load(@NotNull final NightCorePlugin plugin) {
+        final FileConfig config = plugin.getLang();
 
         this.write(config);
 
-        List<String> text = new ArrayList<>(config.getStringList(this.getPath()));
+        final List<String> text = new ArrayList<>(config.getStringList(this.getPath()));
         if (text.isEmpty()) {
             text.add(config.getString(this.getPath(), this.getPath()));
         }
@@ -57,16 +51,10 @@ public class LangText extends LangEntry<LangMessage> {
     }
 
     @NotNull
-    public LangMessage getMessage() {
-        return message;
-    }
+    public LangMessage getMessage() { return this.message; }
 
     @NotNull
-    public LangMessage getMessage(@NotNull NightCorePlugin plugin) {
-        return message.setPrefix(plugin.getPrefix());
-    }
+    public LangMessage getMessage(@NotNull final NightCorePlugin plugin) { return this.message.setPrefix(plugin.getPrefix()); }
 
-    public void setMessage(@NotNull LangMessage message) {
-        this.message = message;
-    }
+    public void setMessage(@NotNull final LangMessage message) { this.message = message; }
 }

@@ -7,12 +7,8 @@ import su.nightexpress.nightcore.command.experimental.node.ChainedNode;
 public interface ImprovedCommands extends NightCorePlugin {
 
     @NotNull
-    default ServerCommand getRootCommand() {
-        return this.getCommandManager().getRootCommand();
-    }
+    default ServerCommand getRootCommand() { return this.getCommandManager().getRootCommand(); }
 
     @NotNull
-    default ChainedNode getRootNode() {
-        return this.getCommandManager().getRootCommand().getNode();
-    }
+    default ChainedNode getRootNode() { return this.getCommandManager().getRootCommand().getNode(); }
 }

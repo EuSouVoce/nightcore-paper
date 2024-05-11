@@ -36,7 +36,7 @@ EntityType:
   experience_orb: Сфера опыта
   eye_of_ender: Око Эндера
   falling_block: Падающий блок
-  falling_block_type: '%s в падении'
+  falling_block_type: "%s в падении"
   fireball: Файербол
   firework_rocket: Фейерверк
   fishing_bobber: Поплавок

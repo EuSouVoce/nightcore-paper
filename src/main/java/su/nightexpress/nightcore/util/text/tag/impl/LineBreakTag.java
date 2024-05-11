@@ -6,18 +6,12 @@ import su.nightexpress.nightcore.util.text.tag.api.Tag;
 
 public class LineBreakTag extends Tag implements OrphanTag {
 
-    public LineBreakTag() {
-        super("br");
-    }
+    public LineBreakTag() { super("br"); }
 
     @Override
-    public int getWeight() {
-        return 0;
-    }
+    public int getWeight() { return 0; }
 
     @Override
     @NotNull
-    public String getContent() {
-        return "\n";
-    }
+    public String getContent() { return "\n"; }
 }

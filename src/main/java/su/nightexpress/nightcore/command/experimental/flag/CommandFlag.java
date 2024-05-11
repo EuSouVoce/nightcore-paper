@@ -8,30 +8,24 @@ import su.nightexpress.nightcore.util.Placeholders;
 
 public abstract class CommandFlag {
 
-    public static final char PREFIX    = '-';
+    public static final char PREFIX = '-';
     public static final char DELIMITER = '=';
 
     private final String name;
     private final String permission;
 
-    public CommandFlag(@NotNull String name, @Nullable String permission) {
+    public CommandFlag(@NotNull final String name, @Nullable final String permission) {
         this.name = name.toLowerCase();
         this.permission = permission;
     }
 
-    public boolean hasPermission(@NotNull CommandSender sender) {
-        return this.permission == null || sender.hasPermission(this.permission);
-    }
+    public boolean hasPermission(@NotNull final CommandSender sender) { return this.permission == null || sender.hasPermission(this.permission); }
 
     @NotNull
-    public String getName() {
-        return name;
-    }
+    public String getName() { return this.name; }
 
     @NotNull
-    public String getPrefixed() {
-        return PREFIX + this.getName();
-    }
+    public String getPrefixed() { return CommandFlag.PREFIX + this.getName(); }
 
     @NotNull
     public String getPrefixedFormatted() {
@@ -39,14 +33,8 @@ public abstract class CommandFlag {
     }
 
     @Nullable
-    public String getPermission() {
-        return permission;
-    }
+    public String getPermission() { return this.permission; }
 
     @Override
-    public String toString() {
-        return "CommandFlag{" +
-            "name='" + name + '\'' +
-            '}';
-    }
+    public String toString() { return "CommandFlag{" + "name='" + this.name + '\'' + '}'; }
 }

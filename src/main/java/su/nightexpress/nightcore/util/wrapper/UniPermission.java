@@ -7,30 +7,24 @@ import org.jetbrains.annotations.Nullable;
 
 public class UniPermission extends Permission {
 
-    public UniPermission(@NotNull String name) {
-        this(name, null, null);
-    }
+    public UniPermission(@NotNull final String name) { this(name, null, null); }
 
-    public UniPermission(@NotNull String name, @Nullable PermissionDefault defaultValue) {
-        this(name, null, defaultValue);
-    }
+    public UniPermission(@NotNull final String name, @Nullable final PermissionDefault defaultValue) { this(name, null, defaultValue); }
 
-    public UniPermission(@NotNull String name, @Nullable String description) {
-        this(name, description, PermissionDefault.OP);
-    }
+    public UniPermission(@NotNull final String name, @Nullable final String description) { this(name, description, PermissionDefault.OP); }
 
-    public UniPermission(@NotNull String name, @Nullable String description, @Nullable PermissionDefault defaultValue) {
+    public UniPermission(@NotNull final String name, @Nullable final String description, @Nullable final PermissionDefault defaultValue) {
         super(name, description, defaultValue);
     }
 
     @NotNull
-    public UniPermission description(String... desc) {
+    public UniPermission description(final String... desc) {
         this.setDescription(String.join(" ", desc));
         return this;
     }
 
-    public void addChildren(@NotNull Permission... childrens) {
-        for (Permission children : childrens) {
+    public void addChildren(@NotNull final Permission... childrens) {
+        for (final Permission children : childrens) {
             children.addParent(this, true);
         }
     }

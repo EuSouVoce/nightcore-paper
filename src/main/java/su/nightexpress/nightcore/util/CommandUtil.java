@@ -19,71 +19,71 @@ public class CommandUtil {
     private static final String FIELD_COMMAND_MAP = "commandMap";
     private static final String FIELD_KNOWN_COMMANDS = "knownCommands";
 
-    private static final SimpleCommandMap COMMAND_MAP = getCommandMap();
+    private static final SimpleCommandMap COMMAND_MAP = CommandUtil.getCommandMap();
 
     private static SimpleCommandMap getCommandMap() {
-        return (SimpleCommandMap) Reflex.getFieldValue(Bukkit.getServer(), FIELD_COMMAND_MAP);
+        return (SimpleCommandMap) Reflex.getFieldValue(Bukkit.getServer(), CommandUtil.FIELD_COMMAND_MAP);
     }
 
-    public static void register(@NotNull Plugin plugin, @NotNull NightPluginCommand command) {
-        WrappedCommand wrappedCommand = new WrappedCommand(plugin, command);
-        if (COMMAND_MAP.register(plugin.getName(), wrappedCommand)) {
+    public static void register(@NotNull final Plugin plugin, @NotNull final NightPluginCommand command) {
+        final WrappedCommand wrappedCommand = new WrappedCommand(plugin, command);
+        if (CommandUtil.COMMAND_MAP.register(plugin.getName(), wrappedCommand)) {
             command.setBackend(wrappedCommand);
         }
     }
 
-    public static boolean register(@NotNull Plugin plugin, @NotNull WrappedCommand wrappedCommand) {
-        return COMMAND_MAP.register(plugin.getName(), wrappedCommand);
+    public static boolean register(@NotNull final Plugin plugin, @NotNull final WrappedCommand wrappedCommand) {
+        return CommandUtil.COMMAND_MAP.register(plugin.getName(), wrappedCommand);
     }
 
-    /*public static void syncCommands() {
-        // Fix tab completer when registerd on runtime
-        Server server = Bukkit.getServer();
-        Method method = Reflex.getMethod(server.getClass(), "syncCommands");
-        if (method == null) return;
-
-        Reflex.invokeMethod(method, server);
-    }*/
+    /*
+     * public static void syncCommands() { // Fix tab completer when registerd on
+     * runtime Server server = Bukkit.getServer(); Method method =
+     * Reflex.getMethod(server.getClass(), "syncCommands"); if (method == null)
+     * return; Reflex.invokeMethod(method, server); }
+     */
 
     @SuppressWarnings("unchecked")
-    public static boolean unregister(@NotNull String name) {
-        Command command = getCommand(name).orElse(null);
-        if (command == null) return false;
+    public static boolean unregister(@NotNull final String name) {
+        final Command command = CommandUtil.getCommand(name).orElse(null);
+        if (command == null)
+            return false;
 
-        Map<String, Command> knownCommands = (HashMap<String, Command>) Reflex.getFieldValue(COMMAND_MAP, FIELD_KNOWN_COMMANDS);
-        if (knownCommands == null) return false;
-        if (!command.unregister(COMMAND_MAP)) return false;
+        final Map<String, Command> knownCommands = (HashMap<String, Command>) Reflex.getFieldValue(CommandUtil.COMMAND_MAP, CommandUtil.FIELD_KNOWN_COMMANDS);
+        if (knownCommands == null)
+            return false;
+        if (!command.unregister(CommandUtil.COMMAND_MAP))
+            return false;
 
         return knownCommands.keySet().removeIf(key -> key.equalsIgnoreCase(command.getName()) || command.getAliases().contains(key));
     }
 
     @NotNull
-    public static Set<String> getAliases(@NotNull String name) {
-        return getAliases(name, false);
-    }
+    public static Set<String> getAliases(@NotNull final String name) { return CommandUtil.getAliases(name, false); }
 
     @NotNull
-    public static Set<String> getAliases(@NotNull String name, boolean inclusive) {
-        Command command = getCommand(name).orElse(null);
-        if (command == null) return Collections.emptySet();
+    public static Set<String> getAliases(@NotNull final String name, final boolean inclusive) {
+        final Command command = CommandUtil.getCommand(name).orElse(null);
+        if (command == null)
+            return Collections.emptySet();
 
-        Set<String> aliases = new HashSet<>(command.getAliases());
-        if (inclusive) aliases.add(command.getName());
+        final Set<String> aliases = new HashSet<>(command.getAliases());
+        if (inclusive)
+            aliases.add(command.getName());
         return aliases;
     }
 
     @NotNull
-    public static Optional<Command> getCommand(@NotNull String name) {
-        return COMMAND_MAP.getCommands().stream()
-            .filter(command -> command.getLabel().equalsIgnoreCase(name) || command.getAliases().contains(name))
-            .findFirst();
+    public static Optional<Command> getCommand(@NotNull final String name) {
+        return CommandUtil.COMMAND_MAP.getCommands().stream()
+                .filter(command -> command.getLabel().equalsIgnoreCase(name) || command.getAliases().contains(name)).findFirst();
     }
 
     @NotNull
-    public static String getCommandName(@NotNull String str) {
+    public static String getCommandName(@NotNull final String str) {
         String name = Colorizer.strip(str).split(" ")[0].substring(1);
 
-        String[] pluginPrefix = name.split(":");
+        final String[] pluginPrefix = name.split(":");
         if (pluginPrefix.length == 2) {
             name = pluginPrefix[1];
         }
@@ -92,12 +92,11 @@ public class CommandUtil {
     }
 
     @Nullable
-    public static Player getPlayerOrSender(@NotNull CommandContext context, @NotNull ParsedArguments arguments, @NotNull String name) {
+    public static Player getPlayerOrSender(@NotNull final CommandContext context, @NotNull final ParsedArguments arguments, @NotNull final String name) {
         Player player;
         if (arguments.hasArgument(name)) {
             player = arguments.getPlayerArgument(name);
-        }
-        else {
+        } else {
             if (context.getExecutor() == null) {
                 context.errorPlayerOnly();
                 return null;

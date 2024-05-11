@@ -10,18 +10,16 @@ import su.nightexpress.nightcore.core.CoreLang;
 
 public class ReloadSubCommand extends AbstractCommand<NightCorePlugin> {
 
-    public ReloadSubCommand(@NotNull NightCorePlugin plugin, @NotNull Permission permission) {
-        this(plugin, permission.getName());
-    }
+    public ReloadSubCommand(@NotNull final NightCorePlugin plugin, @NotNull final Permission permission) { this(plugin, permission.getName()); }
 
-    public ReloadSubCommand(@NotNull NightCorePlugin plugin, @NotNull String permission) {
-        super(plugin, new String[]{"reload"}, permission);
+    public ReloadSubCommand(@NotNull final NightCorePlugin plugin, @NotNull final String permission) {
+        super(plugin, new String[] { "reload" }, permission);
         this.setDescription(CoreLang.COMMAND_RELOAD_DESC);
     }
 
     @Override
-    protected void onExecute(@NotNull CommandSender sender, @NotNull CommandResult result) {
+    protected void onExecute(@NotNull final CommandSender sender, @NotNull final CommandResult result) {
         this.plugin.reload();
-        CoreLang.COMMAND_RELOAD_DONE.getMessage(plugin).send(sender);
+        CoreLang.COMMAND_RELOAD_DONE.getMessage(this.plugin).send(sender);
     }
 }

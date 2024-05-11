@@ -7,17 +7,11 @@ import su.nightexpress.nightcore.util.text.tag.api.Tag;
 
 public class NoPrefixTag extends Tag implements MessageDecorator {
 
-    public NoPrefixTag() {
-        super("noprefix");
-    }
+    public NoPrefixTag() { super("noprefix"); }
 
     @Override
-    public int getWeight() {
-        return 0;
-    }
+    public int getWeight() { return 0; }
 
     @Override
-    public void apply(@NotNull MessageOptions options, @NotNull String value) {
-        options.setHasPrefix(false);
-    }
+    public void apply(@NotNull final MessageOptions options, @NotNull final String value) { options.setHasPrefix(false); }
 }

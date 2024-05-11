@@ -15,60 +15,42 @@ public class CommandFlag<T> {
     private final String name;
     private final Function<String, T> parser;
 
-    public CommandFlag(@NotNull String name, @NotNull Function<String, T> parser) {
+    public CommandFlag(@NotNull final String name, @NotNull final Function<String, T> parser) {
         this.name = name;
         this.parser = parser;
     }
 
     @NotNull
-    public static CommandFlag<World> worldFlag(@NotNull String name) {
-        return new CommandFlag<>(name, Bukkit::getWorld);
-    }
+    public static CommandFlag<World> worldFlag(@NotNull final String name) { return new CommandFlag<>(name, Bukkit::getWorld); }
 
     @NotNull
-    public static CommandFlag<String> stringFlag(@NotNull String name) {
-        return new CommandFlag<>(name, Function.identity());
-    }
+    public static CommandFlag<String> stringFlag(@NotNull final String name) { return new CommandFlag<>(name, Function.identity()); }
 
     @NotNull
-    public static CommandFlag<String> textFlag(@NotNull String name) {
-        return new CommandFlag<>(name, Colorizer::apply);
-    }
+    public static CommandFlag<String> textFlag(@NotNull final String name) { return new CommandFlag<>(name, Colorizer::apply); }
 
     @NotNull
-    public static CommandFlag<Integer> intFlag(@NotNull String name) {
+    public static CommandFlag<Integer> intFlag(@NotNull final String name) {
         return new CommandFlag<>(name, str -> NumberUtil.getAnyInteger(str, 0));
     }
 
     @NotNull
-    public static CommandFlag<Double> doubleFlag(@NotNull String name) {
+    public static CommandFlag<Double> doubleFlag(@NotNull final String name) {
         return new CommandFlag<>(name, str -> NumberUtil.getAnyDouble(str, 0D));
     }
 
     @NotNull
-    public static CommandFlag<Boolean> booleanFlag(@NotNull String name) {
-        return new CommandFlag<>(name, str -> true);
-    }
+    public static CommandFlag<Boolean> booleanFlag(@NotNull final String name) { return new CommandFlag<>(name, str -> true); }
 
     @NotNull
-    public String getName() {
-        return name;
-    }
+    public String getName() { return this.name; }
 
     @NotNull
-    public String getNamePrefixed() {
-        return PREFIX + this.getName();
-    }
+    public String getNamePrefixed() { return CommandFlag.PREFIX + this.getName(); }
 
     @NotNull
-    public Function<String, T> getParser() {
-        return parser;
-    }
+    public Function<String, T> getParser() { return this.parser; }
 
     @Override
-    public String toString() {
-        return "CommandFlag{" +
-            "name='" + name + '\'' +
-            '}';
-    }
+    public String toString() { return "CommandFlag{" + "name='" + this.name + '\'' + '}'; }
 }

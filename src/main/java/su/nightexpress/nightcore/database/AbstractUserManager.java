@@ -19,16 +19,14 @@ public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extend
     private final Map<UUID, U> loadedById;
     private final Map<String, U> loadedByName;
 
-    public AbstractUserManager(@NotNull P plugin) {
+    public AbstractUserManager(@NotNull final P plugin) {
         super(plugin);
         this.loadedById = new ConcurrentHashMap<>();
         this.loadedByName = new ConcurrentHashMap<>();
     }
 
     @Override
-    protected void onLoad() {
-        this.addListener(new UserListener<>(this.plugin));
-    }
+    protected void onLoad() { this.addListener(new UserListener<>(this.plugin)); }
 
     @Override
     protected void onShutdown() {
@@ -42,17 +40,19 @@ public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extend
 
     public void loadOnlineUsers() {
         this.plugin.getServer().getOnlinePlayers().stream().map(Player::getUniqueId).forEach(id -> {
-            U user = this.getUserData(id);
-            if (user != null) this.cachePermanent(user);
+            final U user = this.getUserData(id);
+            if (user != null)
+                this.cachePermanent(user);
         });
     }
 
     @NotNull
-    public final U getUserData(@NotNull Player player) {
-        UUID uuid = player.getUniqueId();
+    public final U getUserData(@NotNull final Player player) {
+        final UUID uuid = player.getUniqueId();
 
         U user = this.getLoaded(uuid);
-        if (user != null) return user;
+        if (user != null)
+            return user;
 
         if (Players.isReal(player)) {
             user = this.getUserData(uuid);
@@ -69,17 +69,19 @@ public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extend
     }
 
     @Nullable
-    public final U getUserData(@NotNull String name) {
-        Player player = Players.getPlayer(name);
-        if (player != null) return this.getUserData(player);
+    public final U getUserData(@NotNull final String name) {
+        final Player player = Players.getPlayer(name);
+        if (player != null)
+            return this.getUserData(player);
 
         U user = this.getLoaded(name);
-        if (user != null) return user;
+        if (user != null)
+            return user;
 
         user = this.plugin.getData().getUser(name);
         if (user != null) {
             user.onLoad();
-            //this.plugin.debug("Loaded by name from DB: " + user.getName());
+            // this.plugin.debug("Loaded by name from DB: " + user.getName());
             this.cacheTemporary(user);
         }
 
@@ -87,73 +89,73 @@ public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extend
     }
 
     @Nullable
-    public final U getUserData(@NotNull UUID uuid) {
+    public final U getUserData(@NotNull final UUID uuid) {
         U user = this.getLoaded(uuid);
-        if (user != null) return user;
+        if (user != null)
+            return user;
 
         user = this.plugin.getData().getUser(uuid);
         if (user != null) {
             user.onLoad();
-            //this.plugin.debug("Loaded by UUID from DB: " + user.getName());
+            // this.plugin.debug("Loaded by UUID from DB: " + user.getName());
             this.cacheTemporary(user);
         }
 
         return user;
     }
 
-    public final CompletableFuture<U> getUserDataAsync(@NotNull String name) {
+    public final CompletableFuture<U> getUserDataAsync(@NotNull final String name) {
         return CompletableFuture.supplyAsync(() -> this.getUserData(name));
     }
 
-    public final CompletableFuture<U> getUserDataAsync(@NotNull UUID uuid) {
+    public final CompletableFuture<U> getUserDataAsync(@NotNull final UUID uuid) {
         return CompletableFuture.supplyAsync(() -> this.getUserData(uuid));
     }
 
-    public void getUserDataAndPerform(@NotNull String name, Consumer<U> consumer) {
-        U user = this.getLoaded(name);
+    public void getUserDataAndPerform(@NotNull final String name, final Consumer<U> consumer) {
+        final U user = this.getLoaded(name);
         if (user != null) {
             consumer.accept(user);
-        }
-        else this.getUserDataAsync(name).thenAccept(user2 -> this.plugin.runTask(task -> consumer.accept(user2)));
+        } else
+            this.getUserDataAsync(name).thenAccept(user2 -> this.plugin.runTask(task -> consumer.accept(user2)));
     }
 
-    public void getUserDataAndPerform(@NotNull UUID uuid, Consumer<U> consumer) {
-        U user = this.getLoaded(uuid);
+    public void getUserDataAndPerform(@NotNull final UUID uuid, final Consumer<U> consumer) {
+        final U user = this.getLoaded(uuid);
         if (user != null) {
             consumer.accept(user);
-        }
-        else this.getUserDataAsync(uuid).thenAccept(user2 -> this.plugin.runTask(task -> consumer.accept(user2)));
+        } else
+            this.getUserDataAsync(uuid).thenAccept(user2 -> this.plugin.runTask(task -> consumer.accept(user2)));
     }
 
-    public void getUserDataAndPerformAsync(@NotNull String name, Consumer<U> consumer) {
-        U user = this.getLoaded(name);
+    public void getUserDataAndPerformAsync(@NotNull final String name, final Consumer<U> consumer) {
+        final U user = this.getLoaded(name);
         if (user != null) {
             consumer.accept(user);
-        }
-        else this.getUserDataAsync(name).thenAccept(consumer);
+        } else
+            this.getUserDataAsync(name).thenAccept(consumer);
     }
 
-    public void getUserDataAndPerformAsync(@NotNull UUID uuid, Consumer<U> consumer) {
-        U user = this.getLoaded(uuid);
+    public void getUserDataAndPerformAsync(@NotNull final UUID uuid, final Consumer<U> consumer) {
+        final U user = this.getLoaded(uuid);
         if (user != null) {
             consumer.accept(user);
-        }
-        else this.getUserDataAsync(uuid).thenAccept(consumer);
+        } else
+            this.getUserDataAsync(uuid).thenAccept(consumer);
     }
 
-    public final void unload(@NotNull Player player) {
-        this.unload(player.getUniqueId());
-    }
+    public final void unload(@NotNull final Player player) { this.unload(player.getUniqueId()); }
 
-    public final void unload(@NotNull UUID uuid) {
-        U user = this.getLoadedByIdMap().get(uuid);
-        if (user == null) return;
+    public final void unload(@NotNull final UUID uuid) {
+        final U user = this.getLoadedByIdMap().get(uuid);
+        if (user == null)
+            return;
 
         this.unload(user);
     }
 
-    public void unload(@NotNull U user) {
-        Player player = user.getPlayer();
+    public void unload(@NotNull final U user) {
+        final Player player = user.getPlayer();
         if (player != null) {
             user.setName(player.getName());
             user.setLastOnline(System.currentTimeMillis());
@@ -162,17 +164,13 @@ public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extend
         this.cacheTemporary(user);
     }
 
-    public void save(@NotNull U user) {
-        this.plugin.getData().saveUser(user);
-    }
+    public void save(@NotNull final U user) { this.plugin.getData().saveUser(user); }
 
-    public void saveAsync(@NotNull U user) {
-        this.plugin.runTaskAsync(task -> this.save(user));
-    }
+    public void saveAsync(@NotNull final U user) { this.plugin.runTaskAsync(task -> this.save(user)); }
 
     @NotNull
     public Set<U> getAllUsers() {
-        Map<UUID, U> users = new HashMap<>();
+        final Map<UUID, U> users = new HashMap<>();
         this.getLoaded().forEach(user -> users.put(user.getId(), user));
         this.plugin.getData().getUsers().forEach(user -> {
             users.putIfAbsent(user.getId(), user);
@@ -191,14 +189,14 @@ public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extend
     public Map<String, U> getLoadedByNameMap() {
         this.removeExpired(this.loadedByName.values());
 
-        return loadedByName;
+        return this.loadedByName;
     }
 
-    private void removeExpired(@NotNull Collection<U> collection) {
+    private void removeExpired(@NotNull final Collection<U> collection) {
         collection.removeIf(user -> {
             if (user.isCacheExpired()) {
                 user.onUnload();
-                //this.plugin.debug("Cache expired: " + user.getName());
+                // this.plugin.debug("Cache expired: " + user.getName());
                 return true;
             }
             return false;
@@ -206,53 +204,37 @@ public abstract class AbstractUserManager<P extends NightDataPlugin<U>, U extend
     }
 
     @NotNull
-    public Set<U> getLoaded() {
-        return new HashSet<>(this.getLoadedByIdMap().values());
-    }
+    public Set<U> getLoaded() { return new HashSet<>(this.getLoadedByIdMap().values()); }
 
     @Nullable
-    public U getLoaded(@NotNull UUID uuid) {
-        return this.getLoadedByIdMap().get(uuid);
-    }
+    public U getLoaded(@NotNull final UUID uuid) { return this.getLoadedByIdMap().get(uuid); }
 
     @Nullable
-    public U getLoaded(@NotNull String name) {
-        return this.getLoadedByNameMap().get(name.toLowerCase());
-    }
+    public U getLoaded(@NotNull final String name) { return this.getLoadedByNameMap().get(name.toLowerCase()); }
 
-    public boolean isLoaded(@NotNull Player player) {
-        return this.isLoaded(player.getUniqueId());
-    }
+    public boolean isLoaded(@NotNull final Player player) { return this.isLoaded(player.getUniqueId()); }
 
-    public boolean isLoaded(@NotNull UUID id) {
-        return this.getLoadedByIdMap().containsKey(id);
-    }
+    public boolean isLoaded(@NotNull final UUID id) { return this.getLoadedByIdMap().containsKey(id); }
 
-    public boolean isLoaded(@NotNull String name) {
-        return this.getLoadedByNameMap().containsKey(name.toLowerCase());
-    }
+    public boolean isLoaded(@NotNull final String name) { return this.getLoadedByNameMap().containsKey(name.toLowerCase()); }
 
-    public boolean isCreated(@NotNull String name) {
-        return this.plugin.getData().isUserExists(name);
-    }
+    public boolean isCreated(@NotNull final String name) { return this.plugin.getData().isUserExists(name); }
 
-    public boolean isCreated(@NotNull UUID uuid) {
-        return this.plugin.getData().isUserExists(uuid);
-    }
+    public boolean isCreated(@NotNull final UUID uuid) { return this.plugin.getData().isUserExists(uuid); }
 
-    public void cacheTemporary(@NotNull U user) {
+    public void cacheTemporary(@NotNull final U user) {
         user.setCachedUntil(System.currentTimeMillis() + CoreConfig.USER_CACHE_LIFETIME.get() * 1000L);
         this.cache(user);
-        //this.plugin.debug("Temp user cache: " + user.getName());
+        // this.plugin.debug("Temp user cache: " + user.getName());
     }
 
-    public void cachePermanent(@NotNull U user) {
+    public void cachePermanent(@NotNull final U user) {
         user.setCachedUntil(-1);
         this.cache(user);
-        //this.plugin.debug("Permanent user cache: " + user.getName());
+        // this.plugin.debug("Permanent user cache: " + user.getName());
     }
 
-    private void cache(@NotNull U user) {
+    private void cache(@NotNull final U user) {
         this.getLoadedByIdMap().putIfAbsent(user.getId(), user);
         this.getLoadedByNameMap().putIfAbsent(user.getName().toLowerCase(), user);
     }

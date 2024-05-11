@@ -19,19 +19,13 @@ public interface Menu {
 
     void clear();
 
-    default void flush() {
-        this.getViewers().forEach(this::flush);
-    }
+    default void flush() { this.getViewers().forEach(this::flush); }
 
-    default void flush(@NotNull MenuViewer viewer) {
-        this.flush(viewer.getPlayer());
-    }
+    default void flush(@NotNull final MenuViewer viewer) { this.flush(viewer.getPlayer()); }
 
     void flush(@NotNull Player player);
 
-    default boolean isViewer(@NotNull Player player) {
-        return this.getViewer(player) != null;
-    }
+    default boolean isViewer(@NotNull final Player player) { return this.getViewer(player) != null; }
 
     void close();
 
@@ -55,31 +49,41 @@ public interface Menu {
 
     boolean isPersistent();
 
-    @NotNull Collection<MenuViewer> getViewers();
+    @NotNull
+    Collection<MenuViewer> getViewers();
 
-    @Nullable MenuViewer getViewer(@NotNull Player player);
+    @Nullable
+    MenuViewer getViewer(@NotNull Player player);
 
-    @NotNull MenuViewer getViewerOrCreate(@NotNull Player player);
+    @NotNull
+    MenuViewer getViewerOrCreate(@NotNull Player player);
 
+    @NotNull
+    List<MenuItem> getItems(@NotNull MenuViewer viewer);
 
+    @Nullable
+    MenuItem getItem(int slot);
 
-    @NotNull List<MenuItem> getItems(@NotNull MenuViewer viewer);
+    @Nullable
+    MenuItem getItem(@NotNull MenuViewer viewer, int slot);
 
-    @Nullable MenuItem getItem(int slot);
+    @NotNull
+    MenuItem addItem(@NotNull ItemStack item, int... slots);
 
-    @Nullable MenuItem getItem(@NotNull MenuViewer viewer, int slot);
+    @NotNull
+    MenuItem addWeakItem(@NotNull Player player, @NotNull ItemStack item, int... slots);
 
-    @NotNull MenuItem addItem(@NotNull ItemStack item, int... slots);
+    @NotNull
+    MenuItem addItem(@NotNull MenuItem menuItem);
 
-    @NotNull MenuItem addWeakItem(@NotNull Player player, @NotNull ItemStack item, int... slots);
+    @NotNull
+    UUID getId();
 
-    @NotNull MenuItem addItem(@NotNull MenuItem menuItem);
+    // @NotNull Map<UUID, MenuViewer> getViewersMap();
 
-    @NotNull UUID getId();
+    @NotNull
+    Set<MenuItem> getItems();
 
-    //@NotNull Map<UUID, MenuViewer> getViewersMap();
-
-    @NotNull Set<MenuItem> getItems();
-
-    @NotNull MenuOptions getOptions();
+    @NotNull
+    MenuOptions getOptions();
 }

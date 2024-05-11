@@ -14,29 +14,27 @@ import su.nightexpress.nightcore.util.NumberUtil;
 
 import java.util.HashSet;
 
+@SuppressWarnings("deprecation")
 public class DialogListener extends AbstractListener<NightCore> {
 
     // TODO Timeout
 
-    public DialogListener(@NotNull NightCore plugin) {
-        super(plugin);
-    }
+    public DialogListener(@NotNull final NightCore plugin) { super(plugin); }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onQuit(PlayerQuitEvent event) {
-        Dialog.stop(event.getPlayer());
-    }
+    public void onQuit(final PlayerQuitEvent event) { Dialog.stop(event.getPlayer()); }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onChatText(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
-        Dialog dialog = Dialog.get(player);
-        if (dialog == null) return;
+    public void onChatText(final AsyncPlayerChatEvent event) {
+        final Player player = event.getPlayer();
+        final Dialog dialog = Dialog.get(player);
+        if (dialog == null)
+            return;
 
         event.getRecipients().clear();
         event.setCancelled(true);
 
-        WrappedInput input = new WrappedInput(event);
+        final WrappedInput input = new WrappedInput(event);
 
         this.plugin.runTask(task -> {
             if (input.getTextRaw().equalsIgnoreCase(Dialog.EXIT) || dialog.getHandler().onInput(dialog, input)) {
@@ -46,25 +44,26 @@ public class DialogListener extends AbstractListener<NightCore> {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onChatCommand(PlayerCommandPreprocessEvent event) {
-        Player player = event.getPlayer();
-        Dialog dialog = Dialog.get(player);
-        if (dialog == null) return;
+    public void onChatCommand(final PlayerCommandPreprocessEvent event) {
+        final Player player = event.getPlayer();
+        final Dialog dialog = Dialog.get(player);
+        if (dialog == null)
+            return;
 
         event.setCancelled(true);
 
-        String raw = event.getMessage();
-        String text = Colorizer.apply(raw.substring(1));
+        final String raw = event.getMessage();
+        final String text = Colorizer.apply(raw.substring(1));
         if (text.startsWith(Dialog.VALUES)) {
-            String[] split = text.split(" ");
-            int page = split.length >= 2 ? NumberUtil.getInteger(split[1], 0) : 0;
-            boolean auto = split.length >= 3 && Boolean.parseBoolean(split[2]);
+            final String[] split = text.split(" ");
+            final int page = split.length >= 2 ? NumberUtil.getInteger(split[1], 0) : 0;
+            final boolean auto = split.length >= 3 && Boolean.parseBoolean(split[2]);
             dialog.displaySuggestions(auto, page);
             return;
         }
 
-        AsyncPlayerChatEvent chatEvent = new AsyncPlayerChatEvent(true, player, text, new HashSet<>());
-        WrappedInput input = new WrappedInput(chatEvent);
+        final AsyncPlayerChatEvent chatEvent = new AsyncPlayerChatEvent(true, player, text, new HashSet<>());
+        final WrappedInput input = new WrappedInput(chatEvent);
 
         this.plugin.runTask(task -> {
             if (input.getTextRaw().equalsIgnoreCase(Dialog.EXIT) || dialog.getHandler().onInput(dialog, input)) {

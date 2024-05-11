@@ -11,13 +11,13 @@ import java.sql.SQLException;
 public abstract class AbstractConnector {
 
     protected final NightCorePlugin plugin;
-    //protected final String           url;
-    protected final HikariConfig    config;
+    // protected final String url;
+    protected final HikariConfig config;
     protected final HikariDataSource dataSource;
 
-    public AbstractConnector(@NotNull NightCorePlugin plugin, @NotNull DatabaseConfig config) {
+    public AbstractConnector(@NotNull final NightCorePlugin plugin, @NotNull final DatabaseConfig config) {
         this.plugin = plugin;
-        //this.url = getURL(config);
+        // this.url = getURL(config);
 
         this.config = new HikariConfig();
         this.config.setJdbcUrl(this.getURL(config));
@@ -32,12 +32,8 @@ public abstract class AbstractConnector {
 
     protected abstract void setupConfig(@NotNull DatabaseConfig config);
 
-    public void close() {
-        this.dataSource.close();
-    }
+    public void close() { this.dataSource.close(); }
 
     @NotNull
-    public final Connection getConnection() throws SQLException {
-        return this.dataSource.getConnection();
-    }
+    public final Connection getConnection() throws SQLException { return this.dataSource.getConnection(); }
 }

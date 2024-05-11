@@ -16,23 +16,19 @@ public final class DeleteQueryExecutor extends SQLExecutor<Void> {
 
     private final List<SQLCondition> wheres;
 
-    private DeleteQueryExecutor(@NotNull String table) {
+    private DeleteQueryExecutor(@NotNull final String table) {
         super(table);
         this.wheres = new ArrayList<>();
     }
 
     @NotNull
-    public static DeleteQueryExecutor builder(@NotNull String table) {
-        return new DeleteQueryExecutor(table);
-    }
+    public static DeleteQueryExecutor builder(@NotNull final String table) { return new DeleteQueryExecutor(table); }
 
     @NotNull
-    public DeleteQueryExecutor where(@NotNull SQLCondition... wheres) {
-        return this.where(Arrays.asList(wheres));
-    }
+    public DeleteQueryExecutor where(@NotNull final SQLCondition... wheres) { return this.where(Arrays.asList(wheres)); }
 
     @NotNull
-    public DeleteQueryExecutor where(@NotNull List<SQLCondition> wheres) {
+    public DeleteQueryExecutor where(@NotNull final List<SQLCondition> wheres) {
         this.wheres.clear();
         this.wheres.addAll(wheres);
         return this;
@@ -40,15 +36,16 @@ public final class DeleteQueryExecutor extends SQLExecutor<Void> {
 
     @Override
     @NotNull
-    public Void execute(@NotNull AbstractConnector connector) {
-        if (this.wheres.isEmpty()) return null;
+    public Void execute(@NotNull final AbstractConnector connector) {
+        if (this.wheres.isEmpty())
+            return null;
 
-        String whereCols = this.wheres.stream()
-            .map(where -> where.getValue().getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
-            .collect(Collectors.joining(" AND "));
-        String sql = "DELETE FROM " + this.getTable() + (whereCols.isEmpty() ? "" : " WHERE " + whereCols);
+        final String whereCols = this.wheres.stream()
+                .map(where -> where.getValue().getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
+                .collect(Collectors.joining(" AND "));
+        final String sql = "DELETE FROM " + this.getTable() + (whereCols.isEmpty() ? "" : " WHERE " + whereCols);
 
-        List<String> whereVals = this.wheres.stream().map(SQLCondition::getValue).map(SQLValue::getValue).toList();
+        final List<String> whereVals = this.wheres.stream().map(SQLCondition::getValue).map(SQLValue::getValue).toList();
 
         SQLQueries.executeStatement(connector, sql, whereVals);
         return null;

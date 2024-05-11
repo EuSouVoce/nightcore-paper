@@ -7,22 +7,14 @@ public abstract class SimpleManager<P extends NightCorePlugin> {
 
     protected final P plugin;
 
-    public SimpleManager(@NotNull P plugin) {
-        this.plugin = plugin;
-    }
+    public SimpleManager(@NotNull final P plugin) { this.plugin = plugin; }
 
     @NotNull
-    public P plugin() {
-        return this.plugin;
-    }
+    public P plugin() { return this.plugin; }
 
-    public void setup() {
-        this.onLoad();
-    }
+    public void setup() { this.onLoad(); }
 
-    public void shutdown() {
-        this.onShutdown();
-    }
+    public void shutdown() { this.onShutdown(); }
 
     public void reload() {
         this.shutdown();

@@ -13,7 +13,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public class ItemHandler {
-
+    // @formatter:off
     public static final String RETURN        = "return";
     public static final String CLOSE         = "close";
     public static final String NEXT_PAGE     = "page_next";
@@ -22,20 +22,16 @@ public class ItemHandler {
     private final String                name;
     private final List<ClickAction>     clickActions;
     private final Predicate<MenuViewer> visibilityPolicy;
+    // @formatter:on
 
-    public ItemHandler() {
-        this(Placeholders.DEFAULT, null, null);
-    }
+    public ItemHandler() { this(Placeholders.DEFAULT, null, null); }
 
-    public ItemHandler(@NotNull String name) {
-        this(name, null, null);
-    }
+    public ItemHandler(@NotNull final String name) { this(name, null, null); }
 
-    public ItemHandler(@NotNull String name, @Nullable ClickAction clickAction) {
-        this(name, clickAction, null);
-    }
+    public ItemHandler(@NotNull final String name, @Nullable final ClickAction clickAction) { this(name, clickAction, null); }
 
-    public ItemHandler(@NotNull String name, @Nullable ClickAction clickAction, @Nullable Predicate<MenuViewer> visibilityPolicy) {
+    public ItemHandler(@NotNull final String name, @Nullable final ClickAction clickAction,
+            @Nullable final Predicate<MenuViewer> visibilityPolicy) {
         this.name = name.toLowerCase();
         this.clickActions = new ArrayList<>();
         this.visibilityPolicy = visibilityPolicy;
@@ -46,63 +42,53 @@ public class ItemHandler {
     }
 
     /**
-     * The main purpose of this method is to quickly create ItemHandler object for non-configurable GUIs.
-     * <br><br>
+     * The main purpose of this method is to quickly create ItemHandler object for
+     * non-configurable GUIs. <br>
+     * <br>
      * Do NOT use this for items requires specific handler name.
+     * 
      * @param action Click action
      * @return ItemHandler with random UUID as a name.
      */
     @NotNull
-    public static ItemHandler forClick(@NotNull ClickAction action) {
-        return new ItemHandler(UUID.randomUUID().toString(), action);
+    public static ItemHandler forClick(@NotNull final ClickAction action) { return new ItemHandler(UUID.randomUUID().toString(), action); }
+
+    @NotNull
+    public static ItemHandler forNextPage(@NotNull final Menu menu) {
+        return new ItemHandler(ItemHandler.NEXT_PAGE, (viewer, event) -> {
+            if (viewer.getPage() < viewer.getPages()) {
+                viewer.setPage(viewer.getPage() + 1);
+                menu.open(viewer.getPlayer());
+            }
+        }, viewer -> viewer.getPage() < viewer.getPages());
     }
 
     @NotNull
-    public static ItemHandler forNextPage(@NotNull Menu menu) {
-        return new ItemHandler(NEXT_PAGE,
-            (viewer, event) -> {
-                if (viewer.getPage() < viewer.getPages()) {
-                    viewer.setPage(viewer.getPage() + 1);
-                    menu.open(viewer.getPlayer());
-                }
-            },
-            viewer -> viewer.getPage() < viewer.getPages());
+    public static ItemHandler forPreviousPage(@NotNull final Menu menu) {
+        return new ItemHandler(ItemHandler.PREVIOUS_PAGE, (viewer, event) -> {
+            if (viewer.getPage() > 1) {
+                viewer.setPage(viewer.getPage() - 1);
+                menu.open(viewer.getPlayer());
+            }
+        }, viewer -> viewer.getPage() > 1);
     }
 
     @NotNull
-    public static ItemHandler forPreviousPage(@NotNull Menu menu) {
-        return new ItemHandler(PREVIOUS_PAGE,
-            (viewer, event) -> {
-                if (viewer.getPage() > 1) {
-                    viewer.setPage(viewer.getPage() - 1);
-                    menu.open(viewer.getPlayer());
-                }
-            },
-            viewer -> viewer.getPage() > 1);
+    public static ItemHandler forClose(@NotNull final Menu menu) {
+        return new ItemHandler(ItemHandler.CLOSE, (viewer, event) -> menu.runNextTick(() -> viewer.getPlayer().closeInventory()));
     }
 
     @NotNull
-    public static ItemHandler forClose(@NotNull Menu menu) {
-        return new ItemHandler(CLOSE, (viewer, event) -> menu.runNextTick(() -> viewer.getPlayer().closeInventory()));
+    public static ItemHandler forReturn(@NotNull final Menu menu, @NotNull final ClickAction action) {
+        return new ItemHandler(ItemHandler.RETURN, action);
     }
 
     @NotNull
-    public static ItemHandler forReturn(@NotNull Menu menu, @NotNull ClickAction action) {
-        return new ItemHandler(RETURN, action);
-    }
+    public String getName() { return this.name; }
 
     @NotNull
-    public String getName() {
-        return name;
-    }
-
-    @NotNull
-    public List<ClickAction> getClickActions() {
-        return clickActions;
-    }
+    public List<ClickAction> getClickActions() { return this.clickActions; }
 
     @Nullable
-    public Predicate<MenuViewer> getVisibilityPolicy() {
-        return visibilityPolicy;
-    }
+    public Predicate<MenuViewer> getVisibilityPolicy() { return this.visibilityPolicy; }
 }

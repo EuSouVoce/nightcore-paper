@@ -10,42 +10,39 @@ import su.nightexpress.nightcore.util.text.tag.api.DynamicTag;
 
 public class OutputTag extends DynamicTag implements MessageDecorator {
 
-    public OutputTag() {
-        super("output");
-    }
+    public OutputTag() { super("output"); }
 
     @Override
-    public int getWeight() {
-        return 0;
-    }
+    public int getWeight() { return 0; }
 
     @NotNull
-    public String enclose(@NotNull OutputType type) {
-        String prefix = type.name().toLowerCase();
+    public String enclose(@NotNull final OutputType type) {
+        final String prefix = type.name().toLowerCase();
         return this.leading(null, prefix);
     }
 
     @NotNull
-    public String enclose(int fade, int stay) {
-        String prefix = OutputType.TITLES.name().toLowerCase();
+    public String enclose(final int fade, final int stay) {
+        final String prefix = OutputType.TITLES.name().toLowerCase();
         return this.leading(null, prefix + ":" + fade + ":" + stay + ":" + fade);
     }
 
     @Override
-    public void apply(@NotNull MessageOptions options, @NotNull String content) {
-        String[] split = content.split(":");
-        OutputType outputType = StringUtil.getEnum(split[0], OutputType.class).orElse(OutputType.CHAT);
+    public void apply(@NotNull final MessageOptions options, @NotNull final String content) {
+        final String[] split = content.split(":");
+        final OutputType outputType = StringUtil.getEnum(split[0], OutputType.class).orElse(OutputType.CHAT);
 
         options.setOutputType(outputType);
         if (outputType == OutputType.TITLES) {
-            int[] titleTimes = new int[3];
+            final int[] titleTimes = new int[3];
             if (split.length >= 4) {
                 titleTimes[0] = NumberUtil.getInteger(split[1]);
                 titleTimes[1] = NumberUtil.getAnyInteger(split[2], -1);
                 titleTimes[2] = NumberUtil.getInteger(split[3]);
             }
 
-            if (titleTimes[1] < 0) titleTimes[1] = Short.MAX_VALUE;
+            if (titleTimes[1] < 0)
+                titleTimes[1] = Short.MAX_VALUE;
 
             options.setTitleTimes(titleTimes);
         }

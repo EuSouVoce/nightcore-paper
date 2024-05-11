@@ -14,39 +14,33 @@ import java.util.stream.Collectors;
 
 public final class UpdateQueryExecutor extends SQLExecutor<Void> {
 
-    private final List<SQLValue>     values;
+    private final List<SQLValue> values;
     private final List<SQLCondition> wheres;
 
-    private UpdateQueryExecutor(@NotNull String table) {
+    private UpdateQueryExecutor(@NotNull final String table) {
         super(table);
         this.values = new ArrayList<>();
         this.wheres = new ArrayList<>();
     }
 
     @NotNull
-    public static UpdateQueryExecutor builder(@NotNull String table) {
-        return new UpdateQueryExecutor(table);
-    }
+    public static UpdateQueryExecutor builder(@NotNull final String table) { return new UpdateQueryExecutor(table); }
 
     @NotNull
-    public UpdateQueryExecutor values(@NotNull SQLValue... values) {
-        return this.values(Arrays.asList(values));
-    }
+    public UpdateQueryExecutor values(@NotNull final SQLValue... values) { return this.values(Arrays.asList(values)); }
 
     @NotNull
-    public UpdateQueryExecutor values(@NotNull List<SQLValue> values) {
+    public UpdateQueryExecutor values(@NotNull final List<SQLValue> values) {
         this.values.clear();
         this.values.addAll(values);
         return this;
     }
 
     @NotNull
-    public UpdateQueryExecutor where(@NotNull SQLCondition... wheres) {
-        return this.where(Arrays.asList(wheres));
-    }
+    public UpdateQueryExecutor where(@NotNull final SQLCondition... wheres) { return this.where(Arrays.asList(wheres)); }
 
     @NotNull
-    public UpdateQueryExecutor where(@NotNull List<SQLCondition> wheres) {
+    public UpdateQueryExecutor where(@NotNull final List<SQLCondition> wheres) {
         this.wheres.clear();
         this.wheres.addAll(wheres);
         return this;
@@ -54,19 +48,19 @@ public final class UpdateQueryExecutor extends SQLExecutor<Void> {
 
     @Override
     @NotNull
-    public Void execute(@NotNull AbstractConnector connector) {
-        if (this.values.isEmpty()) return null;
+    public Void execute(@NotNull final AbstractConnector connector) {
+        if (this.values.isEmpty())
+            return null;
 
-        String values = this.values.stream().map(value -> value.getColumn().getNameEscaped() + " = ?")
-            .collect(Collectors.joining(","));
+        final String values = this.values.stream().map(value -> value.getColumn().getNameEscaped() + " = ?").collect(Collectors.joining(","));
 
-        String wheres = this.wheres.stream().map(where -> where.getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
-            .collect(Collectors.joining(" AND "));
+        final String wheres = this.wheres.stream().map(where -> where.getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")
+                .collect(Collectors.joining(" AND "));
 
-        String sql = "UPDATE " + this.getTable() + " SET " + values + (wheres.isEmpty() ? "" : " WHERE " + wheres);
+        final String sql = "UPDATE " + this.getTable() + " SET " + values + (wheres.isEmpty() ? "" : " WHERE " + wheres);
 
-        List<String> values2 = this.values.stream().map(SQLValue::getValue).toList();
-        List<String> whers2 = this.wheres.stream().map(SQLCondition::getValue).map(SQLValue::getValue).toList();
+        final List<String> values2 = this.values.stream().map(SQLValue::getValue).toList();
+        final List<String> whers2 = this.wheres.stream().map(SQLCondition::getValue).map(SQLValue::getValue).toList();
 
         SQLQueries.executeStatement(connector, sql, values2, whers2);
         return null;

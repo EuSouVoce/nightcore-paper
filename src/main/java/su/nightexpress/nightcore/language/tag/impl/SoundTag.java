@@ -9,23 +9,17 @@ import su.nightexpress.nightcore.util.text.tag.api.DynamicTag;
 
 public class SoundTag extends DynamicTag implements MessageDecorator {
 
-    public SoundTag() {
-        super("sound");
-    }
+    public SoundTag() { super("sound"); }
 
     @Override
-    public int getWeight() {
-        return 0;
-    }
+    public int getWeight() { return 0; }
 
     @NotNull
-    public String enclose(@NotNull Sound sound) {
-        return this.leading(null, sound.name().toLowerCase());
-    }
+    public String enclose(@NotNull final Sound sound) { return this.leading(null, sound.name().toLowerCase()); }
 
     @Override
-    public void apply(@NotNull MessageOptions options, @NotNull String value) {
-        Sound sound = StringUtil.getEnum(value, Sound.class).orElse(null);
+    public void apply(@NotNull final MessageOptions options, @NotNull final String value) {
+        final Sound sound = StringUtil.getEnum(value, Sound.class).orElse(null);
         options.setSound(sound);
     }
 }

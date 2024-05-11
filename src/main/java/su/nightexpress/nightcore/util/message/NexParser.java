@@ -22,60 +22,57 @@ public class NexParser {
     private static final Pattern PATTERN_OPTIONS = Pattern.compile("<\\?(.*?)\\?>(.*?)(?:<\\/>)+");
     private static final Map<ClickEvent.Action, Pattern> PATTERN_CLICKS = new HashMap<>();
     private static final Map<HoverEvent.Action, Pattern> PATTERN_HOVERS = new HashMap<>();
-    private static final Pattern PATTERN_FONT = Pattern.compile("font" + OPTION_PATTERN);
-    private static final Pattern PATTERN_INSERTION = Pattern.compile("insertion" + OPTION_PATTERN);
+    private static final Pattern PATTERN_FONT = Pattern.compile("font" + NexParser.OPTION_PATTERN);
+    private static final Pattern PATTERN_INSERTION = Pattern.compile("insertion" + NexParser.OPTION_PATTERN);
 
     public static final String TAG_NEWLINE = "<newline>";
 
     static {
-        for (ClickEvent.Action action : ClickEvent.Action.values()) {
-            PATTERN_CLICKS.put(action, Pattern.compile(action.name().toLowerCase() + OPTION_PATTERN));
+        for (final ClickEvent.Action action : ClickEvent.Action.values()) {
+            NexParser.PATTERN_CLICKS.put(action, Pattern.compile(action.name().toLowerCase() + NexParser.OPTION_PATTERN));
         }
-        for (HoverEvent.Action action : HoverEvent.Action.values()) {
-            PATTERN_HOVERS.put(action, Pattern.compile(action.name().toLowerCase() + OPTION_PATTERN));
+        for (final HoverEvent.Action action : HoverEvent.Action.values()) {
+            NexParser.PATTERN_HOVERS.put(action, Pattern.compile(action.name().toLowerCase() + NexParser.OPTION_PATTERN));
         }
     }
 
-    public static boolean contains(@NotNull String message) {
-        TimedMatcher matcher = TimedMatcher.create(PATTERN_OPTIONS, message);
+    public static boolean contains(@NotNull final String message) {
+        final TimedMatcher matcher = TimedMatcher.create(NexParser.PATTERN_OPTIONS, message);
         return matcher.find();
     }
 
     @NotNull
-    public static String removeFrom(@NotNull String message) {
-        return strip(message, false);
-    }
+    public static String removeFrom(@NotNull final String message) { return NexParser.strip(message, false); }
 
     @NotNull
-    public static String toPlainText(@NotNull String message) {
-        return strip(message, true);
-    }
+    public static String toPlainText(@NotNull final String message) { return NexParser.strip(message, true); }
 
     @NotNull
-    private static String strip(@NotNull String message, boolean toPlain) {
-        TimedMatcher timedMatcher = TimedMatcher.create(PATTERN_OPTIONS, message);
+    private static String strip(@NotNull String message, final boolean toPlain) {
+        final TimedMatcher timedMatcher = TimedMatcher.create(NexParser.PATTERN_OPTIONS, message);
         while (timedMatcher.find()) {
-            Matcher matcher = timedMatcher.getMatcher();
-            String matchFull = matcher.group(0);
+            final Matcher matcher = timedMatcher.getMatcher();
+            final String matchFull = matcher.group(0);
             if (toPlain) {
-                String matchOptions = matcher.group(1).trim();
-                String matchText = matcher.group(2);
+                @SuppressWarnings("unused")
+                final String matchOptions = matcher.group(1).trim();
+                final String matchText = matcher.group(2);
                 message = message.replace(matchFull, matchText);
-            }
-            else message = message.replace(matchFull, "");
+            } else
+                message = message.replace(matchFull, "");
         }
         return message;
     }
 
-    public static String[] getPlainParts(@NotNull String message) {
-        //message = StringUtil.color(message.replace("\n", " "));
-        return PATTERN_OPTIONS.split(message);
+    public static String[] getPlainParts(@NotNull final String message) {
+        // message = StringUtil.color(message.replace("\n", " "));
+        return NexParser.PATTERN_OPTIONS.split(message);
     }
 
-    public static String[] getComponentParts(@NotNull String message) {
-        List<String> components = new ArrayList<>();
+    public static String[] getComponentParts(@NotNull final String message) {
+        final List<String> components = new ArrayList<>();
 
-        TimedMatcher timedMatcher = TimedMatcher.create(PATTERN_OPTIONS, message);
+        final TimedMatcher timedMatcher = TimedMatcher.create(NexParser.PATTERN_OPTIONS, message);
         while (timedMatcher.find()) {
             components.add(timedMatcher.getMatcher().group(0));
         }
@@ -87,49 +84,52 @@ public class NexParser {
     public static NexMessage toMessage(@NotNull String message) {
         message = Colorizer.apply(message);
 
-        TimedMatcher timedMatcher = TimedMatcher.create(PATTERN_OPTIONS, message);
-        Map<String, String> parameters = new HashMap<>();
+        final TimedMatcher timedMatcher = TimedMatcher.create(NexParser.PATTERN_OPTIONS, message);
+        final Map<String, String> parameters = new HashMap<>();
         while (timedMatcher.find()) {
-            Matcher matcher = timedMatcher.getMatcher();
-            String matchFull = matcher.group(0);
-            String matchOptions = matcher.group(1).trim();
-            String matchText = matcher.group(2);
+            final Matcher matcher = timedMatcher.getMatcher();
+            final String matchFull = matcher.group(0);
+            final String matchOptions = matcher.group(1).trim();
+            final String matchText = matcher.group(2);
 
             message = message.replace(matchFull, matchText);
             parameters.put(matchText, matchOptions);
         }
 
-        NexMessage nexMessage = new NexMessage(message);
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            String text = entry.getKey();
-            String options = entry.getValue();
+        final NexMessage nexMessage = new NexMessage(message);
+        for (final Map.Entry<String, String> entry : parameters.entrySet()) {
+            final String text = entry.getKey();
+            final String options = entry.getValue();
 
-            NexComponent component = nexMessage.addComponent(text, text);
-            for (Map.Entry<ClickEvent.Action, Pattern> entryParams : PATTERN_CLICKS.entrySet()) {
-                String paramValue = getOption(entryParams.getValue(), options);
-                if (paramValue == null) continue;
+            final NexComponent component = nexMessage.addComponent(text, text);
+            for (final Map.Entry<ClickEvent.Action, Pattern> entryParams : NexParser.PATTERN_CLICKS.entrySet()) {
+                final String paramValue = NexParser.getOption(entryParams.getValue(), options);
+                if (paramValue == null)
+                    continue;
 
                 component.addClickEvent(entryParams.getKey(), paramValue);
                 break;
             }
-            for (Map.Entry<HoverEvent.Action, Pattern> entryParams : PATTERN_HOVERS.entrySet()) {
-                String paramValue = getOption(entryParams.getValue(), options);
-                if (paramValue == null) continue;
+            for (final Map.Entry<HoverEvent.Action, Pattern> entryParams : NexParser.PATTERN_HOVERS.entrySet()) {
+                final String paramValue = NexParser.getOption(entryParams.getValue(), options);
+                if (paramValue == null)
+                    continue;
 
                 component.addHoverEvent(entryParams.getKey(), paramValue);
                 break;
             }
-            component.setFont(getOption(PATTERN_FONT, options));
-            component.setInsertion(getOption(PATTERN_INSERTION, options));
+            component.setFont(NexParser.getOption(NexParser.PATTERN_FONT, options));
+            component.setInsertion(NexParser.getOption(NexParser.PATTERN_INSERTION, options));
         }
 
         return nexMessage;
     }
 
     @Nullable
-    private static String getOption(@NotNull Pattern pattern, @NotNull String from) {
-        TimedMatcher timedMatcher = TimedMatcher.create(pattern, from);
-        if (!timedMatcher.find()) return null;
+    private static String getOption(@NotNull final Pattern pattern, @NotNull final String from) {
+        final TimedMatcher timedMatcher = TimedMatcher.create(pattern, from);
+        if (!timedMatcher.find())
+            return null;
 
         return timedMatcher.getMatcher().group(1).stripLeading();
     }

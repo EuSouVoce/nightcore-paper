@@ -7,12 +7,10 @@ import su.nightexpress.nightcore.command.CommandResult;
 
 public class BaseCommand extends PluginCommand<NightCorePlugin> {
 
-    public BaseCommand(@NotNull NightCorePlugin plugin) {
-        super(plugin, plugin.getCommandAliases());
-    }
+    public BaseCommand(@NotNull final NightCorePlugin plugin) { super(plugin, plugin.getCommandAliases()); }
 
     @Override
-    protected void onExecute(@NotNull CommandSender sender, @NotNull CommandResult result) {
+    protected void onExecute(@NotNull final CommandSender sender, @NotNull final CommandResult result) {
 
     }
 }

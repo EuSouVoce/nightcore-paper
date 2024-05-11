@@ -13,65 +13,53 @@ public class PlaceholderMap {
 
     private final List<Pair<String, Supplier<String>>> keys;
 
-    public PlaceholderMap() {
-        this(new ArrayList<>());
-    }
+    public PlaceholderMap() { this(new ArrayList<>()); }
 
-    public PlaceholderMap(@NotNull PlaceholderMap other) {
-        this(other.getKeys());
-    }
+    public PlaceholderMap(@NotNull final PlaceholderMap other) { this(other.getKeys()); }
 
-    public PlaceholderMap(@NotNull List<Pair<String, Supplier<String>>> keys) {
-        this.keys = new ArrayList<>(keys);
-    }
+    public PlaceholderMap(@NotNull final List<Pair<String, Supplier<String>>> keys) { this.keys = new ArrayList<>(keys); }
 
     @NotNull
-    public static PlaceholderMap fusion(@NotNull PlaceholderMap... others) {
-        PlaceholderMap map = new PlaceholderMap();
-        for (PlaceholderMap other : others) {
+    public static PlaceholderMap fusion(@NotNull final PlaceholderMap... others) {
+        final PlaceholderMap map = new PlaceholderMap();
+        for (final PlaceholderMap other : others) {
             map.add(other);
         }
         return map;
     }
 
     @NotNull
-    public static PlaceholderMap fusion(@NotNull Placeholder... others) {
-        PlaceholderMap map = new PlaceholderMap();
-        for (Placeholder other : others) {
+    public static PlaceholderMap fusion(@NotNull final Placeholder... others) {
+        final PlaceholderMap map = new PlaceholderMap();
+        for (final Placeholder other : others) {
             map.add(other.getPlaceholders());
         }
         return map;
     }
 
     @NotNull
-    public List<Pair<String, Supplier<String>>> getKeys() {
-        return keys;
-    }
+    public List<Pair<String, Supplier<String>>> getKeys() { return this.keys; }
 
     @NotNull
-    public PlaceholderMap add(@NotNull PlaceholderMap other) {
+    public PlaceholderMap add(@NotNull final PlaceholderMap other) {
         this.keys.addAll(other.getKeys());
         return this;
     }
 
     @NotNull
-    public PlaceholderMap add(@NotNull String key, @NotNull String replacer) {
+    public PlaceholderMap add(@NotNull final String key, @NotNull final String replacer) {
         this.add(key, () -> replacer);
         return this;
     }
 
     @NotNull
-    public PlaceholderMap add(@NotNull String key, @NotNull Supplier<String> replacer) {
+    public PlaceholderMap add(@NotNull final String key, @NotNull final Supplier<String> replacer) {
         this.keys.add(Pair.of(key, replacer));
         return this;
     }
 
-    public void clear() {
-        this.keys.clear();
-    }
+    public void clear() { this.keys.clear(); }
 
     @NotNull
-    public UnaryOperator<String> replacer() {
-        return str -> StringUtil.replaceEach(str, this.keys);
-    }
+    public UnaryOperator<String> replacer() { return str -> StringUtil.replaceEach(str, this.keys); }
 }

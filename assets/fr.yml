@@ -36,7 +36,7 @@ EntityType:
   experience_orb: Orbe d'expérience
   eye_of_ender: Œil de l'Ender
   falling_block: Bloc soumis à la gravité
-  falling_block_type: '%s qui tombe'
+  falling_block_type: "%s qui tombe"
   fireball: Boule de feu
   firework_rocket: Fusée de feu d'artifice
   fishing_bobber: Flotteur

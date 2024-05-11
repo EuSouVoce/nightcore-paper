@@ -10,9 +10,7 @@ import su.nightexpress.nightcore.menu.impl.AbstractMenu;
 
 public class CoreManager extends AbstractManager<NightCore> {
 
-    public CoreManager(@NotNull NightCore plugin) {
-        super(plugin);
-    }
+    public CoreManager(@NotNull final NightCore plugin) { super(plugin); }
 
     @Override
     protected void onLoad() {

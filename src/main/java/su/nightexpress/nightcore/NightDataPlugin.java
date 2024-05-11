@@ -5,10 +5,10 @@ import su.nightexpress.nightcore.database.AbstractUserDataHandler;
 import su.nightexpress.nightcore.database.AbstractUserManager;
 import su.nightexpress.nightcore.database.DataUser;
 
-public abstract class NightDataPlugin<U extends DataUser> extends NightPlugin /*implements UserDataHolder*/ {
+public abstract class NightDataPlugin<U extends DataUser> extends NightPlugin /* implements UserDataHolder */ {
 
-    //protected AbstractUserDataHandler<NexDataPlugin<U>, U> dataHandler;
-    //protected AbstractUserManager<NexDataPlugin<U>, U> userManager;
+    // protected AbstractUserDataHandler<NexDataPlugin<U>, U> dataHandler;
+    // protected AbstractUserManager<NexDataPlugin<U>, U> userManager;
 
     @Override
     protected void loadManagers() {

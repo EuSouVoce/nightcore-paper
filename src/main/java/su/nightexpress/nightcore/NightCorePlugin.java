@@ -27,97 +27,74 @@ public interface NightCorePlugin extends Plugin {
     NightPluginCommand getBaseCommand();
 
     @Override
-    @NotNull FileConfig getConfig();
+    @NotNull
+    FileConfig getConfig();
 
-    @NotNull FileConfig getLang();
+    @NotNull
+    FileConfig getLang();
 
-    @NotNull PluginDetails getDetails();
+    @NotNull
+    PluginDetails getDetails();
 
     void extractResources(@NotNull String jarPath);
 
     void extractResources(@NotNull String jarParh, @NotNull String toPath);
 
     @NotNull
-    default String getNameLocalized() {
-        return this.getDetails().getName();
-    }
+    default String getNameLocalized() { return this.getDetails().getName(); }
 
     @NotNull
-    default String getPrefix() {
-        return this.getDetails().getPrefix();
-    }
+    default String getPrefix() { return this.getDetails().getPrefix(); }
 
     @NotNull
-    default String[] getCommandAliases() {
-        return this.getDetails().getCommandAliases();
-    }
+    default String[] getCommandAliases() { return this.getDetails().getCommandAliases(); }
 
     @NotNull
-    default String getLanguage() {
-        return this.getDetails().getLanguage();
-    }
+    default String getLanguage() { return this.getDetails().getLanguage(); }
 
-    default void info(@NotNull String msg) {
-        this.getLogger().info(msg);
-    }
+    default void info(@NotNull final String msg) { this.getLogger().info(msg); }
 
-    default void warn(@NotNull String msg) {
-        this.getLogger().warning(msg);
-    }
+    default void warn(@NotNull final String msg) { this.getLogger().warning(msg); }
 
-    default void error(@NotNull String msg) {
-        this.getLogger().severe(msg);
-    }
+    default void error(@NotNull final String msg) { this.getLogger().severe(msg); }
 
-    default void debug(@NotNull String msg) {
-        this.info("[DEBUG] " + msg);
-    }
-
-    @NotNull LangManager getLangManager();
-
-    @NotNull CommandManager getCommandManager();
+    default void debug(@NotNull final String msg) { this.info("[DEBUG] " + msg); }
 
     @NotNull
-    default BukkitScheduler getScheduler() {
-        return this.getServer().getScheduler();
-    }
+    LangManager getLangManager();
 
     @NotNull
-    default PluginManager getPluginManager() {
-        return this.getServer().getPluginManager();
-    }
+    CommandManager getCommandManager();
 
-    default void runTask(@NotNull Consumer<BukkitTask> consumer) {
-        this.getScheduler().runTask(this, consumer);
-    }
+    @NotNull
+    default BukkitScheduler getScheduler() { return this.getServer().getScheduler(); }
 
-    default void runTaskAsync(@NotNull Consumer<BukkitTask> consumer) {
-        this.getScheduler().runTaskAsynchronously(this, consumer);
-    }
+    @NotNull
+    default PluginManager getPluginManager() { return this.getServer().getPluginManager(); }
 
-    default void runTaskLater(@NotNull Consumer<BukkitTask> consumer, long delay) {
+    default void runTask(@NotNull final Consumer<BukkitTask> consumer) { this.getScheduler().runTask(this, consumer); }
+
+    default void runTaskAsync(@NotNull final Consumer<BukkitTask> consumer) { this.getScheduler().runTaskAsynchronously(this, consumer); }
+
+    default void runTaskLater(@NotNull final Consumer<BukkitTask> consumer, final long delay) {
         this.getScheduler().runTaskLater(this, consumer, delay);
     }
 
-    default void runTaskLaterAsync(@NotNull Consumer<BukkitTask> consumer, long delay) {
+    default void runTaskLaterAsync(@NotNull final Consumer<BukkitTask> consumer, final long delay) {
         this.getScheduler().runTaskLaterAsynchronously(this, consumer, delay);
     }
 
-    default void runTaskTimer(@NotNull Consumer<BukkitTask> consumer, long delay, long interval) {
+    default void runTaskTimer(@NotNull final Consumer<BukkitTask> consumer, final long delay, final long interval) {
         this.getScheduler().runTaskTimer(this, consumer, delay, interval);
     }
 
-    default void runTaskTimerAsync(@NotNull Consumer<BukkitTask> consumer, long delay, long interval) {
+    default void runTaskTimerAsync(@NotNull final Consumer<BukkitTask> consumer, final long delay, final long interval) {
         this.getScheduler().runTaskTimerAsynchronously(this, consumer, delay, interval);
     }
 
     @NotNull
-    default UniTask createTask(@NotNull Runnable runnable) {
-        return new UniTask(this, runnable);
-    }
+    default UniTask createTask(@NotNull final Runnable runnable) { return new UniTask(this, runnable); }
 
     @NotNull
-    default UniTask createAsyncTask(@NotNull Runnable runnable) {
-        return this.createTask(runnable).setAsync();
-    }
+    default UniTask createAsyncTask(@NotNull final Runnable runnable) { return this.createTask(runnable).setAsync(); }
 }

@@ -17,25 +17,26 @@ public class UserListener<P extends NightDataPlugin<U>, U extends DataUser> exte
 
     private final AbstractUserManager<? extends NightDataPlugin<U>, U> userManager;
 
-    public UserListener(@NotNull P plugin) {
+    public UserListener(@NotNull final P plugin) {
         super(plugin);
         this.userManager = plugin.getUserManager();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onUserLogin(AsyncPlayerPreLoginEvent event) {
-        if (event.getLoginResult() != AsyncPlayerPreLoginEvent.Result.ALLOWED) return;
+    public void onUserLogin(final AsyncPlayerPreLoginEvent event) {
+        if (event.getLoginResult() != AsyncPlayerPreLoginEvent.Result.ALLOWED)
+            return;
 
-        UUID uuid = event.getUniqueId();
+        final UUID uuid = event.getUniqueId();
         U user;
         if (!this.userManager.isCreated(uuid)) {
             user = this.userManager.createUserData(uuid, event.getName());
-            plugin.getData().addUser(user);
+            this.plugin.getData().addUser(user);
             if (CoreConfig.USER_DEBUG_ENABLED.get()) {
-                plugin.info("Created new data for: '" + uuid + "'");
+                this.plugin.info("Created new data for: '" + uuid + "'");
             }
-        }
-        else user = this.userManager.getUserData(uuid);
+        } else
+            user = this.userManager.getUserData(uuid);
 
         if (user != null) {
             this.userManager.cachePermanent(user);
@@ -43,7 +44,5 @@ public class UserListener<P extends NightDataPlugin<U>, U extends DataUser> exte
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onUserQuit(PlayerQuitEvent event) {
-        this.plugin.getUserManager().unload(event.getPlayer());
-    }
+    public void onUserQuit(final PlayerQuitEvent event) { this.plugin.getUserManager().unload(event.getPlayer()); }
 }

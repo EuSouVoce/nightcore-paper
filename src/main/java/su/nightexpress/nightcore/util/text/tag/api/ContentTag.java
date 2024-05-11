@@ -7,13 +7,11 @@ import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;
 
 public abstract class ContentTag extends DynamicTag implements DecoratorParser {
 
-    public ContentTag(@NotNull String name) {
-        super(name);
-    }
+    public ContentTag(@NotNull final String name) { super(name); }
 
     @Override
     @Nullable
-    public final ParsedDecorator parse(@NotNull String str) {
+    public final ParsedDecorator parse(@NotNull final String str) {
         int tagLength = this.getName().length();
         String sub = str.substring(tagLength);
 
@@ -22,7 +20,7 @@ public abstract class ContentTag extends DynamicTag implements DecoratorParser {
             tagLength += 1;
         }
 
-        ParsedDecorator decorator = this.onParse(sub);
+        final ParsedDecorator decorator = this.onParse(sub);
         if (decorator != null) {
             decorator.setLength(decorator.getLength() + tagLength + 2); // 2 for quotes
         }

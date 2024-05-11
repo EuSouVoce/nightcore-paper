@@ -9,103 +9,86 @@ import java.util.function.Function;
 
 public class SQLQueries {
 
-    public static boolean hasTable(@NotNull AbstractConnector connector, @NotNull String table) {
+    public static boolean hasTable(@NotNull final AbstractConnector connector, @NotNull final String table) {
         try (Connection connection = connector.getConnection()) {
 
             boolean has;
-            DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet tables = metaData.getTables(null, null, table, null);
+            final DatabaseMetaData metaData = connection.getMetaData();
+            final ResultSet tables = metaData.getTables(null, null, table, null);
             has = tables.next();
             tables.close();
             return has;
-        }
-        catch (SQLException exception) {
+        } catch (final SQLException exception) {
             exception.printStackTrace();
             return false;
         }
     }
 
-    public static boolean hasColumn(@NotNull AbstractConnector connector,
-                                    @NotNull String table,
-                                    @NotNull SQLColumn column) {
-        String sql = "SELECT * FROM " + table;
-        String columnName = column.getName();
-        try (Connection connection = connector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static boolean hasColumn(@NotNull final AbstractConnector connector, @NotNull final String table, @NotNull final SQLColumn column) {
+        final String sql = "SELECT * FROM " + table;
+        final String columnName = column.getName();
+        try (Connection connection = connector.getConnection(); Statement statement = connection.createStatement()) {
 
-            ResultSet resultSet = statement.executeQuery(sql);
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columns = metaData.getColumnCount();
+            final ResultSet resultSet = statement.executeQuery(sql);
+            final ResultSetMetaData metaData = resultSet.getMetaData();
+            final int columns = metaData.getColumnCount();
             for (int index = 1; index <= columns; index++) {
                 if (columnName.equals(metaData.getColumnName(index))) {
                     return true;
                 }
             }
             return false;
-        }
-        catch (SQLException exception) {
+        } catch (final SQLException exception) {
             exception.printStackTrace();
             return false;
         }
     }
 
-    public static void executeStatement(@NotNull AbstractConnector connector,
-                                        @NotNull String sql) {
-        executeStatement(connector, sql, Collections.emptySet());
+    public static void executeStatement(@NotNull final AbstractConnector connector, @NotNull final String sql) {
+        SQLQueries.executeStatement(connector, sql, Collections.emptySet());
     }
 
-    public static void executeStatement(@NotNull AbstractConnector connector,
-                                        @NotNull String sql,
-                                        @NotNull Collection<String> values1) {
-        executeStatement(connector, sql, values1, Collections.emptySet());
+    public static void executeStatement(@NotNull final AbstractConnector connector, @NotNull final String sql, @NotNull final Collection<String> values1) {
+        SQLQueries.executeStatement(connector, sql, values1, Collections.emptySet());
     }
 
-    public static void executeStatement(@NotNull AbstractConnector connector,
-                                        @NotNull String sql,
-                                        @NotNull Collection<String> values1,
-                                        @NotNull Collection<String> values2) {
+    public static void executeStatement(@NotNull final AbstractConnector connector, @NotNull final String sql, @NotNull final Collection<String> values1,
+            @NotNull final Collection<String> values2) {
 
-        try (Connection connection = connector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = connector.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
             int count = 1;
-            for (String columnName : values1) {
+            for (final String columnName : values1) {
                 statement.setString(count++, columnName);
             }
-            for (String columnValue : values2) {
+            for (final String columnValue : values2) {
                 statement.setString(count++, columnValue);
             }
 
             statement.executeUpdate();
-        }
-        catch (SQLException exception) {
+        } catch (final SQLException exception) {
             exception.printStackTrace();
         }
     }
 
     @NotNull
-    public static <T> List<@NotNull T> executeQuery(@NotNull AbstractConnector connector,
-                                                    @NotNull String sql,
-                                                    @NotNull Collection<String> values,
-                                                    @NotNull Function<ResultSet, T> dataFunction,
-                                                    int amount) {
+    public static <T> List<@NotNull T> executeQuery(@NotNull final AbstractConnector connector, @NotNull final String sql,
+            @NotNull final Collection<String> values, @NotNull final Function<ResultSet, T> dataFunction, final int amount) {
 
-        List<T> list = new ArrayList<>();
-        try (Connection connection = connector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        final List<T> list = new ArrayList<>();
+        try (Connection connection = connector.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
             int count = 1;
-            for (String wValue : values) {
+            for (final String wValue : values) {
                 statement.setString(count++, wValue);
             }
 
-            ResultSet resultSet = statement.executeQuery();
+            final ResultSet resultSet = statement.executeQuery();
             while (resultSet.next() && (amount < 0 || list.size() < amount)) {
                 list.add(dataFunction.apply(resultSet));
             }
             resultSet.close();
-        }
-        catch (SQLException exception) {
+        } catch (final SQLException exception) {
             exception.printStackTrace();
         }
         list.removeIf(Objects::isNull);

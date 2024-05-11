@@ -4,6 +4,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import net.kyori.adventure.text.Component;
 import su.nightexpress.nightcore.command.experimental.ImprovedCommands;
 import su.nightexpress.nightcore.command.experimental.impl.ReloadCommand;
 import su.nightexpress.nightcore.command.experimental.node.ChainedNode;
@@ -19,13 +21,13 @@ import su.nightexpress.nightcore.language.LangAssets;
 import su.nightexpress.nightcore.util.*;
 import su.nightexpress.nightcore.util.blocktracker.PlayerBlockTracker;
 
-import java.util.HashSet;
+import java.util.*;
 import java.util.Set;
 
 public class NightCore extends NightPlugin implements ImprovedCommands {
 
     private final Set<NightCorePlugin> childrens;
-    private final CoreManager          coreManager;
+    private final CoreManager coreManager;
 
     public NightCore() {
         this.childrens = new HashSet<>();
@@ -36,7 +38,7 @@ public class NightCore extends NightPlugin implements ImprovedCommands {
     public void enable() {
         LangAssets.load();
 
-        ChainedNode rootNode = this.getRootNode();
+        final ChainedNode rootNode = this.getRootNode();
 
         if (Plugins.hasVault()) {
             VaultHook.setup();
@@ -62,53 +64,56 @@ public class NightCore extends NightPlugin implements ImprovedCommands {
     @Override
     @NotNull
     protected PluginDetails getDefaultDetails() {
-        return PluginDetails.create("nightcore", new String[]{"nightcore", "ncore"})
-            .setConfigClass(CoreConfig.class)
-            .setLangClass(CoreLang.class)
-            .setPermissionsClass(CorePerms.class);
+        return PluginDetails.create("nightcore", new String[] { "nightcore", "ncore" }).setConfigClass(CoreConfig.class)
+                .setLangClass(CoreLang.class).setPermissionsClass(CorePerms.class);
     }
 
-    void addChildren(@NotNull NightCorePlugin child) {
+    void addChildren(@NotNull final NightCorePlugin child) {
         this.childrens.add(child);
         child.info("Powered by " + this.getName());
     }
 
     @NotNull
-    public Set<NightCorePlugin> getChildrens() {
-        return new HashSet<>(this.childrens);
-    }
+    public Set<NightCorePlugin> getChildrens() { return new HashSet<>(this.childrens); }
 
     private void testMethods() {
         if (Version.getCurrent() == Version.UNKNOWN) {
             this.warn("Server Version: UNSUPPORTED ✘");
-        }
-        else this.info("Server Version: " + Version.getCurrent().getLocalized() + " ✔");
+        } else
+            this.info("Server Version: " + Version.getCurrent().getLocalized() + " ✔");
 
         if (EntityUtil.setupEntityCounter(this)) {
             this.info("Entity Id Counter: OK ✔");
-        }
-        else this.error("Entity Id Counter: FAIL ✘");
+        } else
+            this.error("Entity Id Counter: FAIL ✘");
 
         if (this.testItemNbt()) {
             this.info("Item NBT Compress: OK ✔");
-        }
-        else this.error("Item NBT Compress: FAIL ✘");
+        } else
+            this.error("Item NBT Compress: FAIL ✘");
     }
 
     private boolean testItemNbt() {
-        if (!ItemNbt.setup(this)) return false;
+        if (!ItemNbt.setup(this))
+            return false;
 
-        ItemStack testItem = new ItemStack(Material.DIAMOND_SWORD);
+        final ItemStack testItem = new ItemStack(Material.DIAMOND_SWORD);
         ItemUtil.editMeta(testItem, meta -> {
-            meta.setDisplayName("Test Item");
-            meta.setLore(Lists.newList("Test Lore 1", "Test Lore 2", "Test Lore 3"));
+            meta.displayName(Component.text("Test Item"));
+
+            final List<Component> testlore = new ArrayList<>();
+            testlore.add(Component.text("Test Lore 1"));
+            testlore.add(Component.text("Test Lore 2"));
+            testlore.add(Component.text("Test Lore 3"));
+            meta.lore(testlore);
             meta.addEnchant(Enchantment.FIRE_ASPECT, 10, true);
         });
 
-        String nbt = ItemNbt.compress(testItem);
-        if (nbt == null) return false;
+        final String nbt = ItemNbt.compress(testItem);
+        if (nbt == null)
+            return false;
 
-        ItemStack decompressed = ItemNbt.decompress(nbt);
+        final ItemStack decompressed = ItemNbt.decompress(nbt);
         return decompressed != null && decompressed.getType() == testItem.getType();
     }
 }

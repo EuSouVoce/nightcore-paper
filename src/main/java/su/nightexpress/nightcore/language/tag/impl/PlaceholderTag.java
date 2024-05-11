@@ -7,17 +7,11 @@ import su.nightexpress.nightcore.util.text.tag.api.Tag;
 
 public class PlaceholderTag extends Tag implements MessageDecorator {
 
-    public PlaceholderTag() {
-        super("papi");
-    }
+    public PlaceholderTag() { super("papi"); }
 
     @Override
-    public int getWeight() {
-        return 0;
-    }
+    public int getWeight() { return 0; }
 
     @Override
-    public void apply(@NotNull MessageOptions options, @NotNull String value) {
-        options.setUsePlaceholderAPI(true);
-    }
+    public void apply(@NotNull final MessageOptions options, @NotNull final String value) { options.setUsePlaceholderAPI(true); }
 }

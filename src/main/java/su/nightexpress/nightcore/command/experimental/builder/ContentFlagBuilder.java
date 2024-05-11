@@ -11,7 +11,7 @@ public class ContentFlagBuilder<T> extends FlagBuilder<ContentFlag<T>, ContentFl
 
     private String sample;
 
-    public ContentFlagBuilder(@NotNull String name, @NotNull Function<String , T> parser) {
+    public ContentFlagBuilder(@NotNull final String name, @NotNull final Function<String, T> parser) {
         super(name);
         this.parser = parser;
         this.sample = "";
@@ -19,18 +19,14 @@ public class ContentFlagBuilder<T> extends FlagBuilder<ContentFlag<T>, ContentFl
 
     @Override
     @NotNull
-    protected ContentFlagBuilder<T> getThis() {
-        return this;
-    }
+    protected ContentFlagBuilder<T> getThis() { return this; }
 
     @NotNull
-    public ContentFlagBuilder<T> sample(@NotNull String sample) {
+    public ContentFlagBuilder<T> sample(@NotNull final String sample) {
         this.sample = sample;
-        return getThis();
+        return this.getThis();
     }
 
     @Override
-    public @NotNull ContentFlag<T> build() {
-        return new ContentFlag<>(this.name, this.parser, this.sample, this.permission);
-    }
+    public @NotNull ContentFlag<T> build() { return new ContentFlag<>(this.name, this.parser, this.sample, this.permission); }
 }

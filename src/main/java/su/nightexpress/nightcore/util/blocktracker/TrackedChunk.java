@@ -11,34 +11,27 @@ public class TrackedChunk {
 
     private final IntSet trackedBlockPositions;
 
-    protected TrackedChunk(@NotNull PersistentDataContainer container) {
+    protected TrackedChunk(@NotNull final PersistentDataContainer container) {
         final int[] data = container.get(PlayerBlockTracker.TRACKED_DATA_KEY, PersistentDataType.INTEGER_ARRAY);
         if (data == null) {
             this.trackedBlockPositions = new IntOpenHashSet();
-        }
-        else {
+        } else {
             this.trackedBlockPositions = new IntOpenHashSet(data);
         }
     }
 
-    protected void add(@NotNull Block block) {
-        this.trackedBlockPositions.add(TrackUtil.getRelativeChunkPosition(block));
-    }
+    protected void add(@NotNull final Block block) { this.trackedBlockPositions.add(TrackUtil.getRelativeChunkPosition(block)); }
 
-    protected void remove(@NotNull Block block) {
-        this.trackedBlockPositions.remove(TrackUtil.getRelativeChunkPosition(block));
-    }
+    protected void remove(@NotNull final Block block) { this.trackedBlockPositions.remove(TrackUtil.getRelativeChunkPosition(block)); }
 
-    protected boolean isTracked(@NotNull Block block) {
+    protected boolean isTracked(@NotNull final Block block) {
         return this.trackedBlockPositions.contains(TrackUtil.getRelativeChunkPosition(block));
     }
 
-    protected void saveTo(@NotNull PersistentDataContainer container) {
+    protected void saveTo(@NotNull final PersistentDataContainer container) {
         final int[] data = this.trackedBlockPositions.toIntArray();
         container.set(PlayerBlockTracker.TRACKED_DATA_KEY, PersistentDataType.INTEGER_ARRAY, data);
     }
 
-    protected boolean isEmpty() {
-        return this.trackedBlockPositions.isEmpty();
-    }
+    protected boolean isEmpty() { return this.trackedBlockPositions.isEmpty(); }
 }

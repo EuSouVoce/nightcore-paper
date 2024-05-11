@@ -19,64 +19,66 @@ import su.nightexpress.nightcore.menu.impl.AbstractMenu;
 
 public class MenuListener extends AbstractListener<NightCore> {
 
-    public MenuListener(@NotNull NightCore core) {
-        super(core);
-    }
+    public MenuListener(@NotNull final NightCore core) { super(core); }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onQuit(PlayerQuitEvent event) {
-        AbstractMenu.PLAYER_MENUS.remove(event.getPlayer().getUniqueId());
-    }
+    public void onQuit(final PlayerQuitEvent event) { AbstractMenu.PLAYER_MENUS.remove(event.getPlayer().getUniqueId()); }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onMenuItemClick(InventoryClickEvent event) {
-        Player player = (Player) event.getWhoClicked();
+    public void onMenuItemClick(final InventoryClickEvent event) {
+        final Player player = (Player) event.getWhoClicked();
 
-        Menu menu = AbstractMenu.getMenu(player);
-        if (menu == null) return;
+        final Menu menu = AbstractMenu.getMenu(player);
+        if (menu == null)
+            return;
 
-        MenuViewer viewer = menu.getViewer(player);
-        if (viewer == null) return;
+        final MenuViewer viewer = menu.getViewer(player);
+        if (viewer == null)
+            return;
 
         if (!viewer.canClickAgain(CoreConfig.MENU_CLICK_COOLDOWN.get())) {
             event.setCancelled(true);
             return;
         }
 
-        Inventory inventory = event.getInventory();
-        ItemStack item = event.getCurrentItem();
+        final Inventory inventory = event.getInventory();
+        final ItemStack item = event.getCurrentItem();
 
-        int slot = event.getRawSlot();
-        boolean isMenu = slot < inventory.getSize();
-        //boolean isEmptyItem = item == null || item.getType().isAir();
-        ClickResult result = new ClickResult(slot, item, isMenu);
+        final int slot = event.getRawSlot();
+        final boolean isMenu = slot < inventory.getSize();
+        // boolean isEmptyItem = item == null || item.getType().isAir();
+        final ClickResult result = new ClickResult(slot, item, isMenu);
 
         menu.onClick(viewer, result, event);
         viewer.setLastClickTime(System.currentTimeMillis());
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onMenuItemDrag(InventoryDragEvent event) {
-        Player player = (Player) event.getWhoClicked();
+    public void onMenuItemDrag(final InventoryDragEvent event) {
+        final Player player = (Player) event.getWhoClicked();
 
-        Menu menu = AbstractMenu.getMenu(player);
-        if (menu == null) return;
+        final Menu menu = AbstractMenu.getMenu(player);
+        if (menu == null)
+            return;
 
-        MenuViewer viewer = menu.getViewer(player);
-        if (viewer == null) return;
+        final MenuViewer viewer = menu.getViewer(player);
+        if (viewer == null)
+            return;
 
         menu.onDrag(viewer, event);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onMenuClose(InventoryCloseEvent event) {
-        Player player = (Player) event.getPlayer();
+    public void onMenuClose(final InventoryCloseEvent event) {
+        final Player player = (Player) event.getPlayer();
 
-        Menu menu = AbstractMenu.getMenu(player);
-        if (menu == null) return;
+        final Menu menu = AbstractMenu.getMenu(player);
+        if (menu == null)
+            return;
 
-        MenuViewer viewer = menu.getViewer(player);
-        if (viewer == null) return;
+        final MenuViewer viewer = menu.getViewer(player);
+        if (viewer == null)
+            return;
 
         menu.onClose(viewer, event);
     }

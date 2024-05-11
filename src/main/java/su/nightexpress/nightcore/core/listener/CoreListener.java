@@ -11,13 +11,11 @@ import su.nightexpress.nightcore.util.Plugins;
 
 public class CoreListener extends AbstractListener<NightCore> {
 
-    public CoreListener(@NotNull NightCore plugin) {
-        super(plugin);
-    }
+    public CoreListener(@NotNull final NightCore plugin) { super(plugin); }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onServiceRegisterEvent(ServiceRegisterEvent event) {
-        //if (!Plugins.hasVault()) return;
+    public void onServiceRegisterEvent(final ServiceRegisterEvent event) {
+        // if (!Plugins.hasVault()) return;
 
         if (Plugins.isLoaded(Plugins.VAULT)) {
             VaultHook.onServiceRegisterEvent(event);

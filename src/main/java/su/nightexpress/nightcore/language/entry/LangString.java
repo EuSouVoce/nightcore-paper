@@ -11,19 +11,15 @@ public class LangString extends LangEntry<String> {
     private String string;
     private WrappedMessage message;
 
-    public LangString(@NotNull String path, @NotNull String defaultText) {
-        super(path, defaultText);
-    }
+    public LangString(@NotNull final String path, @NotNull final String defaultText) { super(path, defaultText); }
 
     @NotNull
-    public static LangString of(@NotNull String path, @NotNull String defaultText) {
-        return new LangString(path, defaultText);
-    }
+    public static LangString of(@NotNull final String path, @NotNull final String defaultText) { return new LangString(path, defaultText); }
 
     @Override
-    public boolean write(@NotNull FileConfig config) {
+    public boolean write(@NotNull final FileConfig config) {
         if (!config.contains(this.getPath())) {
-            String textDefault = this.getDefaultText();
+            final String textDefault = this.getDefaultText();
             config.set(this.getPath(), textDefault);
             return true;
         }
@@ -32,33 +28,27 @@ public class LangString extends LangEntry<String> {
 
     @Override
     @NotNull
-    public String load(@NotNull NightCorePlugin plugin) {
-        FileConfig config = plugin.getLang();
+    public String load(@NotNull final NightCorePlugin plugin) {
+        final FileConfig config = plugin.getLang();
 
         this.write(config);
-        String text = config.getString(this.getPath(), this.getPath());
+        final String text = config.getString(this.getPath(), this.getPath());
         this.setString(text);
 
         return this.getString();
     }
 
     @NotNull
-    public String getString() {
-        return string;
-    }
+    public String getString() { return this.string; }
 
-    public void setString(@NotNull String string) {
+    public void setString(@NotNull final String string) {
         this.string = string;
         this.message = NightMessage.from(string);
     }
 
     @NotNull
-    public WrappedMessage getMessage() {
-        return this.message;
-    }
+    public WrappedMessage getMessage() { return this.message; }
 
     @NotNull
-    public String getLegacy() {
-        return this.getMessage().toLegacy();
-    }
+    public String getLegacy() { return this.getMessage().toLegacy(); }
 }

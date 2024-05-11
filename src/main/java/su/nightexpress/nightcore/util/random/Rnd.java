@@ -9,93 +9,60 @@ public class Rnd {
 
     public static final MTRandom RANDOM = new MTRandom();
 
-    public static float getChance() {
-        return nextFloat() * 100f;
-    }
+    public static float getChance() { return Rnd.nextFloat() * 100f; }
 
-    public static int get(int n) {
-        return nextInt(n);
-    }
+    public static int get(final int n) { return Rnd.nextInt(n); }
 
-    public static int get(int min, int max) {
-        return min + (int) Math.floor(RANDOM.nextDouble() * (max - min + 1));
-    }
+    public static int get(final int min, final int max) { return min + (int) Math.floor(Rnd.RANDOM.nextDouble() * (max - min + 1)); }
 
-    public static double getDouble(double max) {
-        return getDouble(0, max);
-    }
+    public static double getDouble(final double max) { return Rnd.getDouble(0, max); }
 
-    public static double getDouble(double min, double max) {
-        return min + (max - min) * RANDOM.nextDouble();
+    public static double getDouble(final double min, final double max) { return min + (max - min) * Rnd.RANDOM.nextDouble(); }
+
+    @NotNull
+    public static <E> E get(@NotNull final E[] list) { return list[Rnd.get(list.length)]; }
+
+    public static int get(final int[] list) { return list[Rnd.get(list.length)]; }
+
+    @NotNull
+    public static <E> E get(@NotNull final List<E> list) {
+        if (list.isEmpty())
+            throw new NoSuchElementException("Empty list provided!");
+
+        return list.get(Rnd.get(list.size()));
     }
 
     @NotNull
-    public static <E> E get(@NotNull E[] list) {
-        return list[get(list.length)];
-    }
-
-    public static int get(int[] list) {
-        return list[get(list.length)];
-    }
+    public static <E> E get(@NotNull final Set<E> list) { return Rnd.get(new ArrayList<>(list)); }
 
     @NotNull
-    public static <E> E get(@NotNull List<E> list) {
-        if (list.isEmpty()) throw new NoSuchElementException("Empty list provided!");
-
-        return list.get(get(list.size()));
-    }
-
-    @NotNull
-    public static <E> E get(@NotNull Set<E> list) {
-        return get(new ArrayList<>(list));
-    }
-
-    @NotNull
-    public static <T> T getByWeight(@NotNull Map<T, Double> itemsMap) {
-        List<Pair<T, Double>> items = itemsMap.entrySet().stream()
-            .filter(entry -> entry.getValue() > 0D)
-            .map(entry -> Pair.of(entry.getKey(), entry.getValue()))
-            .sorted(Comparator.comparing(Pair::getSecond))
-            .toList();
-        double totalWeight = items.stream().mapToDouble(Pair::getSecond).sum();
+    public static <T> T getByWeight(@NotNull final Map<T, Double> itemsMap) {
+        final List<Pair<T, Double>> items = itemsMap.entrySet().stream().filter(entry -> entry.getValue() > 0D)
+                .map(entry -> Pair.of(entry.getKey(), entry.getValue())).sorted(Comparator.comparing(Pair::getSecond)).toList();
+        final double totalWeight = items.stream().mapToDouble(Pair::getSecond).sum();
 
         int index = 0;
-        for (double roll = nextDouble() * totalWeight; index < items.size() - 1; ++index) {
+        for (double roll = Rnd.nextDouble() * totalWeight; index < items.size() - 1; ++index) {
             roll -= items.get(index).getSecond();
-            if (roll <= 0D) break;
+            if (roll <= 0D)
+                break;
         }
         return items.get(index).getFirst();
     }
 
-    public static boolean chance(int chance) {
-        return chance >= 1 && (chance > 99 || nextInt(99) + 1 <= chance);
-    }
+    public static boolean chance(final int chance) { return chance >= 1 && (chance > 99 || Rnd.nextInt(99) + 1 <= chance); }
 
-    public static boolean chance(double chance) {
-        return nextDouble() <= chance / 100.0;
-    }
+    public static boolean chance(final double chance) { return Rnd.nextDouble() <= chance / 100.0; }
 
-    public static int nextInt(int n) {
-        return (int) Math.floor(RANDOM.nextDouble() * n);
-    }
+    public static int nextInt(final int n) { return (int) Math.floor(Rnd.RANDOM.nextDouble() * n); }
 
-    public static int nextInt() {
-        return RANDOM.nextInt();
-    }
+    public static int nextInt() { return Rnd.RANDOM.nextInt(); }
 
-    public static double nextDouble() {
-        return RANDOM.nextDouble();
-    }
+    public static double nextDouble() { return Rnd.RANDOM.nextDouble(); }
 
-    public static float nextFloat() {
-        return RANDOM.nextFloat();
-    }
+    public static float nextFloat() { return Rnd.RANDOM.nextFloat(); }
 
-    public static double nextGaussian() {
-        return RANDOM.nextGaussian();
-    }
+    public static double nextGaussian() { return Rnd.RANDOM.nextGaussian(); }
 
-    public static boolean nextBoolean() {
-        return RANDOM.nextBoolean();
-    }
+    public static boolean nextBoolean() { return Rnd.RANDOM.nextBoolean(); }
 }

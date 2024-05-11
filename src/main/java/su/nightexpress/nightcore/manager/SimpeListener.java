@@ -7,7 +7,5 @@ public interface SimpeListener extends Listener {
 
     void registerListeners();
 
-    default void unregisterListeners() {
-        HandlerList.unregisterAll(this);
-    }
+    default void unregisterListeners() { HandlerList.unregisterAll(this); }
 }

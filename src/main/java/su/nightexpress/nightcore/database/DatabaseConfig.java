@@ -10,12 +10,12 @@ import java.util.stream.Stream;
 
 public class DatabaseConfig {
 
-    private final int          saveInterval;
-    private final int          syncInterval;
+    private final int saveInterval;
+    private final int syncInterval;
     private final DatabaseType databaseType;
-    private final String       tablePrefix;
-    private final boolean      purgeEnabled;
-    private final int          purgePeriod;
+    private final String tablePrefix;
+    private final boolean purgeEnabled;
+    private final int purgePeriod;
 
     private final String username;
     private final String password;
@@ -25,22 +25,12 @@ public class DatabaseConfig {
 
     private final String filename;
 
-    public DatabaseConfig(
-        int saveInterval,
-        int syncInterval,
-        @NotNull DatabaseType databaseType,
-        @NotNull String tablePrefix,
-        boolean purgeEnabled,
-        int purgePeriod,
+    public DatabaseConfig(final int saveInterval, final int syncInterval, @NotNull final DatabaseType databaseType, @NotNull final String tablePrefix,
+            final boolean purgeEnabled, final int purgePeriod,
 
-        @NotNull String username,
-        @NotNull String password,
-        @NotNull String host,
-        @NotNull String database,
-        @NotNull String urlOptions,
+            @NotNull final String username, @NotNull final String password, @NotNull final String host, @NotNull final String database, @NotNull final String urlOptions,
 
-        @NotNull String filename
-    ) {
+            @NotNull final String filename) {
         this.saveInterval = saveInterval;
         this.syncInterval = syncInterval;
         this.databaseType = databaseType;
@@ -58,139 +48,92 @@ public class DatabaseConfig {
     }
 
     @NotNull
-    public static DatabaseConfig read(@NotNull NightCorePlugin plugin) {
-        String defPrefix = StringUtil.lowerCaseUnderscore(plugin.getName());
-        return read(plugin.getConfig(), defPrefix);
+    public static DatabaseConfig read(@NotNull final NightCorePlugin plugin) {
+        final String defPrefix = StringUtil.lowerCaseUnderscore(plugin.getName());
+        return DatabaseConfig.read(plugin.getConfig(), defPrefix);
     }
 
     @NotNull
-    public static DatabaseConfig read(@NotNull FileConfig cfg, @NotNull String defaultPrefix) {
-        //FileConfig cfg = plugin.getConfig();
+    public static DatabaseConfig read(@NotNull final FileConfig cfg, @NotNull final String defaultPrefix) {
+        // FileConfig cfg = plugin.getConfig();
         String path = "Database.";
 
-        DatabaseType databaseType = ConfigValue.create(path + "Type", DatabaseType.class, DatabaseType.SQLITE,
-            "Sets database type.",
-            "Available values: " + String.join(",", Stream.of(DatabaseType.values()).map(Enum::name).toList()))
-            .read(cfg);
+        final DatabaseType databaseType = ConfigValue.create(path + "Type", DatabaseType.class, DatabaseType.SQLITE, "Sets database type.",
+                "Available values: " + String.join(",", Stream.of(DatabaseType.values()).map(Enum::name).toList())).read(cfg);
 
-        int saveInterval = ConfigValue.create(path + "Auto_Save_Interval", 20,
-            "Sets how often (in minutes) plugin data of online players will be saved to the database.",
-            "Set to '-1' to disable.")
-            .read(cfg);
+        final int saveInterval = ConfigValue.create(path + "Auto_Save_Interval", 20,
+                "Sets how often (in minutes) plugin data of online players will be saved to the database.", "Set to '-1' to disable.")
+                .read(cfg);
 
-        int syncInterval = ConfigValue.create(path + "Sync_Interval", -1,
-            "Sets how often (in seconds) plugin data will be fetched and loaded from the remote database.",
-            "Useless for " + DatabaseType.SQLITE.name() + ".",
-            "Set to '-1' to disable.")
-            .read(cfg);
+        final int syncInterval = ConfigValue.create(path + "Sync_Interval", -1,
+                "Sets how often (in seconds) plugin data will be fetched and loaded from the remote database.",
+                "Useless for " + DatabaseType.SQLITE.name() + ".", "Set to '-1' to disable.").read(cfg);
 
-        String tablePrefix = ConfigValue.create(path + "Table_Prefix", defaultPrefix,
-            "Custom prefix for plugin tables in database.")
-            .read(cfg);
+        final String tablePrefix = ConfigValue.create(path + "Table_Prefix", defaultPrefix, "Custom prefix for plugin tables in database.")
+                .read(cfg);
 
-        String mysqlUser = ConfigValue.create(path + "MySQL.Username", "root",
-            "Database user name.")
-            .read(cfg);
+        final String mysqlUser = ConfigValue.create(path + "MySQL.Username", "root", "Database user name.").read(cfg);
 
-        String mysqlPassword = ConfigValue.create(path + "MySQL.Password", "root",
-            "Database password.")
-            .read(cfg);
+        final String mysqlPassword = ConfigValue.create(path + "MySQL.Password", "root", "Database password.").read(cfg);
 
-        String mysqlHost = ConfigValue.create(path + "MySQL.Host", "localhost:3306",
-            "Database address. Like http://127.0.0.1:3306/")
-            .read(cfg);
+        final String mysqlHost = ConfigValue.create(path + "MySQL.Host", "localhost:3306", "Database address. Like http://127.0.0.1:3306/")
+                .read(cfg);
 
-        String mysqlBase = ConfigValue.create(path + "MySQL.Database", "minecraft",
-            "Name of the MySQL database where plugin will create tables.")
-            .read(cfg);
+        final String mysqlBase = ConfigValue
+                .create(path + "MySQL.Database", "minecraft", "Name of the MySQL database where plugin will create tables.").read(cfg);
 
-        String urlOptions = ConfigValue.create(path + "MySQL.Options",
-            "?allowPublicKeyRetrieval=true&useSSL=false",
-            "Connection options. Do not touch unless you know what you're doing."
-        ).read(cfg);
+        final String urlOptions = ConfigValue.create(path + "MySQL.Options", "?allowPublicKeyRetrieval=true&useSSL=false",
+                "Connection options. Do not touch unless you know what you're doing.").read(cfg);
 
-        String sqliteFilename = ConfigValue.create(path + "SQLite.FileName", "data.db",
-            "File name for the SQLite database file.",
-            "Actually it's a path to the file, so you can use directories here.")
-            .read(cfg);
-
+        final String sqliteFilename = ConfigValue.create(path + "SQLite.FileName", "data.db", "File name for the SQLite database file.",
+                "Actually it's a path to the file, so you can use directories here.").read(cfg);
 
         path = "Database.Purge.";
-        boolean purgeEnabled = ConfigValue.create(path + "Enabled", false,
-            "Enables the purge feature.",
-            "Purge will remove all records from the plugin tables that are 'old' enough.")
-            .read(cfg);
+        final boolean purgeEnabled = ConfigValue.create(path + "Enabled", false, "Enables the purge feature.",
+                "Purge will remove all records from the plugin tables that are 'old' enough.").read(cfg);
 
-        int purgePeriod = ConfigValue.create(path + "For_Period", 60,
-            "Sets maximal 'age' for the database records before they will be purged.",
-            "This option may have different behavior depends on the plugin.",
-            "By default it's days of inactivity for the plugin users.")
-            .read(cfg);
+        final int purgePeriod = ConfigValue
+                .create(path + "For_Period", 60, "Sets maximal 'age' for the database records before they will be purged.",
+                        "This option may have different behavior depends on the plugin.",
+                        "By default it's days of inactivity for the plugin users.")
+                .read(cfg);
 
-        return new DatabaseConfig(
-            saveInterval, syncInterval,
-            databaseType, tablePrefix,
-            purgeEnabled, purgePeriod,
+        return new DatabaseConfig(saveInterval, syncInterval, databaseType, tablePrefix, purgeEnabled, purgePeriod,
 
-            mysqlUser, mysqlPassword, mysqlHost, mysqlBase, urlOptions,
+                mysqlUser, mysqlPassword, mysqlHost, mysqlBase, urlOptions,
 
-            sqliteFilename
-        );
+                sqliteFilename);
     }
 
     @NotNull
-    public DatabaseType getStorageType() {
-        return databaseType;
-    }
+    public DatabaseType getStorageType() { return this.databaseType; }
 
     @NotNull
-    public String getTablePrefix() {
-        return tablePrefix;
-    }
+    public String getTablePrefix() { return this.tablePrefix; }
 
-    public int getSaveInterval() {
-        return saveInterval;
-    }
+    public int getSaveInterval() { return this.saveInterval; }
 
-    public int getSyncInterval() {
-        return syncInterval;
-    }
+    public int getSyncInterval() { return this.syncInterval; }
 
-    public boolean isPurgeEnabled() {
-        return purgeEnabled;
-    }
+    public boolean isPurgeEnabled() { return this.purgeEnabled; }
 
-    public int getPurgePeriod() {
-        return purgePeriod;
-    }
+    public int getPurgePeriod() { return this.purgePeriod; }
 
     @NotNull
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return this.username; }
 
     @NotNull
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return this.password; }
 
     @NotNull
-    public String getHost() {
-        return host;
-    }
+    public String getHost() { return this.host; }
 
     @NotNull
-    public String getDatabase() {
-        return database;
-    }
+    public String getDatabase() { return this.database; }
 
     @NotNull
-    public String getUrlOptions() {
-        return urlOptions;
-    }
+    public String getUrlOptions() { return this.urlOptions; }
 
     @NotNull
-    public String getFilename() {
-        return filename;
-    }
+    public String getFilename() { return this.filename; }
 }

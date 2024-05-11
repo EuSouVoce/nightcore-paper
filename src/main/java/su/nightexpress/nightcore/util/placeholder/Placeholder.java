@@ -6,10 +6,9 @@ import java.util.function.UnaryOperator;
 
 public interface Placeholder {
 
-    @NotNull PlaceholderMap getPlaceholders();
+    @NotNull
+    PlaceholderMap getPlaceholders();
 
     @NotNull
-    default UnaryOperator<String> replacePlaceholders() {
-        return this.getPlaceholders().replacer();
-    }
+    default UnaryOperator<String> replacePlaceholders() { return this.getPlaceholders().replacer(); }
 }

@@ -15,31 +15,32 @@ import java.util.Set;
 
 public class HelpSubCommand extends AbstractCommand<NightCorePlugin> {
 
-    public HelpSubCommand(@NotNull NightCorePlugin plugin) {
-        super(plugin, new String[]{"help"});
+    public HelpSubCommand(@NotNull final NightCorePlugin plugin) {
+        super(plugin, new String[] { "help" });
         this.setDescription(CoreLang.COMMAND_HELP_DESC);
     }
 
     @Override
-    protected void onExecute(@NotNull CommandSender sender, @NotNull CommandResult result) {
-        NightCommand parent = this.getParent();
-        if (parent == null) return;
+    protected void onExecute(@NotNull final CommandSender sender, @NotNull final CommandResult result) {
+        final NightCommand parent = this.getParent();
+        if (parent == null)
+            return;
 
         if (!parent.hasPermission(sender)) {
             this.errorPermission(sender);
             return;
         }
 
-        CoreLang.COMMAND_HELP_LIST.getMessage()
-            .replace(Placeholders.GENERIC_NAME, this.plugin.getNameLocalized())
-            .replace(Placeholders.GENERIC_ENTRY, list -> {
-                Set<NightCommand> commands = new HashSet<>(parent.getChildrens());
+        CoreLang.COMMAND_HELP_LIST.getMessage().replace(Placeholders.GENERIC_NAME, this.plugin.getNameLocalized())
+                .replace(Placeholders.GENERIC_ENTRY, list -> {
+                    final Set<NightCommand> commands = new HashSet<>(parent.getChildrens());
 
-                commands.stream().sorted(Comparator.comparing(command -> command.getAliases()[0])).forEach(children -> {
-                    if (!children.hasPermission(sender)) return;
+                    commands.stream().sorted(Comparator.comparing(command -> command.getAliases()[0])).forEach(children -> {
+                        if (!children.hasPermission(sender))
+                            return;
 
-                    list.add(children.replacePlaceholders().apply(CoreLang.COMMAND_HELP_ENTRY.getString()));
-                });
-            }).send(sender);
+                        list.add(children.replacePlaceholders().apply(CoreLang.COMMAND_HELP_ENTRY.getString()));
+                    });
+                }).send(sender);
     }
 }

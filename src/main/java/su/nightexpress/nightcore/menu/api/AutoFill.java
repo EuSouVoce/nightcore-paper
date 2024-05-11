@@ -21,45 +21,28 @@ public class AutoFill<T> {
         this.setSlots();
         this.setItems(new ArrayList<>());
         this.setItemCreator(obj -> new ItemStack(Material.AIR));
-        this.setClickAction(obj -> (viewer, event) -> {});
+        this.setClickAction(obj -> (viewer, event) -> {
+        });
     }
 
-    public int[] getSlots() {
-        return slots;
-    }
+    public int[] getSlots() { return this.slots; }
 
-    public void setSlots(int... slots) {
-        this.slots = slots;
-    }
+    public void setSlots(final int... slots) { this.slots = slots; }
 
     @NotNull
-    public List<T> getItems() {
-        return items;
-    }
+    public List<T> getItems() { return this.items; }
 
-    public void setItems(@NotNull Collection<T> items) {
-        this.setItems(new ArrayList<>(items));
-    }
+    public void setItems(@NotNull final Collection<T> items) { this.setItems(new ArrayList<>(items)); }
 
-    public void setItems(@NotNull List<T> items) {
-        this.items = items;
-    }
+    public void setItems(@NotNull final List<T> items) { this.items = items; }
 
     @NotNull
-    public Function<T, ItemStack> getItemCreator() {
-        return itemCreator;
-    }
+    public Function<T, ItemStack> getItemCreator() { return this.itemCreator; }
 
-    public void setItemCreator(@NotNull Function<T, ItemStack> itemCreator) {
-        this.itemCreator = itemCreator;
-    }
+    public void setItemCreator(@NotNull final Function<T, ItemStack> itemCreator) { this.itemCreator = itemCreator; }
 
     @NotNull
-    public Function<T, ClickAction> getClickAction() {
-        return clickAction;
-    }
+    public Function<T, ClickAction> getClickAction() { return this.clickAction; }
 
-    public void setClickAction(@NotNull Function<T, ClickAction> clickAction) {
-        this.clickAction = clickAction;
-    }
+    public void setClickAction(@NotNull final Function<T, ClickAction> clickAction) { this.clickAction = clickAction; }
 }

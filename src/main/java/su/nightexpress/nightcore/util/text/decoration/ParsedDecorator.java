@@ -1,7 +1,6 @@
 package su.nightexpress.nightcore.util.text.decoration;
 
 import org.jetbrains.annotations.NotNull;
-import su.nightexpress.nightcore.util.text.decoration.Decorator;
 
 public class ParsedDecorator {
 
@@ -9,21 +8,15 @@ public class ParsedDecorator {
 
     private int length;
 
-    public ParsedDecorator(@NotNull Decorator tag, int length) {
+    public ParsedDecorator(@NotNull final Decorator tag, final int length) {
         this.tag = tag;
         this.length = length;
     }
 
     @NotNull
-    public Decorator getDecorator() {
-        return tag;
-    }
+    public Decorator getDecorator() { return this.tag; }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
+    public void setLength(final int length) { this.length = length; }
 
-    public int getLength() {
-        return length;
-    }
+    public int getLength() { return this.length; }
 }

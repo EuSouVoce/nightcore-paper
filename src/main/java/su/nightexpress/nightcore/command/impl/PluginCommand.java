@@ -18,86 +18,69 @@ import java.util.List;
 
 public abstract class PluginCommand<P extends NightCorePlugin> extends AbstractCommand<P> implements NightPluginCommand {
 
-    private Command      backend;
+    private Command backend;
     private NightCommand defaultCommand;
 
-    public PluginCommand(@NotNull P plugin, @NotNull String[] aliases) {
-        this(plugin, aliases, (String) null);
-    }
+    public PluginCommand(@NotNull final P plugin, @NotNull final String[] aliases) { this(plugin, aliases, (String) null); }
 
-    public PluginCommand(@NotNull P plugin, @NotNull String[] aliases, @Nullable Permission permission) {
+    public PluginCommand(@NotNull final P plugin, @NotNull final String[] aliases, @Nullable final Permission permission) {
         super(plugin, aliases, permission);
     }
 
-    public PluginCommand(@NotNull P plugin, @NotNull String[] aliases, @Nullable String permission) {
-        super(plugin, aliases, permission);
-    }
+    public PluginCommand(@NotNull final P plugin, @NotNull final String[] aliases, @Nullable final String permission) { super(plugin, aliases, permission); }
 
     @Override
-    public void addDefaultCommand(@NotNull NightCommand command) {
+    public void addDefaultCommand(@NotNull final NightCommand command) {
         this.addChildren(command);
         this.defaultCommand = command;
     }
 
     @Override
     @Nullable
-    public NightCommand getDefaultCommand() {
-        return defaultCommand;
-    }
+    public NightCommand getDefaultCommand() { return this.defaultCommand; }
 
     @Override
-    public Command getBackend() {
-        return backend;
-    }
+    public Command getBackend() { return this.backend; }
 
     @Override
-    public void setBackend(@NotNull Command backend) {
-        this.backend = backend;
-    }
+    public void setBackend(@NotNull final Command backend) { this.backend = backend; }
 
-    //@Override
+    // @Override
     @NotNull
-    private NightCommand findChildren(@NotNull String[] args) {
-        NightCommand command = this;//.defaultCommand;
+    private NightCommand findChildren(@NotNull final String[] args) {
+        NightCommand command = this;// .defaultCommand;
         int childCount = 0;
         while (args.length > childCount) {
-            NightCommand child = command.getChildren(args[childCount++]);
-            if (child == null) break;
+            final NightCommand child = command.getChildren(args[childCount++]);
+            if (child == null)
+                break;
 
             command = child;
         }
         return command;
     }
 
-    /*private int countChildren(@NotNull String[] args) {
-        AbstractCommand<P> command = this;
-        int childCount = 0;
-        while (args.length > childCount) {
-            AbstractCommand<P> child = command.getChildren(args[childCount]);
-            if (child == null) break;
+    /*
+     * private int countChildren(@NotNull String[] args) { AbstractCommand<P>
+     * command = this; int childCount = 0; while (args.length > childCount) {
+     * AbstractCommand<P> child = command.getChildren(args[childCount]); if (child
+     * == null) break; command = child; childCount++; } return childCount; }
+     */
 
-            command = child;
-            childCount++;
-        }
-        return childCount;
-    }*/
-
-    /*private String[] insertArg(@NotNull String arg, int index, String[] args) {
-        List<String> list = new ArrayList<>(Arrays.asList(args));
-        if (index >= list.size()) {
-            list.add(arg);
-        }
-        else list.add(index, arg);
-        return list.toArray(new String[0]);
-    }*/
+    /*
+     * private String[] insertArg(@NotNull String arg, int index, String[] args) {
+     * List<String> list = new ArrayList<>(Arrays.asList(args)); if (index >=
+     * list.size()) { list.add(arg); } else list.add(index, arg); return
+     * list.toArray(new String[0]); }
+     */
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label, final String[] args) {
         NightCommand command = this.findChildren(args);
-        if (command instanceof NightPluginCommand pluginCommand) {
+        if (command instanceof final NightPluginCommand pluginCommand) {
             if (pluginCommand.getDefaultCommand() != null) {
                 command = pluginCommand.getDefaultCommand();
-                //args = insertArg(command.getAliases()[0], 0, args);
+                // args = insertArg(command.getAliases()[0], 0, args);
             }
         }
         command.execute(sender, label, args);
@@ -105,20 +88,20 @@ public abstract class PluginCommand<P extends NightCorePlugin> extends AbstractC
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd,
-                                      @NotNull String label, String[] args) {
+    public List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label, final String[] args) {
 
-        if (!(sender instanceof Player player) || args.length == 0) return Collections.emptyList();
+        if (!(sender instanceof final Player player) || args.length == 0)
+            return Collections.emptyList();
 
-        NightCommand command = this.findChildren(args);
-        if (!command.hasPermission(sender)) return Collections.emptyList();
+        final NightCommand command = this.findChildren(args);
+        if (!command.hasPermission(sender))
+            return Collections.emptyList();
 
-        List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
         if (!command.getChildrens().isEmpty()) {
             command.getChildrens().stream().filter(child -> child.hasPermission(sender))
-                .forEach(child -> list.addAll(Arrays.asList(child.getAliases())));
-        }
-        else {
+                    .forEach(child -> list.addAll(Arrays.asList(child.getAliases())));
+        } else {
             list.addAll(command.getTab(player, command.equals(this) ? (args.length) : (args.length - 1), args));
         }
         return Lists.getSequentialMatches(list, args[args.length - 1]);

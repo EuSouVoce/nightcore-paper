@@ -19,7 +19,7 @@ public class DirectNodeBuilder extends NodeBuilder<DirectNode, DirectNodeBuilder
 
     private DirectExecutor executor;
 
-    public DirectNodeBuilder(@NotNull NightCorePlugin plugin, @NotNull String... aliases) {
+    public DirectNodeBuilder(@NotNull final NightCorePlugin plugin, @NotNull final String... aliases) {
         super(plugin, aliases);
         this.arguments = new ArrayList<>();
         this.flags = new HashMap<>();
@@ -27,34 +27,28 @@ public class DirectNodeBuilder extends NodeBuilder<DirectNode, DirectNodeBuilder
 
     @Override
     @NotNull
-    protected DirectNodeBuilder getThis() {
-        return this;
-    }
+    protected DirectNodeBuilder getThis() { return this; }
 
     @NotNull
-    public DirectNodeBuilder withArgument(@NotNull ArgumentBuilder<?> builder) {
-        return this.withArgument(builder.build());
-    }
+    public DirectNodeBuilder withArgument(@NotNull final ArgumentBuilder<?> builder) { return this.withArgument(builder.build()); }
 
     @NotNull
-    public DirectNodeBuilder withArgument(@NotNull CommandArgument<?> argument) {
+    public DirectNodeBuilder withArgument(@NotNull final CommandArgument<?> argument) {
         this.arguments.add(argument);
         return this;
     }
 
     @NotNull
-    public DirectNodeBuilder withFlag(@NotNull FlagBuilder<?, ?> builder) {
-        return this.withFlag(builder.build());
-    }
+    public DirectNodeBuilder withFlag(@NotNull final FlagBuilder<?, ?> builder) { return this.withFlag(builder.build()); }
 
     @NotNull
-    public DirectNodeBuilder withFlag(@NotNull CommandFlag flag) {
+    public DirectNodeBuilder withFlag(@NotNull final CommandFlag flag) {
         this.flags.put(flag.getName(), flag);
         return this;
     }
 
     @NotNull
-    public DirectNodeBuilder executes(DirectExecutor executor) {
+    public DirectNodeBuilder executes(final DirectExecutor executor) {
         this.executor = executor;
         return this;
     }
@@ -62,6 +56,7 @@ public class DirectNodeBuilder extends NodeBuilder<DirectNode, DirectNodeBuilder
     @Override
     @NotNull
     public DirectNode build() {
-        return new DirectNode(this.plugin, this.name, this.aliases, this.description, this.permission, this.playerOnly, this.arguments, this.flags, this.executor);
+        return new DirectNode(this.plugin, this.name, this.aliases, this.description, this.permission, this.playerOnly, this.arguments,
+                this.flags, this.executor);
     }
 }

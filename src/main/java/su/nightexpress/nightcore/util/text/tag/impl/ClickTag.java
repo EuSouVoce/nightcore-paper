@@ -13,18 +13,14 @@ public class ClickTag extends ContentTag {
 
     public static final String NAME = "click";
 
-    public ClickTag() {
-        super(NAME);
-    }
+    public ClickTag() { super(ClickTag.NAME); }
 
     @Override
-    public int getWeight() {
-        return 50;
-    }
+    public int getWeight() { return 50; }
 
     @NotNull
-    public String enclose(@NotNull ClickEvent.Action action, @NotNull String text, @NotNull String command) {
-        String actionName = action.name().toLowerCase();
+    public String enclose(@NotNull final ClickEvent.Action action, @NotNull final String text, @NotNull final String command) {
+        final String actionName = action.name().toLowerCase();
         return this.enclose(actionName, command, text);
     }
 
@@ -32,23 +28,25 @@ public class ClickTag extends ContentTag {
     @Nullable
     public ParsedDecorator onParse(@NotNull String sub) {
         ClickEvent.Action action = null;
-        for (ClickEvent.Action global : ClickEvent.Action.values()) {
+        for (final ClickEvent.Action global : ClickEvent.Action.values()) {
             if (sub.startsWith(global.name().toLowerCase())) {
                 action = global;
                 break;
             }
         }
-        if (action == null) return null;
+        if (action == null)
+            return null;
 
-        int prefixSize = action.name().toLowerCase().length() + 1; // 1 for ':', like "run_command:"
+        final int prefixSize = action.name().toLowerCase().length() + 1; // 1 for ':', like "run_command:"
         sub = sub.substring(prefixSize);
 
-        String content = StringUtil.parseQuotedContent(sub);
-        if (content == null) return null;
+        final String content = StringUtil.parseQuotedContent(sub);
+        if (content == null)
+            return null;
 
-        int length = prefixSize + content.length();// + 2; // 2 for quotes
+        final int length = prefixSize + content.length();// + 2; // 2 for quotes
 
-        Decorator decorator = new ClickEventDecorator(action, content);
+        final Decorator decorator = new ClickEventDecorator(action, content);
 
         return new ParsedDecorator(decorator, length);
     }

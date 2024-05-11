@@ -19,7 +19,7 @@ public abstract class NodeBuilder<S extends CommandNode, B extends NodeBuilder<S
     protected String permission;
     protected boolean playerOnly;
 
-    public NodeBuilder(@NotNull NightCorePlugin plugin, @NotNull String... aliases) {
+    public NodeBuilder(@NotNull final NightCorePlugin plugin, @NotNull final String... aliases) {
         this.plugin = plugin;
         this.name = aliases[0];
         this.aliases = Stream.of(aliases).skip(1).toArray(String[]::new);
@@ -35,29 +35,25 @@ public abstract class NodeBuilder<S extends CommandNode, B extends NodeBuilder<S
     public abstract S build();
 
     @NotNull
-    public B aliases(@NotNull String... aliases) {
+    public B aliases(@NotNull final String... aliases) {
         this.aliases = aliases;
         return this.getThis();
     }
 
     @NotNull
-    public B description(@NotNull LangString description) {
-        return this.description(description.getString());
-    }
+    public B description(@NotNull final LangString description) { return this.description(description.getString()); }
 
     @NotNull
-    public B description(@NotNull String description) {
+    public B description(@NotNull final String description) {
         this.description = description;
         return this.getThis();
     }
 
     @NotNull
-    public B permission(@NotNull UniPermission permission) {
-        return this.permission(permission.getName());
-    }
+    public B permission(@NotNull final UniPermission permission) { return this.permission(permission.getName()); }
 
     @NotNull
-    public B permission(@Nullable String permission) {
+    public B permission(@Nullable final String permission) {
         this.permission = permission;
         return this.getThis();
     }

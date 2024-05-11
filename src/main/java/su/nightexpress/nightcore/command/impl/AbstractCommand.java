@@ -19,49 +19,44 @@ import java.util.stream.Stream;
 
 public abstract class AbstractCommand<P extends NightCorePlugin> implements NightCommand {
 
-    protected final P                           plugin;
-    private final   String[]                    aliases;
-    private final   Map<String, NightCommand>   childrens;
-    private final   Map<String, CommandFlag<?>> commandFlags;
-    private final   PlaceholderMap              placeholderMap;
+    protected final P plugin;
+    private final String[] aliases;
+    private final Map<String, NightCommand> childrens;
+    private final Map<String, CommandFlag<?>> commandFlags;
+    private final PlaceholderMap placeholderMap;
 
     private NightCommand parent;
-    private String       permission;
-    private String       usage;
-    private String       description;
-    private boolean      playerOnly;
+    private String permission;
+    private String usage;
+    private String description;
+    private boolean playerOnly;
 
-    public AbstractCommand(@NotNull P plugin, @NotNull String[] aliases) {
-        this(plugin, aliases, (String) null);
-    }
+    public AbstractCommand(@NotNull final P plugin, @NotNull final String[] aliases) { this(plugin, aliases, (String) null); }
 
-    public AbstractCommand(@NotNull P plugin, @NotNull String[] aliases, @Nullable Permission permission) {
+    public AbstractCommand(@NotNull final P plugin, @NotNull final String[] aliases, @Nullable final Permission permission) {
         this(plugin, aliases, permission == null ? null : permission.getName());
     }
 
-    public AbstractCommand(@NotNull P plugin, @NotNull String[] aliases, @Nullable String permission) {
+    public AbstractCommand(@NotNull final P plugin, @NotNull final String[] aliases, @Nullable final String permission) {
         this.plugin = plugin;
         this.aliases = Stream.of(aliases).map(String::toLowerCase).toArray(String[]::new);
         this.permission = permission;
         this.childrens = new TreeMap<>();
         this.commandFlags = new HashMap<>();
-        this.placeholderMap = new PlaceholderMap()
-            .add(Placeholders.COMMAND_DESCRIPTION, this::getDescription)
-            .add(Placeholders.COMMAND_USAGE, this::getUsage)
-            .add(Placeholders.COMMAND_LABEL, this::getLabelWithParents);
+        this.placeholderMap = new PlaceholderMap().add(Placeholders.COMMAND_DESCRIPTION, this::getDescription)
+                .add(Placeholders.COMMAND_USAGE, this::getUsage).add(Placeholders.COMMAND_LABEL, this::getLabelWithParents);
 
     }
 
     @Override
     @NotNull
-    public PlaceholderMap getPlaceholders() {
-        return this.placeholderMap;
-    }
+    public PlaceholderMap getPlaceholders() { return this.placeholderMap; }
 
     protected abstract void onExecute(@NotNull CommandSender sender, @NotNull CommandResult result);
 
+    @Override
     @NotNull
-    public List<String> getTab(@NotNull Player player, int arg, @NotNull String[] args) {
+    public List<String> getTab(@NotNull final Player player, final int arg, @NotNull final String[] args) {
         if (player.hasPermission(CorePerms.COMMAND_FLAGS)) {
             return this.getFlags().stream().map(CommandFlag::getNamePrefixed).toList();
         }
@@ -69,7 +64,7 @@ public abstract class AbstractCommand<P extends NightCorePlugin> implements Nigh
     }
 
     @Override
-    public final void execute(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
+    public final void execute(@NotNull final CommandSender sender, @NotNull final String label, @NotNull final String[] args) {
         if (this.isPlayerOnly() && !(sender instanceof Player)) {
             this.errorSender(sender);
             return;
@@ -79,24 +74,23 @@ public abstract class AbstractCommand<P extends NightCorePlugin> implements Nigh
             return;
         }
 
-        List<String> cleanArgs = new ArrayList<>();
-        Map<CommandFlag<?>, StringBuilder> flagContent = new HashMap<>();
+        final List<String> cleanArgs = new ArrayList<>();
+        final Map<CommandFlag<?>, StringBuilder> flagContent = new HashMap<>();
         CommandFlag<?> lastFlag = null;
 
-        for (String arg : args) {
-            CommandFlag<?> found = arg.charAt(0) == CommandFlag.PREFIX ? this.getFlag(arg.substring(1)) : null;
+        for (final String arg : args) {
+            final CommandFlag<?> found = arg.charAt(0) == CommandFlag.PREFIX ? this.getFlag(arg.substring(1)) : null;
 
             if (found != null) {
                 flagContent.put(found, new StringBuilder());
                 lastFlag = found;
-            }
-            else if (lastFlag != null) {
-                StringBuilder builder = flagContent.get(lastFlag);
-                if (!builder.isEmpty()) builder.append(" ");
+            } else if (lastFlag != null) {
+                final StringBuilder builder = flagContent.get(lastFlag);
+                if (!builder.isEmpty())
+                    builder.append(" ");
 
                 builder.append(arg);
-            }
-            else {
+            } else {
                 cleanArgs.add(arg);
             }
         }
@@ -104,13 +98,15 @@ public abstract class AbstractCommand<P extends NightCorePlugin> implements Nigh
             flagContent.clear();
         }
 
-        CommandResult result = new CommandResult(label, cleanArgs.toArray(new String[0]), flagContent);
+        final CommandResult result = new CommandResult(label, cleanArgs.toArray(new String[0]), flagContent);
 
         this.onExecute(sender, result);
     }
 
-    public final void addChildren(@NotNull NightCommand children) {
-        if (children.getParent() != null) return;
+    @Override
+    public final void addChildren(@NotNull final NightCommand children) {
+        if (children.getParent() != null)
+            return;
 
         Stream.of(children.getAliases()).forEach(alias -> {
             this.childrens.put(alias, children);
@@ -119,116 +115,76 @@ public abstract class AbstractCommand<P extends NightCorePlugin> implements Nigh
     }
 
     @Override
-    public final void removeChildren(@NotNull String alias) {
-        this.childrens.keySet().removeIf(key -> key.equalsIgnoreCase(alias));
-    }
+    public final void removeChildren(@NotNull final String alias) { this.childrens.keySet().removeIf(key -> key.equalsIgnoreCase(alias)); }
 
     @Override
     @Nullable
-    public NightCommand getParent() {
-        return parent;
-    }
+    public NightCommand getParent() { return this.parent; }
 
     @Override
-    public void setParent(@Nullable NightCommand parent) {
-        this.parent = parent;
-    }
+    public void setParent(@Nullable final NightCommand parent) { this.parent = parent; }
 
     @Override
     @Nullable
-    public final NightCommand getChildren(@NotNull String alias) {
-        return this.childrens.get(alias);
-    }
+    public final NightCommand getChildren(@NotNull final String alias) { return this.childrens.get(alias); }
 
     @Override
     @NotNull
-    public Collection<NightCommand> getChildrens() {
-        return this.childrens.values();
-    }
+    public Collection<NightCommand> getChildrens() { return this.childrens.values(); }
 
     @Override
     @NotNull
-    public final String[] getAliases() {
-        return this.aliases;
-    }
+    public final String[] getAliases() { return this.aliases; }
 
     @Override
     @Nullable
-    public final String getPermission() {
-        return this.permission;
-    }
+    public final String getPermission() { return this.permission; }
 
     @Override
-    public void setPermission(@Nullable String permission) {
-        this.permission = permission;
-    }
+    public void setPermission(@Nullable final String permission) { this.permission = permission; }
 
     @Override
     @Nullable
-    public CommandFlag<?> getFlag(@NotNull String name) {
-        return this.commandFlags.get(name.toLowerCase());
-    }
+    public CommandFlag<?> getFlag(@NotNull final String name) { return this.commandFlags.get(name.toLowerCase()); }
 
     @Override
-    public void addFlag(@NotNull CommandFlag<?> flag) {
-        this.commandFlags.put(flag.getName(), flag);
-    }
+    public void addFlag(@NotNull final CommandFlag<?> flag) { this.commandFlags.put(flag.getName(), flag); }
 
     @Override
     @NotNull
-    public Collection<CommandFlag<?>> getFlags() {
-        return this.commandFlags.values();
-    }
+    public Collection<CommandFlag<?>> getFlags() { return this.commandFlags.values(); }
 
     @Override
     @NotNull
-    public String getUsage() {
-        return this.usage == null ? "" : this.usage;
-    }
+    public String getUsage() { return this.usage == null ? "" : this.usage; }
 
     @Override
-    public void setUsage(@NotNull String usage) {
-        this.usage = usage;
-    }
+    public void setUsage(@NotNull final String usage) { this.usage = usage; }
 
     @Override
     @NotNull
-    public String getDescription() {
-        return this.description == null ? "" : this.description;
-    }
+    public String getDescription() { return this.description == null ? "" : this.description; }
 
     @Override
-    public void setDescription(@NotNull String description) {
-        this.description = description;
-    }
+    public void setDescription(@NotNull final String description) { this.description = description; }
 
     @Override
-    public boolean isPlayerOnly() {
-        return this.playerOnly;
-    }
+    public boolean isPlayerOnly() { return this.playerOnly; }
 
     @Override
-    public void setPlayerOnly(boolean playerOnly) {
-        this.playerOnly = playerOnly;
+    public void setPlayerOnly(final boolean playerOnly) { this.playerOnly = playerOnly; }
+
+    protected final void errorUsage(@NotNull final CommandSender sender) {
+        CoreLang.ERROR_COMMAND_USAGE.getMessage(this.plugin).replace(this.replacePlaceholders()).send(sender);
     }
 
-    protected final void errorUsage(@NotNull CommandSender sender) {
-        CoreLang.ERROR_COMMAND_USAGE.getMessage(plugin).replace(this.replacePlaceholders()).send(sender);
-    }
+    protected final void errorPermission(@NotNull final CommandSender sender) { CoreLang.ERROR_NO_PERMISSION.getMessage(this.plugin).send(sender); }
 
-    protected final void errorPermission(@NotNull CommandSender sender) {
-        CoreLang.ERROR_NO_PERMISSION.getMessage(plugin).send(sender);
-    }
+    protected final void errorPlayer(@NotNull final CommandSender sender) { CoreLang.ERROR_INVALID_PLAYER.getMessage(this.plugin).send(sender); }
 
-    protected final void errorPlayer(@NotNull CommandSender sender) {
-        CoreLang.ERROR_INVALID_PLAYER.getMessage(plugin).send(sender);
-    }
+    protected final void errorSender(@NotNull final CommandSender sender) { CoreLang.ERROR_COMMAND_PLAYER_ONLY.getMessage(this.plugin).send(sender); }
 
-    protected final void errorSender(@NotNull CommandSender sender) {
-        CoreLang.ERROR_COMMAND_PLAYER_ONLY.getMessage(plugin).send(sender);
-    }
-
-    protected final void errorNumber(@NotNull CommandSender sender, @NotNull String from) {
-        CoreLang.ERROR_INVALID_NUMBER.getMessage(plugin).replace(Placeholders.GENERIC_VALUE, from).send(sender);
+    protected final void errorNumber(@NotNull final CommandSender sender, @NotNull final String from) {
+        CoreLang.ERROR_INVALID_NUMBER.getMessage(this.plugin).replace(Placeholders.GENERIC_VALUE, from).send(sender);
     }
 }

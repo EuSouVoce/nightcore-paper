@@ -12,9 +12,9 @@ import java.util.Set;
 public abstract class AbstractManager<P extends NightCorePlugin> extends SimpleManager<P> {
 
     protected final Set<SimpeListener> listeners;
-    protected final List<UniTask>       tasks;
+    protected final List<UniTask> tasks;
 
-    public AbstractManager(@NotNull P plugin) {
+    public AbstractManager(@NotNull final P plugin) {
         super(plugin);
         this.listeners = new HashSet<>();
         this.tasks = new ArrayList<>();
@@ -29,13 +29,13 @@ public abstract class AbstractManager<P extends NightCorePlugin> extends SimpleM
         super.shutdown();
     }
 
-    protected void addListener(@NotNull SimpeListener listener) {
+    protected void addListener(@NotNull final SimpeListener listener) {
         if (this.listeners.add(listener)) {
             listener.registerListeners();
         }
     }
 
-    protected void addTask(@NotNull UniTask task) {
+    protected void addTask(@NotNull final UniTask task) {
         this.tasks.add(task);
         task.start();
     }

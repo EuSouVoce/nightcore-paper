@@ -12,35 +12,26 @@ import java.util.List;
 
 public class WrappedCommand extends Command implements PluginIdentifiableCommand {
 
-    protected final Plugin          plugin;
+    protected final Plugin plugin;
     protected final CommandExecutor executor;
-    protected final TabCompleter    tabCompleter;
+    protected final TabCompleter tabCompleter;
 
-    public WrappedCommand(@NotNull Plugin plugin, @NotNull NightPluginCommand command) {
+    public WrappedCommand(@NotNull final Plugin plugin, @NotNull final NightPluginCommand command) {
         this(plugin, command, command, command.getAliases(), command.getDescription(), command.getUsage());
         this.setPermission(command.getPermission());
     }
 
-    public WrappedCommand(@NotNull Plugin plugin,
-                          @NotNull CommandExecutor executor,
-                          @NotNull TabCompleter tabCompleter,
-                          @NotNull String[] aliases,
-                          @NotNull String description,
-                          @NotNull String usage) {
-        /*super(aliases[0], description, usage, Arrays.asList(aliases));
-        this.plugin = plugin;
-        this.executor = executor;
-        this.tabCompleter = tabCompleter;*/
+    public WrappedCommand(@NotNull final Plugin plugin, @NotNull final CommandExecutor executor, @NotNull final TabCompleter tabCompleter,
+            @NotNull final String[] aliases, @NotNull final String description, @NotNull final String usage) {
+        /*
+         * super(aliases[0], description, usage, Arrays.asList(aliases)); this.plugin =
+         * plugin; this.executor = executor; this.tabCompleter = tabCompleter;
+         */
         this(plugin, executor, tabCompleter, aliases[0], aliases, description, usage);
     }
 
-    public WrappedCommand(@NotNull Plugin plugin,
-                          @NotNull CommandExecutor executor,
-                          @NotNull TabCompleter tabCompleter,
-                          @NotNull String name,
-                          @NotNull String[] aliases,
-                          @NotNull String description,
-                          @NotNull String usage) {
+    public WrappedCommand(@NotNull final Plugin plugin, @NotNull final CommandExecutor executor, @NotNull final TabCompleter tabCompleter,
+            @NotNull final String name, @NotNull final String[] aliases, @NotNull final String description, @NotNull final String usage) {
         super(name, NightMessage.clean(description), NightMessage.clean(usage), Arrays.asList(aliases));
         this.plugin = plugin;
         this.executor = executor;
@@ -49,19 +40,17 @@ public class WrappedCommand extends Command implements PluginIdentifiableCommand
 
     @Override
     @NotNull
-    public Plugin getPlugin() {
-        return this.plugin;
-    }
+    public Plugin getPlugin() { return this.plugin; }
 
     @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
+    public boolean execute(@NotNull final CommandSender sender, @NotNull final String label, @NotNull final String[] args) {
         return this.executor.onCommand(sender, this, label, args);
     }
 
     @Override
     @NotNull
-    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
-        List<String> list = this.tabCompleter.onTabComplete(sender, this, alias, args);
+    public List<String> tabComplete(@NotNull final CommandSender sender, @NotNull final String alias, @NotNull final String[] args) {
+        final List<String> list = this.tabCompleter.onTabComplete(sender, this, alias, args);
         return list == null ? Collections.emptyList() : list;
     }
 }

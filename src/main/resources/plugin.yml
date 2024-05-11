@@ -1,10 +1,10 @@
 name: nightcore
 main: su.nightexpress.nightcore.NightCore
-version: '${project.version}'
+version: "${project.version}"
 description: Plugin Creation Kit.
 author: NightExpress
 api-version: 1.18
 load: STARTUP
 libraries:
-  - com.zaxxer:HikariCP:5.0.1
+  - com.zaxxer:HikariCP:5.1.0
   - it.unimi.dsi:fastutil-core:8.5.13

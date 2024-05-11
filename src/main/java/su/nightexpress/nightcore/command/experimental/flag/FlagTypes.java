@@ -9,32 +9,30 @@ import su.nightexpress.nightcore.command.experimental.builder.SimpleFlagBuilder;
 public class FlagTypes {
 
     @NotNull
-    public static SimpleFlagBuilder simple(@NotNull String name) {
-        return SimpleFlag.builder(name);
-    }
+    public static SimpleFlagBuilder simple(@NotNull final String name) { return SimpleFlag.builder(name); }
 
     @NotNull
-    public static ContentFlagBuilder<World> world(@NotNull String name) {
+    public static ContentFlagBuilder<World> world(@NotNull final String name) {
         return ContentFlag.builder(name, ArgumentTypes.WORLD).sample("world");
     }
 
     @NotNull
-    public static ContentFlagBuilder<String> string(@NotNull String name) {
+    public static ContentFlagBuilder<String> string(@NotNull final String name) {
         return ContentFlag.builder(name, ArgumentTypes.STRING).sample("foo");
     }
 
     @NotNull
-    public static ContentFlagBuilder<Integer> integer(@NotNull String name) {
+    public static ContentFlagBuilder<Integer> integer(@NotNull final String name) {
         return ContentFlag.builder(name, ArgumentTypes.INTEGER).sample("0");
     }
 
     @NotNull
-    public static ContentFlagBuilder<Double> decimal(@NotNull String name) {
+    public static ContentFlagBuilder<Double> decimal(@NotNull final String name) {
         return ContentFlag.builder(name, ArgumentTypes.DOUBLE).sample("0.0");
     }
 
     @NotNull
-    public static ContentFlagBuilder<Boolean> bool(@NotNull String name) {
+    public static ContentFlagBuilder<Boolean> bool(@NotNull final String name) {
         return ContentFlag.builder(name, ArgumentTypes.BOOLEAN).sample(Boolean.TRUE.toString());
     }
 }

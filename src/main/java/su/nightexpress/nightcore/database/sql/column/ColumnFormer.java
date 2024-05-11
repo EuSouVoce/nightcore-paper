@@ -19,17 +19,12 @@ public interface ColumnFormer {
         return "int(" + length + ") NOT NULL";
     };
 
-    ColumnFormer DOUBLE = (storageType, length) -> {
-        return storageType == DatabaseType.SQLITE ? "REAL NOT NULL" : "double NOT NULL";
-    };
+    ColumnFormer DOUBLE = (storageType, length) -> (storageType == DatabaseType.SQLITE ? "REAL NOT NULL" : "double NOT NULL");
 
-    ColumnFormer LONG = (storageType, length) -> {
-        return length < 1 || storageType == DatabaseType.SQLITE ? "BIGINT NOT NULL" : "bigint(" + length + ") NOT NULL";
-    };
+    ColumnFormer LONG = (storageType, length) -> (length < 1 || storageType == DatabaseType.SQLITE ? "BIGINT NOT NULL" : "bigint(" + length + ") NOT NULL");
 
-    ColumnFormer BOOLEAN = (storageType, length) -> {
-        return storageType == DatabaseType.SQLITE ? "INTEGER NOT NULL" : "tinyint(1) NOT NULL";
-    };
+    ColumnFormer BOOLEAN = (storageType, length) -> (storageType == DatabaseType.SQLITE ? "INTEGER NOT NULL" : "tinyint(1) NOT NULL");
 
-    @NotNull String build(@NotNull DatabaseType databaseType, int length);
+    @NotNull
+    String build(@NotNull DatabaseType databaseType, int length);
 }

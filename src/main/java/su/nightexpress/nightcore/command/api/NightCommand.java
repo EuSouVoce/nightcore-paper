@@ -14,7 +14,8 @@ import java.util.List;
 
 public interface NightCommand extends Placeholder {
 
-    @NotNull List<String> getTab(@NotNull Player player, int arg, @NotNull String[] args);
+    @NotNull
+    List<String> getTab(@NotNull Player player, int arg, @NotNull String[] args);
 
     void execute(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args);
 
@@ -22,13 +23,13 @@ public interface NightCommand extends Placeholder {
 
     void removeChildren(@NotNull String alias);
 
-    default boolean hasPermission(@NotNull CommandSender sender) {
+    default boolean hasPermission(@NotNull final CommandSender sender) {
         return this.getPermission() == null || sender.hasPermission(this.getPermission());
     }
 
     @NotNull
     default String getLabelWithParents() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         NightCommand parent = this.getParent();
         while (parent != null) {
             builder.insert(0, parent.getAliases()[0] + " ");
@@ -38,47 +39,51 @@ public interface NightCommand extends Placeholder {
         return builder.toString();
     }
 
-    @Nullable NightCommand getParent();
+    @Nullable
+    NightCommand getParent();
 
     void setParent(@Nullable NightCommand parent);
 
-    @Nullable NightCommand getChildren(@NotNull String alias);
+    @Nullable
+    NightCommand getChildren(@NotNull String alias);
 
-    @NotNull Collection<NightCommand> getChildrens();
+    @NotNull
+    Collection<NightCommand> getChildrens();
 
-    @NotNull String[] getAliases();
+    @NotNull
+    String[] getAliases();
 
-    @Nullable String getPermission();
+    @Nullable
+    String getPermission();
 
-    default void setPermission(@Nullable Permission permission) {
-        this.setPermission(permission == null ? null : permission.getName());
-    }
+    default void setPermission(@Nullable final Permission permission) { this.setPermission(permission == null ? null : permission.getName()); }
 
     void setPermission(@Nullable String permission);
 
-    @Nullable CommandFlag<?> getFlag(@NotNull String name);
+    @Nullable
+    CommandFlag<?> getFlag(@NotNull String name);
 
-    @NotNull Collection<CommandFlag<?>> getFlags();
+    @NotNull
+    Collection<CommandFlag<?>> getFlags();
 
-    default void addFlag(@NotNull CommandFlag<?>... flags) {
-        for (CommandFlag<?> flag : flags) this.addFlag(flag);
+    default void addFlag(@NotNull final CommandFlag<?>... flags) {
+        for (final CommandFlag<?> flag : flags)
+            this.addFlag(flag);
     }
 
     void addFlag(@NotNull CommandFlag<?> flag);
 
-    @NotNull String getUsage();
+    @NotNull
+    String getUsage();
 
-    default void setUsage(@NotNull LangString string) {
-        this.setUsage(string.getString());
-    }
+    default void setUsage(@NotNull final LangString string) { this.setUsage(string.getString()); }
 
     void setUsage(@NotNull String usage);
 
-    @NotNull String getDescription();
+    @NotNull
+    String getDescription();
 
-    default void setDescription(@NotNull LangString string) {
-        this.setDescription(string.getString());
-    }
+    default void setDescription(@NotNull final LangString string) { this.setDescription(string.getString()); }
 
     void setDescription(@NotNull String description);
 

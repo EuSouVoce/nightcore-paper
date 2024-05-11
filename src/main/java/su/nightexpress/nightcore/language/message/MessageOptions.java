@@ -7,10 +7,10 @@ import org.jetbrains.annotations.Nullable;
 public class MessageOptions {
 
     private OutputType outputType;
-    private boolean    hasPrefix;
-    private boolean    usePlaceholderAPI;
-    private Sound      sound;
-    private int[]      titleTimes;
+    private boolean hasPrefix;
+    private boolean usePlaceholderAPI;
+    private Sound sound;
+    private int[] titleTimes;
 
     public MessageOptions() {
         this.setOutputType(OutputType.CHAT);
@@ -19,7 +19,7 @@ public class MessageOptions {
 
     @NotNull
     public MessageOptions copy() {
-        MessageOptions copy = new MessageOptions();
+        final MessageOptions copy = new MessageOptions();
         copy.outputType = this.outputType;
         copy.hasPrefix = this.hasPrefix;
         copy.usePlaceholderAPI = this.usePlaceholderAPI;
@@ -29,44 +29,24 @@ public class MessageOptions {
     }
 
     @NotNull
-    public OutputType getOutputType() {
-        return outputType;
-    }
+    public OutputType getOutputType() { return this.outputType; }
 
-    public void setOutputType(OutputType outputType) {
-        this.outputType = outputType;
-    }
+    public void setOutputType(final OutputType outputType) { this.outputType = outputType; }
 
-    public boolean hasPrefix() {
-        return hasPrefix;
-    }
+    public boolean hasPrefix() { return this.hasPrefix; }
 
-    public void setHasPrefix(boolean hasPrefix) {
-        this.hasPrefix = hasPrefix;
-    }
+    public void setHasPrefix(final boolean hasPrefix) { this.hasPrefix = hasPrefix; }
 
-    public boolean usePlaceholderAPI() {
-        return this.usePlaceholderAPI;
-    }
+    public boolean usePlaceholderAPI() { return this.usePlaceholderAPI; }
 
-    public void setUsePlaceholderAPI(boolean usePlaceholderAPI) {
-        this.usePlaceholderAPI = usePlaceholderAPI;
-    }
+    public void setUsePlaceholderAPI(final boolean usePlaceholderAPI) { this.usePlaceholderAPI = usePlaceholderAPI; }
 
     @Nullable
-    public Sound getSound() {
-        return sound;
-    }
+    public Sound getSound() { return this.sound; }
 
-    public void setSound(Sound sound) {
-        this.sound = sound;
-    }
+    public void setSound(final Sound sound) { this.sound = sound; }
 
-    public int[] getTitleTimes() {
-        return titleTimes;
-    }
+    public int[] getTitleTimes() { return this.titleTimes; }
 
-    public void setTitleTimes(int[] titleTimes) {
-        this.titleTimes = titleTimes;
-    }
+    public void setTitleTimes(final int[] titleTimes) { this.titleTimes = titleTimes; }
 }

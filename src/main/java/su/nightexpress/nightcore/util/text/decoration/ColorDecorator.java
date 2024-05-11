@@ -10,12 +10,8 @@ public class ColorDecorator implements Decorator {
 
     private final Color color;
 
-    public ColorDecorator(@NotNull Color color) {
-        this.color = color;
-    }
+    public ColorDecorator(@NotNull final Color color) { this.color = color; }
 
     @Override
-    public void decorate(@NotNull BaseComponent component) {
-        component.setColor(ChatColor.of(this.color));
-    }
+    public void decorate(@NotNull final BaseComponent component) { component.setColor(ChatColor.of(this.color)); }
 }

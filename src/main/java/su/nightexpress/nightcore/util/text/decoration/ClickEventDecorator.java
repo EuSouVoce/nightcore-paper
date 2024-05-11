@@ -9,18 +9,14 @@ public class ClickEventDecorator implements Decorator {
     private final ClickEvent.Action action;
     private final String value;
 
-    public ClickEventDecorator(@NotNull ClickEvent.Action action, @NotNull String value) {
+    public ClickEventDecorator(@NotNull final ClickEvent.Action action, @NotNull final String value) {
         this.action = action;
         this.value = value;
     }
 
     @NotNull
-    public ClickEvent createEvent() {
-        return new ClickEvent(this.action, this.value);
-    }
+    public ClickEvent createEvent() { return new ClickEvent(this.action, this.value); }
 
     @Override
-    public void decorate(@NotNull BaseComponent component) {
-        component.setClickEvent(this.createEvent());
-    }
+    public void decorate(@NotNull final BaseComponent component) { component.setClickEvent(this.createEvent()); }
 }

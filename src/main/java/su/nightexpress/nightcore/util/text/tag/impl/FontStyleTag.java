@@ -13,29 +13,25 @@ public class FontStyleTag extends Tag implements Decorator {
 
     private final Style style;
 
-    public FontStyleTag(@NotNull String name, @NotNull Style style) {
+    public FontStyleTag(@NotNull final String name, @NotNull final Style style) {
         super(name);
         this.style = style;
     }
 
     @Override
-    public int getWeight() {
-        return 0;
-    }
+    public int getWeight() { return 0; }
 
     @NotNull
-    public Style getStyle() {
-        return style;
-    }
+    public Style getStyle() { return this.style; }
 
     @Override
-    public void decorate(@NotNull BaseComponent component) {
+    public void decorate(@NotNull final BaseComponent component) {
         switch (this.getStyle()) {
-            case BOLD -> component.setBold(true);
-            case ITALIC -> component.setItalic(true);
-            case OBFUSCATED -> component.setObfuscated(true);
-            case UNDERLINED -> component.setUnderlined(true);
-            case STRIKETHROUGH -> component.setStrikethrough(true);
+        case BOLD -> component.setBold(true);
+        case ITALIC -> component.setItalic(true);
+        case OBFUSCATED -> component.setObfuscated(true);
+        case UNDERLINED -> component.setUnderlined(true);
+        case STRIKETHROUGH -> component.setStrikethrough(true);
         }
     }
 }

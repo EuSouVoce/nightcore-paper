@@ -8,25 +8,21 @@ import su.nightexpress.nightcore.menu.click.ClickAction;
 public class MenuItem {
 
     protected ItemStack itemStack;
-    protected int       priority;
-    protected int[]     slots;
+    protected int priority;
+    protected int[] slots;
 
     protected ItemOptions options;
     protected ItemHandler handler;
 
-    public MenuItem(@NotNull ItemStack itemStack) {
-        this(itemStack, new int[0]);
-    }
+    public MenuItem(@NotNull final ItemStack itemStack) { this(itemStack, new int[0]); }
 
-    public MenuItem(@NotNull ItemStack itemStack, int... slots) {
-        this(itemStack, 0, slots);
-    }
+    public MenuItem(@NotNull final ItemStack itemStack, final int... slots) { this(itemStack, 0, slots); }
 
-    public MenuItem(@NotNull ItemStack itemStack, int priority, int[] slots) {
+    public MenuItem(@NotNull final ItemStack itemStack, final int priority, final int[] slots) {
         this(itemStack, priority, slots, new ItemOptions(), new ItemHandler());
     }
 
-    public MenuItem(@NotNull ItemStack itemStack, int priority, int[] slots, @NotNull ItemOptions options, @NotNull ItemHandler handler) {
+    public MenuItem(@NotNull final ItemStack itemStack, final int priority, final int[] slots, @NotNull final ItemOptions options, @NotNull final ItemHandler handler) {
         this.setItemStack(itemStack);
         this.setPriority(priority);
         this.setSlots(slots);
@@ -45,73 +41,62 @@ public class MenuItem {
         return this;
     }
 
-    public boolean canSee(@NotNull MenuViewer viewer) {
-        if (!this.getOptions().canSee(viewer)) return false;
+    public boolean canSee(@NotNull final MenuViewer viewer) {
+        if (!this.getOptions().canSee(viewer))
+            return false;
 
-        var policy = this.getHandler().getVisibilityPolicy();
+        final var policy = this.getHandler().getVisibilityPolicy();
         return policy == null || policy.test(viewer);
     }
 
     @NotNull
-    public ItemStack getItemStack() {
-        return new ItemStack(this.itemStack);
-    }
+    public ItemStack getItemStack() { return new ItemStack(this.itemStack); }
 
     @NotNull
-    public MenuItem setItemStack(@NotNull ItemStack itemStack) {
+    public MenuItem setItemStack(@NotNull final ItemStack itemStack) {
         this.itemStack = new ItemStack(itemStack);
         return this;
     }
 
-    public int getPriority() {
-        return priority;
-    }
+    public int getPriority() { return this.priority; }
 
     @NotNull
-    public MenuItem setPriority(int priority) {
+    public MenuItem setPriority(final int priority) {
         this.priority = priority;
         return this;
     }
 
-    public int[] getSlots() {
-        return slots;
-    }
+    public int[] getSlots() { return this.slots; }
 
     @NotNull
-    public MenuItem setSlots(int... slots) {
+    public MenuItem setSlots(final int... slots) {
         this.slots = slots;
         return this;
     }
 
     @NotNull
-    public ItemOptions getOptions() {
-        return options;
-    }
+    public ItemOptions getOptions() { return this.options; }
 
     @NotNull
-    public MenuItem setOptions(@NotNull ItemOptions options) {
+    public MenuItem setOptions(@NotNull final ItemOptions options) {
         this.options = options;
         return this;
     }
 
     @NotNull
-    public ItemHandler getHandler() {
-        return handler;
-    }
+    public ItemHandler getHandler() { return this.handler; }
 
     @NotNull
-    public MenuItem setHandler(@NotNull ItemHandler handler) {
+    public MenuItem setHandler(@NotNull final ItemHandler handler) {
         this.handler = handler;
         return this;
     }
 
     @NotNull
-    public MenuItem setHandler(@NotNull ClickAction click) {
-        return this.setHandler(ItemHandler.forClick(click));
-    }
+    public MenuItem setHandler(@NotNull final ClickAction click) { return this.setHandler(ItemHandler.forClick(click)); }
 
     @NotNull
-    public MenuItem addClick(@NotNull ClickAction click) {
+    public MenuItem addClick(@NotNull final ClickAction click) {
         this.getHandler().getClickActions().add(click);
         return this;
     }

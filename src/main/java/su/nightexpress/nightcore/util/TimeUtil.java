@@ -12,14 +12,16 @@ import java.util.concurrent.TimeUnit;
 public class TimeUtil {
 
     @NotNull
-    public static String formatTime(long time) {
-        long days = TimeUnit.MILLISECONDS.toDays(time);
-        long hours = TimeUnit.MILLISECONDS.toHours(time) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(time) % 60;
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(time) % 60;
-        String delimiter = CoreLang.TIME_DELIMITER.getString();
+    public static String formatTime(final long time) {
+        //@formatter:off
+        final long days        = TimeUnit.MILLISECONDS.toDays(time);
+        final long hours       = TimeUnit.MILLISECONDS.toHours(time)   % 24;
+        final long minutes     = TimeUnit.MILLISECONDS.toMinutes(time) % 60;
+        final long seconds     = TimeUnit.MILLISECONDS.toSeconds(time) % 60;
+        final String delimiter = CoreLang.TIME_DELIMITER.getString();
+        //@formatter:on
 
-        StringBuilder str = new StringBuilder();
+        final StringBuilder str = new StringBuilder();
         if (days > 0) {
             if (!str.isEmpty()) {
                 str.append(delimiter);
@@ -49,32 +51,30 @@ public class TimeUtil {
     }
 
     @NotNull
-    public static String formatDuration(long from, long to) {
-        long time = to - from;
-        return formatTime(time);
+    public static String formatDuration(final long from, final long to) {
+        final long time = to - from;
+        return TimeUtil.formatTime(time);
     }
 
     @NotNull
-    public static String formatDuration(long until) {
-        return formatTime(until - System.currentTimeMillis());
-    }
+    public static String formatDuration(final long until) { return TimeUtil.formatTime(until - System.currentTimeMillis()); }
 
     @NotNull
-    public static LocalTime getLocalTimeOf(long ms) {
-        long hours = TimeUnit.MILLISECONDS.toHours(ms) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(ms) % 60;
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(ms) % 60;
+    public static LocalTime getLocalTimeOf(final long ms) {
+        final long hours = TimeUnit.MILLISECONDS.toHours(ms) % 24;
+        final long minutes = TimeUnit.MILLISECONDS.toMinutes(ms) % 60;
+        final long seconds = TimeUnit.MILLISECONDS.toSeconds(ms) % 60;
 
         return LocalTime.of((int) hours, (int) minutes, (int) seconds);
     }
 
     @NotNull
-    public static LocalDateTime getLocalDateTimeOf(long ms) {
+    public static LocalDateTime getLocalDateTimeOf(final long ms) {
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(ms), TimeZone.getDefault().toZoneId());
     }
 
-    public static long toEpochMillis(@NotNull LocalDateTime dateTime) {
-        Instant instant = dateTime.atZone(TimeZone.getDefault().toZoneId()).toInstant();
+    public static long toEpochMillis(@NotNull final LocalDateTime dateTime) {
+        final Instant instant = dateTime.atZone(TimeZone.getDefault().toZoneId()).toInstant();
         return instant.toEpochMilli();
     }
 }

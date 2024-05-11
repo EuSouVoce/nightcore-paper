@@ -4,5 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface OrphanTag {
 
-    @NotNull String getContent();
+    @NotNull
+    String getContent();
 }

@@ -19,9 +19,11 @@ public interface DataUser {
 
     void setCachedUntil(long cachedUntil);
 
-    @NotNull UUID getId();
+    @NotNull
+    UUID getId();
 
-    @NotNull String getName();
+    @NotNull
+    String getName();
 
     void setName(String name);
 
@@ -35,7 +37,9 @@ public interface DataUser {
 
     boolean isOnline();
 
-    @NotNull OfflinePlayer getOfflinePlayer();
+    @NotNull
+    OfflinePlayer getOfflinePlayer();
 
-    @Nullable Player getPlayer();
+    @Nullable
+    Player getPlayer();
 }

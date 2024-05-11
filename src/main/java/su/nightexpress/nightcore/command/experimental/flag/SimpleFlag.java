@@ -6,12 +6,8 @@ import su.nightexpress.nightcore.command.experimental.builder.SimpleFlagBuilder;
 
 public class SimpleFlag extends CommandFlag {
 
-    public SimpleFlag(@NotNull String name, @Nullable String permission) {
-        super(name, permission);
-    }
+    public SimpleFlag(@NotNull final String name, @Nullable final String permission) { super(name, permission); }
 
     @NotNull
-    public static SimpleFlagBuilder builder(@NotNull String name) {
-        return new SimpleFlagBuilder(name);
-    }
+    public static SimpleFlagBuilder builder(@NotNull final String name) { return new SimpleFlagBuilder(name); }
 }

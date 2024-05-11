@@ -15,15 +15,15 @@ import java.util.stream.StreamSupport;
 public class BukkitThing {
 
     @Nullable
-    public static <T extends Keyed> T fromRegistry(@NotNull Registry<T> registry, @NotNull String key) {
+    public static <T extends Keyed> T fromRegistry(@NotNull final Registry<T> registry, @NotNull String key) {
         key = StringUtil.lowerCaseUnderscoreStrict(key);
 
-        NamespacedKey namespacedKey = NamespacedKey.minecraft(key);
+        final NamespacedKey namespacedKey = NamespacedKey.minecraft(key);
         return registry.get(namespacedKey);
     }
 
     @NotNull
-    public static <T extends Keyed> Set<T> allFromRegistry(@NotNull Registry<T> registry) {
+    public static <T extends Keyed> Set<T> allFromRegistry(@NotNull final Registry<T> registry) {
         if (Version.isBehind(Version.V1_20_R2)) {
             return StreamSupport.stream(registry.spliterator(), false).collect(Collectors.toSet());
         }
@@ -31,50 +31,35 @@ public class BukkitThing {
     }
 
     @NotNull
-    public static String toString(@NotNull Keyed keyed) {
-        return keyed.getKey().getKey();
-    }
+    public static String toString(@NotNull final Keyed keyed) { return keyed.getKey().getKey(); }
 
     @Nullable
-    public static Material getMaterial(@NotNull String name) {
-        return fromRegistry(Registry.MATERIAL, name);
-    }
+    public static Material getMaterial(@NotNull final String name) { return BukkitThing.fromRegistry(Registry.MATERIAL, name); }
 
     @NotNull
-    public static Set<Material> getMaterials() {
-        return allFromRegistry(Registry.MATERIAL);
-    }
+    public static Set<Material> getMaterials() { return BukkitThing.allFromRegistry(Registry.MATERIAL); }
 
     @NotNull
-    public static Set<Enchantment> getEnchantments() {
-        return allFromRegistry(Registry.ENCHANTMENT);
-    }
+    public static Set<Enchantment> getEnchantments() { return BukkitThing.allFromRegistry(Registry.ENCHANTMENT); }
 
+    @SuppressWarnings("deprecation")
     @Nullable
-    public static Enchantment getEnchantment(@NotNull String name) {
+    public static Enchantment getEnchantment(@NotNull final String name) {
         if (Version.isBehind(Version.V1_19_R3)) {
             return Enchantment.getByKey(NamespacedKey.minecraft(StringUtil.lowerCaseUnderscoreStrict(name)));
         }
-        return fromRegistry(Registry.ENCHANTMENT, name);
+        return BukkitThing.fromRegistry(Registry.ENCHANTMENT, name);
     }
 
     @Nullable
-    public static EntityType getEntityType(@NotNull String name) {
-        return fromRegistry(Registry.ENTITY_TYPE, name);
-    }
+    public static EntityType getEntityType(@NotNull final String name) { return BukkitThing.fromRegistry(Registry.ENTITY_TYPE, name); }
 
     @Nullable
-    public static Attribute getAttribute(@NotNull String name) {
-        return fromRegistry(Registry.ATTRIBUTE, name);
-    }
+    public static Attribute getAttribute(@NotNull final String name) { return BukkitThing.fromRegistry(Registry.ATTRIBUTE, name); }
 
     @Nullable
-    public static PotionEffectType getPotionEffect(@NotNull String name) {
-        return fromRegistry(Registry.EFFECT, name);
-    }
+    public static PotionEffectType getPotionEffect(@NotNull final String name) { return BukkitThing.fromRegistry(Registry.EFFECT, name); }
 
     @Nullable
-    public static Sound getSound(@NotNull String name) {
-        return fromRegistry(Registry.SOUNDS, name);
-    }
+    public static Sound getSound(@NotNull final String name) { return BukkitThing.fromRegistry(Registry.SOUNDS, name); }
 }

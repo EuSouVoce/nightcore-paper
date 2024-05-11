@@ -3,11 +3,12 @@ package su.nightexpress.nightcore.util.text.tag;
 import su.nightexpress.nightcore.util.text.tag.impl.*;
 
 public class Tags {
-
+    //@formatter:off
     public static final ClickTag         CLICK           = new ClickTag();
     public static final FontTag          FONT            = new FontTag();
     public static final GradientTag      GRADIENT        = new GradientTag();
     public static final HexColorTag      HEX_COLOR       = new HexColorTag();
+    @SuppressWarnings("deprecation")
     public static final ShortHexColorTag HEX_COLOR_SHORT = new ShortHexColorTag();
     public static final HoverTag         HOVER           = new HoverTag();
     public static final LineBreakTag     LINE_BREAK      = new LineBreakTag();
@@ -42,4 +43,5 @@ public class Tags {
     public static final ColorTag LIGHT_CYAN   = new ColorTag("lcyan", new String[]{"light_cyan"}, "#5edefd");
     public static final ColorTag LIGHT_PURPLE = new ColorTag("lpurple", new String[]{"light_purple"}, "#e39fff");
     public static final ColorTag LIGHT_PINK   = new ColorTag("lpink", new String[]{"light_pink"}, "#fd8ddb");
+    //@formatter:on
 }

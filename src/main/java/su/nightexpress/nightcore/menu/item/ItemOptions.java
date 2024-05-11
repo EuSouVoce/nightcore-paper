@@ -15,65 +15,59 @@ public class ItemOptions {
     private Predicate<MenuViewer> weakPolicy;
     private BiConsumer<MenuViewer, ItemStack> displayModifier;
 
-    public ItemOptions() {
-        this(null, null, null);
-    }
+    public ItemOptions() { this(null, null, null); }
 
-    public ItemOptions(@Nullable Predicate<MenuViewer> visibilityPolicy,
-                       @Nullable Predicate<MenuViewer> weakPolicy,
-                       @Nullable BiConsumer<MenuViewer, ItemStack> displayModifier) {
+    public ItemOptions(@Nullable final Predicate<MenuViewer> visibilityPolicy, @Nullable final Predicate<MenuViewer> weakPolicy,
+            @Nullable final BiConsumer<MenuViewer, ItemStack> displayModifier) {
         this.setVisibilityPolicy(visibilityPolicy);
         this.setWeakPolicy(weakPolicy);
         this.setDisplayModifier(displayModifier);
     }
 
     @NotNull
-    public static ItemOptions personalWeak(@NotNull Player player) {
-        Predicate<MenuViewer> visibility = (viewer -> viewer.getPlayer().getUniqueId().equals(player.getUniqueId()));
-        Predicate<MenuViewer> weak = (viewer -> viewer.getPlayer().getUniqueId().equals(player.getUniqueId()));
+    public static ItemOptions personalWeak(@NotNull final Player player) {
+        final Predicate<MenuViewer> visibility = (viewer -> viewer.getPlayer().getUniqueId().equals(player.getUniqueId()));
+        final Predicate<MenuViewer> weak = (viewer -> viewer.getPlayer().getUniqueId().equals(player.getUniqueId()));
         return new ItemOptions(visibility, weak, null);
     }
 
     @NotNull
-    public static ItemOptions personalPermanent(@NotNull Player player) {
-        Predicate<MenuViewer> visibility = (viewer -> viewer.getPlayer().getUniqueId().equals(player.getUniqueId()));
+    public static ItemOptions personalPermanent(@NotNull final Player player) {
+        final Predicate<MenuViewer> visibility = (viewer -> viewer.getPlayer().getUniqueId().equals(player.getUniqueId()));
         return new ItemOptions(visibility, null, null);
     }
 
-    public boolean canSee(@NotNull MenuViewer viewer) {
-        Predicate<MenuViewer> policy = this.getVisibilityPolicy();
+    public boolean canSee(@NotNull final MenuViewer viewer) {
+        final Predicate<MenuViewer> policy = this.getVisibilityPolicy();
         return policy == null || policy.test(viewer);
     }
 
-    public boolean canBeDestroyed(@NotNull MenuViewer viewer) {
-        Predicate<MenuViewer> policy = this.getWeakPolicy();
+    public boolean canBeDestroyed(@NotNull final MenuViewer viewer) {
+        final Predicate<MenuViewer> policy = this.getWeakPolicy();
         return policy != null && policy.test(viewer);
     }
 
-    public void modifyDisplay(@NotNull MenuViewer viewer, @NotNull ItemStack item) {
-        BiConsumer<MenuViewer, ItemStack> displayModifier = this.getDisplayModifier();
+    public void modifyDisplay(@NotNull final MenuViewer viewer, @NotNull final ItemStack item) {
+        final BiConsumer<MenuViewer, ItemStack> displayModifier = this.getDisplayModifier();
         if (displayModifier != null) {
             displayModifier.accept(viewer, item);
         }
     }
 
     @Nullable
-    public Predicate<MenuViewer> getVisibilityPolicy() {
-        return visibilityPolicy;
-    }
+    public Predicate<MenuViewer> getVisibilityPolicy() { return this.visibilityPolicy; }
 
     @NotNull
-    public ItemOptions setVisibilityPolicy(@Nullable Predicate<MenuViewer> visibilityPolicy) {
+    public ItemOptions setVisibilityPolicy(@Nullable final Predicate<MenuViewer> visibilityPolicy) {
         this.visibilityPolicy = visibilityPolicy;
         return this;
     }
 
     @NotNull
-    public ItemOptions addVisibilityPolicy(@NotNull Predicate<MenuViewer> visibilityPolicy) {
+    public ItemOptions addVisibilityPolicy(@NotNull final Predicate<MenuViewer> visibilityPolicy) {
         if (this.visibilityPolicy == null) {
             this.setVisibilityPolicy(visibilityPolicy);
-        }
-        else {
+        } else {
             this.visibilityPolicy = this.visibilityPolicy.and(visibilityPolicy);
         }
 
@@ -81,33 +75,28 @@ public class ItemOptions {
     }
 
     @Nullable
-    public Predicate<MenuViewer> getWeakPolicy() {
-        return weakPolicy;
-    }
+    public Predicate<MenuViewer> getWeakPolicy() { return this.weakPolicy; }
 
     @NotNull
-    public ItemOptions setWeakPolicy(@Nullable Predicate<MenuViewer> weakPolicy) {
+    public ItemOptions setWeakPolicy(@Nullable final Predicate<MenuViewer> weakPolicy) {
         this.weakPolicy = weakPolicy;
         return this;
     }
 
     @Nullable
-    public BiConsumer<MenuViewer, ItemStack> getDisplayModifier() {
-        return displayModifier;
-    }
+    public BiConsumer<MenuViewer, ItemStack> getDisplayModifier() { return this.displayModifier; }
 
     @NotNull
-    public ItemOptions setDisplayModifier(@Nullable BiConsumer<MenuViewer, ItemStack> displayModifier) {
+    public ItemOptions setDisplayModifier(@Nullable final BiConsumer<MenuViewer, ItemStack> displayModifier) {
         this.displayModifier = displayModifier;
         return this;
     }
 
     @NotNull
-    public ItemOptions addDisplayModifier(@NotNull BiConsumer<MenuViewer, ItemStack> displayModifier) {
+    public ItemOptions addDisplayModifier(@NotNull final BiConsumer<MenuViewer, ItemStack> displayModifier) {
         if (this.displayModifier == null) {
             this.setDisplayModifier(displayModifier);
-        }
-        else {
+        } else {
             this.displayModifier = this.displayModifier.andThen(displayModifier);
         }
         return this;

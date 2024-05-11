@@ -10,37 +10,31 @@ import java.util.function.Function;
 public class ContentFlag<T> extends CommandFlag {
 
     private final Function<String, T> parser;
-    private final String              sample;
+    private final String sample;
 
-    public ContentFlag(@NotNull String name, @NotNull Function<String , T> parser, @Nullable String sample, @Nullable String permission) {
+    public ContentFlag(@NotNull final String name, @NotNull final Function<String, T> parser, @Nullable final String sample, @Nullable final String permission) {
         super(name, permission);
         this.parser = parser;
         this.sample = sample == null ? "" : sample;
     }
 
     @NotNull
-    public static <T> ContentFlagBuilder<T> builder(@NotNull String name, @NotNull Function<String , T> parser) {
+    public static <T> ContentFlagBuilder<T> builder(@NotNull final String name, @NotNull final Function<String, T> parser) {
         return new ContentFlagBuilder<>(name, parser);
     }
 
     @Nullable
-    public ParsedArgument<T> parse(@NotNull String str) {
-        T result = this.parser.apply(str);
+    public ParsedArgument<T> parse(@NotNull final String str) {
+        final T result = this.parser.apply(str);
         return result == null ? null : new ParsedArgument<>(result);
     }
 
     @NotNull
-    public String getSampled() {
-        return this.getPrefixed() + DELIMITER + this.getSample();
-    }
+    public String getSampled() { return this.getPrefixed() + CommandFlag.DELIMITER + this.getSample(); }
 
     @NotNull
-    public Function<String , T> getParser() {
-        return parser;
-    }
+    public Function<String, T> getParser() { return this.parser; }
 
     @NotNull
-    public String getSample() {
-        return sample;
-    }
+    public String getSample() { return this.sample; }
 }

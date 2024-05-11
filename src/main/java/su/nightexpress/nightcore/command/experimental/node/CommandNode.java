@@ -12,22 +12,18 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public abstract class CommandNode implements NodeExecutor {
-
+    // @formatter:off
     protected final NightCorePlugin plugin;
     protected final String          name;
     protected final String[]        aliases;
     protected final String          description;
     protected final String          permission;
     protected final boolean         playerOnly;
-
+    // @formatter:on
     protected CommandNode parent;
 
-    public CommandNode(@NotNull NightCorePlugin plugin,
-                       @NotNull String name,
-                       @NotNull String[] aliases,
-                       @NotNull String description,
-                       @Nullable String permission,
-                       boolean playerOnly) {
+    public CommandNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases, @NotNull final String description,
+            @Nullable final String permission, final boolean playerOnly) {
         this.plugin = plugin;
         this.name = name.toLowerCase();
         this.aliases = Stream.of(aliases).map(String::toLowerCase).toArray(String[]::new);
@@ -40,7 +36,7 @@ public abstract class CommandNode implements NodeExecutor {
     public abstract List<String> getTab(@NotNull TabContext context);
 
     @Override
-    public boolean run(@NotNull CommandContext context) {
+    public boolean run(@NotNull final CommandContext context) {
         if (this.isPlayerOnly() && !(context.getSender() instanceof Player)) {
             context.errorPlayerOnly();
             return false;
@@ -55,13 +51,11 @@ public abstract class CommandNode implements NodeExecutor {
 
     protected abstract boolean onRun(@NotNull CommandContext context);
 
-    public boolean hasPermission(@NotNull CommandSender sender) {
-        return this.permission == null || sender.hasPermission(this.permission);
-    }
+    public boolean hasPermission(@NotNull final CommandSender sender) { return this.permission == null || sender.hasPermission(this.permission); }
 
     @NotNull
     public String getNameWithParents() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
 
         CommandNode parent = this.getParent();
         while (parent != null) {
@@ -78,40 +72,24 @@ public abstract class CommandNode implements NodeExecutor {
     }
 
     @NotNull
-    public String getName() {
-        return name;
-    }
+    public String getName() { return this.name; }
 
     @NotNull
-    public String[] getAliases() {
-        return this.aliases;
-    }
+    public String[] getAliases() { return this.aliases; }
 
     @NotNull
-    public String getUsage() {
-        return "";
-    }
+    public String getUsage() { return ""; }
 
     @NotNull
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return this.description; }
 
     @Nullable
-    public CommandNode getParent() {
-        return parent;
-    }
+    public CommandNode getParent() { return this.parent; }
 
-    protected void setParent(@Nullable CommandNode parent) {
-        this.parent = parent;
-    }
+    protected void setParent(@Nullable final CommandNode parent) { this.parent = parent; }
 
     @Nullable
-    public String getPermission() {
-        return permission;
-    }
+    public String getPermission() { return this.permission; }
 
-    public boolean isPlayerOnly() {
-        return this.playerOnly;
-    }
+    public boolean isPlayerOnly() { return this.playerOnly; }
 }

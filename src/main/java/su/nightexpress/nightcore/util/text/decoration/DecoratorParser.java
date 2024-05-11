@@ -5,5 +5,6 @@ import org.jetbrains.annotations.Nullable;
 
 public interface DecoratorParser {
 
-    @Nullable ParsedDecorator parse(@NotNull String str);
+    @Nullable
+    ParsedDecorator parse(@NotNull String str);
 }

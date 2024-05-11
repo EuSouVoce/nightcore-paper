@@ -17,39 +17,38 @@ import java.util.function.Predicate;
 
 public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin {
 
-    protected LangManager    langManager;
+    protected LangManager langManager;
     protected CommandManager commandManager;
 
-    protected FileConfig    config;
+    protected FileConfig config;
     protected PluginDetails details;
-    private   boolean       isEngine;
+    private boolean isEngine;
 
-    public final boolean isEngine() {
-        return this.isEngine;
-    }
+    @Override
+    public final boolean isEngine() { return this.isEngine; }
 
     @Override
     public void onEnable() {
-        long loadTook = System.currentTimeMillis();
+        final long loadTook = System.currentTimeMillis();
         this.isEngine = this instanceof NightCore;
 
         if (!this.isEngine()) {
             Plugins.CORE.addChildren(this);
         }
 
-        Version version = Version.getCurrent();
+        final Version version = Version.getCurrent();
         if (version == Version.UNKNOWN) {
             this.warn("=".repeat(35));
             this.warn("WARNING: You're running an unsupported server version!");
             this.warn("Expect bugs and broken features.");
             this.warn("! NO DISCORD SUPPORT WILL BE GIVEN !");
             this.warn("=".repeat(35));
-        }
-        else if (version.isDeprecated()) {
+        } else if (version.isDeprecated()) {
             this.warn("=".repeat(35));
             this.warn("WARNING: You're running an outdated/deprecated server version (" + Version.getCurrent().getLocalized() + ")!");
             this.warn("Support for this version will be dropped soon.");
-            this.warn("Please, upgrade your server to at least " + Lists.next(Version.getCurrent(), Predicate.not(Version::isDeprecated)).getLocalized() + ".");
+            this.warn("Please, upgrade your server to at least "
+                    + Lists.next(Version.getCurrent(), Predicate.not(Version::isDeprecated)).getLocalized() + ".");
             this.warn("=".repeat(35));
         }
 
@@ -58,10 +57,9 @@ public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin 
     }
 
     @Override
-    public void onDisable() {
-        this.unloadManagers();
-    }
+    public void onDisable() { this.unloadManagers(); }
 
+    @Override
     public final void reload() {
         if (this.isEngine()) {
             this.setupConfig();
@@ -72,38 +70,28 @@ public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin 
         this.loadManagers();
     }
 
-    /*@Override
-    public final void reloadConfig() {
-        this.getConfig().reload();
-        this.loadConfig();
-    }
-
-    public final void reloadLang() {
-        this.getLang().reload();
-        this.loadLang();
-    }*/
+    /*
+     * @Override public final void reloadConfig() { this.getConfig().reload();
+     * this.loadConfig(); } public final void reloadLang() {
+     * this.getLang().reload(); this.loadLang(); }
+     */
 
     @Override
     @NotNull
-    public final FileConfig getConfig() {
-        return this.config;
-    }
+    public final FileConfig getConfig() { return this.config; }
 
+    @Override
     @NotNull
-    public final FileConfig getLang() {
-        return this.getLangManager().getConfig();
-    }
+    public final FileConfig getLang() { return this.getLangManager().getConfig(); }
 
     @NotNull
     @Override
-    public PluginDetails getDetails() {
-        return this.details == null ? this.getDefaultDetails() : this.details;
-    }
+    public PluginDetails getDetails() { return this.details == null ? this.getDefaultDetails() : this.details; }
 
     @NotNull
     protected abstract PluginDetails getDefaultDetails();
 
-    public void registerPermissions(@NotNull Class<?> clazz) {
+    public void registerPermissions(@NotNull final Class<?> clazz) {
         Reflex.getFields(clazz, UniPermission.class).forEach(permission -> {
             if (this.getPluginManager().getPermission(permission.getName()) == null) {
                 this.getPluginManager().addPermission(permission);
@@ -130,8 +118,9 @@ public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin 
     }
 
     protected void setupPermissions() {
-        Class<?> clazz = this.getDetails().getPermissionsClass();
-        if (clazz == null) return;
+        final Class<?> clazz = this.getDetails().getPermissionsClass();
+        if (clazz == null)
+            return;
 
         this.registerPermissions(clazz);
     }
@@ -142,12 +131,12 @@ public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin 
     }
 
     protected void loadManagers() {
-        this.setupConfig();         // Load configuration.
-        this.setupLanguage();       // Load language.
-        this.setupPermissions();    // Register plugin permissions.
-        this.setupCommands();       // Register plugin commands.
+        this.setupConfig(); // Load configuration.
+        this.setupLanguage(); // Load language.
+        this.setupPermissions(); // Register plugin permissions.
+        this.setupCommands(); // Register plugin commands.
 
-        this.enable();              // Load the plugin.
+        this.enable(); // Load the plugin.
 
         this.getConfig().saveChanges();
         this.getLang().saveChanges();
@@ -165,30 +154,26 @@ public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin 
         this.getLangManager().shutdown();
     }
 
+    @Override
     @NotNull
-    public final NightPluginCommand getBaseCommand() {
-        return this.getCommandManager().getMainCommand();
-    }
-
-    @NotNull
-    public final LangManager getLangManager() {
-        return this.langManager;
-    }
-
-    @NotNull
-    public final CommandManager getCommandManager() {
-        return this.commandManager;
-    }
+    public final NightPluginCommand getBaseCommand() { return this.getCommandManager().getMainCommand(); }
 
     @Override
-    public void extractResources(@NotNull String jarPath) {
-        this.extractResources(jarPath, this.getDataFolder() + jarPath);
-    }
+    @NotNull
+    public final LangManager getLangManager() { return this.langManager; }
 
     @Override
-    public void extractResources(@NotNull String jarPath, @NotNull String targetPath) {
-        File destination = new File(targetPath);
-        if (destination.exists()) return;
+    @NotNull
+    public final CommandManager getCommandManager() { return this.commandManager; }
+
+    @Override
+    public void extractResources(@NotNull final String jarPath) { this.extractResources(jarPath, this.getDataFolder() + jarPath); }
+
+    @Override
+    public void extractResources(@NotNull String jarPath, @NotNull final String targetPath) {
+        final File destination = new File(targetPath);
+        if (destination.exists())
+            return;
 
         if (jarPath.startsWith("/")) {
             jarPath = jarPath.substring(1);

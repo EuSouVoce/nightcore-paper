@@ -15,27 +15,25 @@ import java.util.stream.Collectors;
 
 public final class CreateTableExecutor extends SQLExecutor<Void> {
 
-    private final DatabaseType    databaseType;
+    private final DatabaseType databaseType;
     private final List<SQLColumn> columns;
 
-    private CreateTableExecutor(@NotNull String table, @NotNull DatabaseType databaseType) {
+    private CreateTableExecutor(@NotNull final String table, @NotNull final DatabaseType databaseType) {
         super(table);
         this.databaseType = databaseType;
         this.columns = new ArrayList<>();
     }
 
     @NotNull
-    public static CreateTableExecutor builder(@NotNull String table, @NotNull DatabaseType databaseType) {
+    public static CreateTableExecutor builder(@NotNull final String table, @NotNull final DatabaseType databaseType) {
         return new CreateTableExecutor(table, databaseType);
     }
 
     @NotNull
-    public CreateTableExecutor columns(@NotNull SQLColumn... columns) {
-        return this.columns(Arrays.asList(columns));
-    }
+    public CreateTableExecutor columns(@NotNull final SQLColumn... columns) { return this.columns(Arrays.asList(columns)); }
 
     @NotNull
-    public CreateTableExecutor columns(@NotNull List<SQLColumn> columns) {
+    public CreateTableExecutor columns(@NotNull final List<SQLColumn> columns) {
         this.columns.clear();
         this.columns.addAll(columns);
         return this;
@@ -43,22 +41,21 @@ public final class CreateTableExecutor extends SQLExecutor<Void> {
 
     @Override
     @NotNull
-    public Void execute(@NotNull AbstractConnector connector) {
-        if (this.columns.isEmpty()) return null;
+    public Void execute(@NotNull final AbstractConnector connector) {
+        if (this.columns.isEmpty())
+            return null;
 
         String id = "`id` " + ColumnFormer.INTEGER.build(this.databaseType, 11);
         if (this.databaseType == DatabaseType.SQLITE) {
             id += " PRIMARY KEY AUTOINCREMENT";
-        }
-        else {
+        } else {
             id += " PRIMARY KEY AUTO_INCREMENT";
         }
 
-        String columns = id + "," + this.columns.stream()
-            .map(column -> column.getNameEscaped() + " " + column.formatType(this.databaseType))
-            .collect(Collectors.joining(", "));
+        final String columns = id + "," + this.columns.stream()
+                .map(column -> column.getNameEscaped() + " " + column.formatType(this.databaseType)).collect(Collectors.joining(", "));
 
-        String sql = "CREATE TABLE IF NOT EXISTS " + this.getTable() + "(" + columns + ");";
+        final String sql = "CREATE TABLE IF NOT EXISTS " + this.getTable() + "(" + columns + ");";
 
         SQLQueries.executeStatement(connector, sql);
         return null;

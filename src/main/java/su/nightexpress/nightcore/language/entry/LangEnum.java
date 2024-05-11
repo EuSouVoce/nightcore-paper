@@ -16,28 +16,24 @@ public class LangEnum<E extends Enum<E>> {
     private final Class<E> clazz;
     private final Map<E, String> localeMap;
 
-    public LangEnum(@NotNull String path, @NotNull Class<E> clazz) {
+    public LangEnum(@NotNull final String path, @NotNull final Class<E> clazz) {
         this.path = path;
         this.clazz = clazz;
         this.localeMap = new HashMap<>();
     }
 
     @NotNull
-    public static <E extends Enum<E>> LangEnum<E> of(@NotNull String path, @NotNull Class<E> clazz) {
-        return new LangEnum<>(path, clazz);
-    }
+    public static <E extends Enum<E>> LangEnum<E> of(@NotNull final String path, @NotNull final Class<E> clazz) { return new LangEnum<>(path, clazz); }
 
-    public void load(@NotNull NightCorePlugin plugin) {
-        FileConfig config = plugin.getLang();
+    public void load(@NotNull final NightCorePlugin plugin) {
+        final FileConfig config = plugin.getLang();
 
         Stream.of(this.clazz.getEnumConstants()).forEach(con -> {
-            String text = ConfigValue.create(this.path + "." + con.name(), StringUtil.capitalizeUnderscored(con.name())).read(config);
+            final String text = ConfigValue.create(this.path + "." + con.name(), StringUtil.capitalizeUnderscored(con.name())).read(config);
             this.localeMap.put(con, text);
         });
     }
 
     @NotNull
-    public String getLocalized(@NotNull E con) {
-        return this.localeMap.getOrDefault(con, con.name());
-    }
+    public String getLocalized(@NotNull final E con) { return this.localeMap.getOrDefault(con, con.name()); }
 }
