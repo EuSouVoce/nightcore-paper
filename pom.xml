@@ -142,15 +142,7 @@
             <plugin>
                 <groupId>ca.bkaw</groupId>
                 <artifactId>paper-nms-maven-plugin</artifactId>
-                <version>1.4.3</version>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>remap</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>1.4.4</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
