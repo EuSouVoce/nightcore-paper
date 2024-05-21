@@ -4,19 +4,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
 public enum ClickType {
-    // @formatter:off
-    LEFT, RIGHT, SHIFT_LEFT, SHIFT_RIGHT,
-    DROP_KEY, SWAP_KEY,
-    NUMBER_1,
-    NUMBER_2,
-    NUMBER_3,
-    NUMBER_4,
-    NUMBER_5,
-    NUMBER_6,
-    NUMBER_7,
-    NUMBER_8,
-    NUMBER_9;
-    // @formatter:on
+
+    LEFT, RIGHT, SHIFT_LEFT, SHIFT_RIGHT, DROP_KEY, SWAP_KEY, NUMBER_1, NUMBER_2, NUMBER_3, NUMBER_4, NUMBER_5, NUMBER_6, NUMBER_7,
+    NUMBER_8, NUMBER_9,;
+
     @NotNull
     public static ClickType from(@NotNull final InventoryClickEvent event) {
         if (event.getClick() == org.bukkit.event.inventory.ClickType.DROP)

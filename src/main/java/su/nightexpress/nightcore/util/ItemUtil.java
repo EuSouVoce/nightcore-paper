@@ -1,7 +1,6 @@
 package su.nightexpress.nightcore.util;
 
 import java.lang.reflect.Method;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,11 +18,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
@@ -33,7 +32,6 @@ public class ItemUtil {
 
     private static final String TEXTURES_HOST = "http://textures.minecraft.net/texture/";
 
-    @SuppressWarnings("deprecation")
     @NotNull
     public static String getItemName(@NotNull final ItemStack item) {
         final ItemMeta meta = item.getItemMeta();
@@ -49,7 +47,6 @@ public class ItemUtil {
         item.setItemMeta(meta);
     }
 
-    @SuppressWarnings("deprecation")
     @NotNull
     public static List<String> getLore(@NotNull final ItemStack item) {
         final ItemMeta meta = item.getItemMeta();
@@ -86,12 +83,12 @@ public class ItemUtil {
             // If no name, then meta#getOwnerProfile will return 'null' (wtf?)
             // sometimes swtiching to "new" spigot api is a pain.
             // why the hell i have to dig into nms to learn that...
-            final PlayerProfile profile = Bukkit.createProfile(uuid, urlData.substring(0, 16));
-            final URL url = URI.create(urlData).toURL();
+            final PlayerProfile profile = Bukkit.createPlayerProfile(uuid, urlData.substring(0, 16));
+            final URL url = new URL(urlData);
             final PlayerTextures textures = profile.getTextures();
             textures.setSkin(url);
             profile.setTextures(textures);
-            ((SkullMeta) meta).setPlayerProfile(profile);
+            meta.setOwnerProfile(profile);
             item.setItemMeta(meta);
         } catch (final Exception exception) {
             exception.printStackTrace();
@@ -105,7 +102,7 @@ public class ItemUtil {
         if (!(item.getItemMeta() instanceof final SkullMeta meta))
             return null;
 
-        final PlayerProfile profile = meta.getPlayerProfile();
+        final PlayerProfile profile = meta.getOwnerProfile();
         if (profile == null)
             return null;
 

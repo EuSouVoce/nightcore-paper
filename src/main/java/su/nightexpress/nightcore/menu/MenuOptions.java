@@ -39,7 +39,6 @@ public class MenuOptions {
         this.lastAutoRefresh = 0L;
     }
 
-    @SuppressWarnings("deprecation")
     @NotNull
     public Inventory createInventory() {
         if (this.getType() == InventoryType.CHEST) {

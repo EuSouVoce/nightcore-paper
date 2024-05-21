@@ -298,7 +298,6 @@ public class FileConfig extends YamlConfiguration {
         return item.getType().isAir() && def != null ? def : item;
     }
 
-    @SuppressWarnings("deprecation")
     @NotNull
     public ItemStack getItem(@NotNull String path) {
         if (!path.isEmpty() && !path.endsWith("."))
@@ -317,7 +316,7 @@ public class FileConfig extends YamlConfiguration {
         } else {
             final String headTexture = this.getString(path + "Head_Texture", "");
             if (!headTexture.isEmpty()) {
-                ItemUtil.setHeadSkin(item, headTexture);
+                ItemUtil.setSkullTexture(item, headTexture);
             }
         }
 
@@ -373,7 +372,6 @@ public class FileConfig extends YamlConfiguration {
         return item;
     }
 
-    @SuppressWarnings("deprecation")
     public void setItem(@NotNull String path, @Nullable final ItemStack item) {
         if (item == null) {
             this.set(path, null);
@@ -389,7 +387,7 @@ public class FileConfig extends YamlConfiguration {
         this.set(path + "Amount", item.getAmount() <= 1 ? null : item.getAmount());
         this.set(path + "SkinURL", ItemUtil.getHeadSkin(item));
         if (!this.contains(path + "SkinURL")) {
-            this.set(path + "Head_Texture", ItemUtil.getHeadSkin(item));
+            this.set(path + "Head_Texture", ItemUtil.getSkullTexture(item));
         }
 
         final ItemMeta meta = item.getItemMeta();

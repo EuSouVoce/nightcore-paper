@@ -93,7 +93,6 @@ public class WrappedMessage {
      * this; }
      */
 
-    @SuppressWarnings("deprecation")
     public void send(@NotNull final CommandSender... senders) {
         this.parseIfAbsent();
         for (final CommandSender sender : senders) {

@@ -7,19 +7,16 @@ public class MTRandom extends Random {
     private final static int UPPER_MASK = 0x80000000;
     private final static int LOWER_MASK = 0x7fffffff;
 
-    // @formatter:off
-    private final static int   N             = 624;
-    private final static int   M             = 397;
-    private final static int[] MAGIC         = {0x0, 0x9908b0df};
-    private final static int   MAGIC_FACTOR1 = 1812433253;
-    private final static int   MAGIC_FACTOR2 = 1664525;
-    private final static int   MAGIC_FACTOR3 = 1566083941;
-    private final static int   MAGIC_MASK1   = 0x9d2c5680;
-    private final static int   MAGIC_MASK2   = 0xefc60000;
-    private final static int   MAGIC_SEED    = 19650218;
-    @SuppressWarnings("unused")
-    private final static long  DEFAULT_SEED  = 5489L;
-    // @formatter:on
+    private final static int N = 624;
+    private final static int M = 397;
+    private final static int[] MAGIC = { 0x0, 0x9908b0df };
+    private final static int MAGIC_FACTOR1 = 1812433253;
+    private final static int MAGIC_FACTOR2 = 1664525;
+    private final static int MAGIC_FACTOR3 = 1566083941;
+    private final static int MAGIC_MASK1 = 0x9d2c5680;
+    private final static int MAGIC_MASK2 = 0xefc60000;
+    private final static int MAGIC_SEED = 19650218;
+    private final static long DEFAULT_SEED = 5489L;
 
     // Internal state
     private transient int[] mt;

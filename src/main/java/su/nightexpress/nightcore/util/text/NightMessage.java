@@ -13,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import su.nightexpress.nightcore.core.CoreConfig;
@@ -35,28 +34,20 @@ import su.nightexpress.nightcore.util.text.tag.impl.GradientTag;
 public class NightMessage {
 
     private static final Map<String, Tag> TAG_MAP = new HashMap<>();
-    //@formatter:off
-    static {
-        NightMessage.registerTags(
-            Tags.BLACK, Tags.WHITE, Tags.GRAY, Tags.GREEN,
-            Tags.YELLOW, Tags.ORANGE, Tags.RED,
-            Tags.BLUE, Tags.CYAN, Tags.PURPLE, Tags.PINK,
 
-            Tags.DARK_GRAY, Tags.LIGHT_GRAY, Tags.LIGHT_GREEN,
-            Tags.LIGHT_YELLOW, Tags.LIGHT_ORANGE, Tags.LIGHT_RED,
-            Tags.LIGHT_BLUE, Tags.LIGHT_CYAN, Tags.LIGHT_PURPLE, Tags.LIGHT_PINK
-        );
+    static {
+        NightMessage.registerTags(Tags.BLACK, Tags.WHITE, Tags.GRAY, Tags.GREEN, Tags.YELLOW, Tags.ORANGE, Tags.RED, Tags.BLUE, Tags.CYAN,
+                Tags.PURPLE, Tags.PINK,
+
+                Tags.DARK_GRAY, Tags.LIGHT_GRAY, Tags.LIGHT_GREEN, Tags.LIGHT_YELLOW, Tags.LIGHT_ORANGE, Tags.LIGHT_RED, Tags.LIGHT_BLUE,
+                Tags.LIGHT_CYAN, Tags.LIGHT_PURPLE, Tags.LIGHT_PINK);
 
         NightMessage.registerTags(Tags.BOLD, Tags.ITALIC, Tags.OBFUSCATED, Tags.STRIKETHROUGH, Tags.UNDERLINED);
 
-        NightMessage.registerTags(
-            Tags.FONT, Tags.HEX_COLOR, Tags.HEX_COLOR_SHORT, Tags.GRADIENT,
-            Tags.HOVER, Tags.CLICK,
-            Tags.LINE_BREAK, Tags.RESET,
-            Tags.TRANSLATE
-        );
+        NightMessage.registerTags(Tags.FONT, Tags.HEX_COLOR, Tags.HEX_COLOR_SHORT, Tags.GRADIENT, Tags.HOVER, Tags.CLICK, Tags.LINE_BREAK,
+                Tags.RESET, Tags.TRANSLATE);
     }
-    //@formatter:on
+
     @NotNull
     public static Collection<Tag> getTags() { return NightMessage.TAG_MAP.values(); }
 
@@ -347,11 +338,6 @@ public class NightMessage {
             return builder.create();
         }
 
-        public net.kyori.adventure.text.@NotNull Component serialize(final BaseComponent[] text) {
-            return BungeeComponentSerializer.get().deserialize(text);
-        }
-
-        @SuppressWarnings("deprecation")
         public void send(@NotNull final CommandSender sender) { sender.spigot().sendMessage(this.create()); }
 
         public Builder append(@NotNull final WrappedText.Builder textBuilder) {

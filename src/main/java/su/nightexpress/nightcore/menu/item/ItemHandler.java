@@ -14,16 +14,15 @@ import su.nightexpress.nightcore.menu.click.ClickAction;
 import su.nightexpress.nightcore.util.Placeholders;
 
 public class ItemHandler {
-    // @formatter:off
-    public static final String RETURN        = "return";
-    public static final String CLOSE         = "close";
-    public static final String NEXT_PAGE     = "page_next";
+
+    public static final String RETURN = "return";
+    public static final String CLOSE = "close";
+    public static final String NEXT_PAGE = "page_next";
     public static final String PREVIOUS_PAGE = "page_previous";
 
-    private final String                name;
-    private final List<ClickAction>     clickActions;
+    private final String name;
+    private final List<ClickAction> clickActions;
     private final Predicate<MenuViewer> visibilityPolicy;
-    // @formatter:on
 
     public ItemHandler() { this(Placeholders.DEFAULT, null, null); }
 

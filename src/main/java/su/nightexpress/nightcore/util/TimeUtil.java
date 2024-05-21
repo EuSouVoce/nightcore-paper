@@ -14,13 +14,11 @@ public class TimeUtil {
 
     @NotNull
     public static String formatTime(final long time) {
-        //@formatter:off
-        final long days        = TimeUnit.MILLISECONDS.toDays(time);
-        final long hours       = TimeUnit.MILLISECONDS.toHours(time)   % 24;
-        final long minutes     = TimeUnit.MILLISECONDS.toMinutes(time) % 60;
-        final long seconds     = TimeUnit.MILLISECONDS.toSeconds(time) % 60;
+        final long days = TimeUnit.MILLISECONDS.toDays(time);
+        final long hours = TimeUnit.MILLISECONDS.toHours(time) % 24;
+        final long minutes = TimeUnit.MILLISECONDS.toMinutes(time) % 60;
+        final long seconds = TimeUnit.MILLISECONDS.toSeconds(time) % 60;
         final String delimiter = CoreLang.TIME_DELIMITER.getString();
-        //@formatter:on
 
         final StringBuilder str = new StringBuilder();
         if (days > 0) {

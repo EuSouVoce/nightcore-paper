@@ -55,7 +55,6 @@ public class NexParser {
             final Matcher matcher = timedMatcher.getMatcher();
             final String matchFull = matcher.group(0);
             if (toPlain) {
-                @SuppressWarnings("unused")
                 final String matchOptions = matcher.group(1).trim();
                 final String matchText = matcher.group(2);
                 message = message.replace(matchFull, matchText);

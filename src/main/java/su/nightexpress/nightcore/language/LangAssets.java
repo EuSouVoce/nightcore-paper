@@ -4,7 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
+import java.net.URL;
 import java.util.Optional;
 
 import org.bukkit.Keyed;
@@ -45,7 +45,7 @@ public class LangAssets {
         FileUtil.create(file);
 
         final String url = Placeholders.GITHUB_URL + "/raw/master/assets/" + langCode + ".yml";
-        try (BufferedInputStream in = new BufferedInputStream(URI.create(url).toURL().openStream());
+        try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
                 FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             plugin.info("Downloading '" + langCode + "' assets from github...");
             final byte[] dataBuffer = new byte[1024];

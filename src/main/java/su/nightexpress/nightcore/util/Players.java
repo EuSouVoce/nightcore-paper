@@ -20,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.ChatMessageType;
 import su.nightexpress.nightcore.core.CoreConfig;
 import su.nightexpress.nightcore.integration.VaultHook;
@@ -28,7 +27,6 @@ import su.nightexpress.nightcore.util.message.NexParser;
 import su.nightexpress.nightcore.util.text.NightMessage;
 import su.nightexpress.nightcore.util.text.WrappedMessage;
 
-@SuppressWarnings("deprecation")
 public class Players {
 
     public static final String PLAYER_COMMAND_PREFIX = "player:";
@@ -148,7 +146,7 @@ public class Players {
     }
 
     public static void sendActionBar(@NotNull final Player player, @NotNull final WrappedMessage message) {
-        player.sendActionBar(BungeeComponentSerializer.get().deserialize(message.parseIfAbsent()));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, message.parseIfAbsent());
     }
 
     public static void dispatchCommands(@NotNull final Player player, @NotNull final String... commands) {

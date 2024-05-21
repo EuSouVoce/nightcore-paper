@@ -22,19 +22,20 @@ import org.jetbrains.annotations.Nullable;
 import su.nightexpress.nightcore.NightCore;
 
 public class ItemNbt {
-    // @formatter:off
-    private static final Class<?> ITEM_STACK_CLASS   = Reflex.getClass("net.minecraft.world.item", "ItemStack");
+
+    private static final Class<?> ITEM_STACK_CLASS = Reflex.getClass("net.minecraft.world.item", "ItemStack");
     private static final Class<?> COMPOUND_TAG_CLASS = Reflex.getClass("net.minecraft.nbt", "NBTTagCompound");
-    private static final Class<?> NBT_IO_CLASS       = Reflex.getClass("net.minecraft.nbt", "NBTCompressedStreamTools");
+    private static final Class<?> NBT_IO_CLASS = Reflex.getClass("net.minecraft.nbt", "NBTCompressedStreamTools");
 
     private static final Class<?> CRAFT_ITEM_STACK_CLASS = Reflex.getClass(Version.CRAFTBUKKIT_PACKAGE + ".inventory", "CraftItemStack");
 
-    private static final Method CRAFT_ITEM_STACK_AS_NMS_COPY    = Reflex.getMethod(ItemNbt.CRAFT_ITEM_STACK_CLASS, "asNMSCopy", ItemStack.class);
+    private static final Method CRAFT_ITEM_STACK_AS_NMS_COPY = Reflex.getMethod(ItemNbt.CRAFT_ITEM_STACK_CLASS, "asNMSCopy",
+            ItemStack.class);
     private static final Method CRAFT_ITEM_STACK_AS_BUKKIT_COPY = Reflex.getMethod(ItemNbt.CRAFT_ITEM_STACK_CLASS, "asBukkitCopy",
             ItemNbt.ITEM_STACK_CLASS);
 
-    private static final Method NBT_IO_WRITE    = Reflex.getMethod(ItemNbt.NBT_IO_CLASS, "a", ItemNbt.COMPOUND_TAG_CLASS, DataOutput.class);
-    private static final Method NBT_IO_READ     = Reflex.getMethod(ItemNbt.NBT_IO_CLASS, "a", DataInput.class);
+    private static final Method NBT_IO_WRITE = Reflex.getMethod(ItemNbt.NBT_IO_CLASS, "a", ItemNbt.COMPOUND_TAG_CLASS, DataOutput.class);
+    private static final Method NBT_IO_READ = Reflex.getMethod(ItemNbt.NBT_IO_CLASS, "a", DataInput.class);
 
     // For 1.20.6+
     private static Method MINECRAFT_SERVER_REGISTRY_ACCESS;
@@ -43,9 +44,9 @@ public class ItemNbt {
 
     // For 1.20.4 and below.
     private static Constructor<?> NBT_TAG_COMPOUND_NEW;
-    private static Method         NMS_ITEM_OF;
-    private static Method         NMS_SAVE;
-    // @formatter:on
+    private static Method NMS_ITEM_OF;
+    private static Method NMS_SAVE;
+
     static {
         if (Version.isAtLeast(Version.MC_1_20_6)) {
             final Class<?> minecraftServerClass = Reflex.getClass("net.minecraft.server", "MinecraftServer");

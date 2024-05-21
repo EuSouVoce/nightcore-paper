@@ -12,11 +12,12 @@ import net.md_5.bungee.api.ChatColor;
 import su.nightexpress.nightcore.util.regex.TimedMatcher;
 
 public class Colorizer {
-    // @formatter:off
-    public static final Pattern PATTERN_HEX         = Pattern.compile("#([A-Fa-f0-9]{6})");
-    public static final Pattern PATTERN_HEX_LEGACY  = Pattern.compile("(?:^|[^<])(#[A-Fa-f0-9]{6})(?:$|[^:>])");
-    public static final Pattern PATTERN_GRADIENT    = Pattern.compile("<gradient:" + Colorizer.PATTERN_HEX.pattern() + ">(.*?)</gradient:" + Colorizer.PATTERN_HEX.pattern() + ">");
-    // @formatter:on
+
+    public static final Pattern PATTERN_HEX = Pattern.compile("#([A-Fa-f0-9]{6})");
+    public static final Pattern PATTERN_HEX_LEGACY = Pattern.compile("(?:^|[^<])(#[A-Fa-f0-9]{6})(?:$|[^:>])");
+    public static final Pattern PATTERN_GRADIENT = Pattern
+            .compile("<gradient:" + Colorizer.PATTERN_HEX.pattern() + ">(.*?)</gradient:" + Colorizer.PATTERN_HEX.pattern() + ">");
+
     @NotNull
     public static String apply(@NotNull final String str) { return Colorizer.hex(Colorizer.gradient(Colorizer.legacy(str))); }
 

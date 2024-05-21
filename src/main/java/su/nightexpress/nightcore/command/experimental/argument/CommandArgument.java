@@ -15,15 +15,15 @@ import su.nightexpress.nightcore.language.message.LangMessage;
 import su.nightexpress.nightcore.util.Placeholders;
 
 public class CommandArgument<T> {
-// @formatter:off
-    private final String                             name;
-    private final Function<String, T>                parser;
-    private final boolean                            required;
-    private final String                             localized;
-    private final String                             permission;
+
+    private final String name;
+    private final Function<String, T> parser;
+    private final boolean required;
+    private final String localized;
+    private final String permission;
     private final Function<TabContext, List<String>> samples;
-    private final LangMessage                        failureMessage;
-// @formatter:on
+    private final LangMessage failureMessage;
+
     public CommandArgument(@NotNull final String name, @NotNull final Function<String, T> parser, final boolean required,
             @Nullable final String localized, @Nullable final String permission, @Nullable final LangMessage failureMessage,
             @Nullable final Function<TabContext, List<String>> samples) {

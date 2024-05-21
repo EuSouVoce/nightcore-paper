@@ -26,12 +26,12 @@ import su.nightexpress.nightcore.database.sql.column.ColumnType;
 import su.nightexpress.nightcore.util.TimeUtil;
 
 public abstract class AbstractUserDataHandler<P extends NightDataPlugin<U>, U extends DataUser> extends AbstractDataHandler<P> {
-    // @formatter:off
-    protected static final SQLColumn COLUMN_USER_ID           = SQLColumn.of("uuid", ColumnType.STRING);
-    protected static final SQLColumn COLUMN_USER_NAME         = SQLColumn.of("name", ColumnType.STRING);
+
+    protected static final SQLColumn COLUMN_USER_ID = SQLColumn.of("uuid", ColumnType.STRING);
+    protected static final SQLColumn COLUMN_USER_NAME = SQLColumn.of("name", ColumnType.STRING);
     protected static final SQLColumn COLUMN_USER_DATE_CREATED = SQLColumn.of("dateCreated", ColumnType.LONG);
-    protected static final SQLColumn COLUMN_USER_LAST_ONLINE  = SQLColumn.of("last_online", ColumnType.LONG);
-    // @formatter:on
+    protected static final SQLColumn COLUMN_USER_LAST_ONLINE = SQLColumn.of("last_online", ColumnType.LONG);
+
     protected final String tableUsers;
 
     protected final Set<UUID> existIDs;

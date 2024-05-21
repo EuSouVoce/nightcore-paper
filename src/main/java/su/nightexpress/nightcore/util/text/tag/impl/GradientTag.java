@@ -19,7 +19,6 @@ public class GradientTag extends Tag implements DecoratorParser {
     @Override
     public int getWeight() { return Integer.MAX_VALUE - 1; }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean conflictsWith(@NotNull final Tag tag) {
         return super.conflictsWith(tag) || tag instanceof ColorTag || tag instanceof ShortHexColorTag || tag instanceof HexColorTag;

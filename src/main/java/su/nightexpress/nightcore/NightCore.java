@@ -1,8 +1,6 @@
 package su.nightexpress.nightcore;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -10,7 +8,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import net.kyori.adventure.text.Component;
 import su.nightexpress.nightcore.command.experimental.ImprovedCommands;
 import su.nightexpress.nightcore.command.experimental.impl.ReloadCommand;
 import su.nightexpress.nightcore.command.experimental.node.ChainedNode;
@@ -26,6 +23,7 @@ import su.nightexpress.nightcore.language.LangAssets;
 import su.nightexpress.nightcore.util.EntityUtil;
 import su.nightexpress.nightcore.util.ItemNbt;
 import su.nightexpress.nightcore.util.ItemUtil;
+import su.nightexpress.nightcore.util.Lists;
 import su.nightexpress.nightcore.util.Plugins;
 import su.nightexpress.nightcore.util.Version;
 import su.nightexpress.nightcore.util.blocktracker.PlayerBlockTracker;
@@ -105,13 +103,8 @@ public class NightCore extends NightPlugin implements ImprovedCommands {
 
         final ItemStack testItem = new ItemStack(Material.DIAMOND_SWORD);
         ItemUtil.editMeta(testItem, meta -> {
-            meta.displayName(Component.text("Test Item"));
-
-            final List<Component> testlore = new ArrayList<>();
-            testlore.add(Component.text("Test Lore 1"));
-            testlore.add(Component.text("Test Lore 2"));
-            testlore.add(Component.text("Test Lore 3"));
-            meta.lore(testlore);
+            meta.setDisplayName("Test Item");
+            meta.setLore(Lists.newList("Test Lore 1", "Test Lore 2", "Test Lore 3"));
             meta.addEnchant(Enchantment.FIRE_ASPECT, 10, true);
         });
 

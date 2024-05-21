@@ -144,7 +144,6 @@ public class Dialog {
         this.sendInfo(Colorizer.apply(title), Colorizer.apply(text));
     }
 
-    @SuppressWarnings("deprecation")
     private void sendInfo(@NotNull final String title, @NotNull final String text) {
         this.getPlayer().sendTitle(title, text, 20, Short.MAX_VALUE, 20);
     }
@@ -161,7 +160,6 @@ public class Dialog {
     @Nullable
     public static Dialog get(@NotNull final Player player) { return Dialog.DIALOG_MAP.get(player.getUniqueId()); }
 
-    @SuppressWarnings("deprecation")
     public static void stop(@NotNull final Player player) {
         final Dialog dialog = Dialog.DIALOG_MAP.remove(player.getUniqueId());
         if (dialog == null)

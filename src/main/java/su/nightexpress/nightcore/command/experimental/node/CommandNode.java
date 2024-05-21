@@ -13,14 +13,14 @@ import su.nightexpress.nightcore.command.experimental.CommandContext;
 import su.nightexpress.nightcore.command.experimental.TabContext;
 
 public abstract class CommandNode implements NodeExecutor {
-    // @formatter:off
+
     protected final NightCorePlugin plugin;
-    protected final String          name;
-    protected final String[]        aliases;
-    protected final String          description;
-    protected final String          permission;
-    protected final boolean         playerOnly;
-    // @formatter:on
+    protected final String name;
+    protected final String[] aliases;
+    protected final String description;
+    protected final String permission;
+    protected final boolean playerOnly;
+
     protected CommandNode parent;
 
     public CommandNode(@NotNull final NightCorePlugin plugin, @NotNull final String name, @NotNull final String[] aliases,

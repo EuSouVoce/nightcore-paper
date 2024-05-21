@@ -59,7 +59,6 @@ public class LangItem extends LangEntry<Pair<String, List<String>>> {
         return Pair.of(this.getLocalizedName(), this.getLocalizedLore());
     }
 
-    @SuppressWarnings("deprecation")
     public void apply(@NotNull final ItemStack item) {
         ItemUtil.editMeta(item, meta -> {
             meta.setDisplayName(this.getWrappedName().toLegacy());

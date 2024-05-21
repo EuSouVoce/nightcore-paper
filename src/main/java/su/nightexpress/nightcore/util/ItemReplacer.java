@@ -49,7 +49,6 @@ public class ItemReplacer {
     @NotNull
     public static ItemReplacer create(@NotNull final ItemMeta meta) { return new ItemReplacer(meta); }
 
-    @SuppressWarnings("deprecation")
     @NotNull
     public ItemReplacer readMeta() {
         if (this.hasMeta()) {
@@ -68,7 +67,6 @@ public class ItemReplacer {
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public void writeMeta() {
         if (!this.hasMeta())
             return;

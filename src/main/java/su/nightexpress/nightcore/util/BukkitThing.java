@@ -46,7 +46,6 @@ public class BukkitThing {
     @NotNull
     public static Set<Enchantment> getEnchantments() { return BukkitThing.allFromRegistry(Registry.ENCHANTMENT); }
 
-    @SuppressWarnings("deprecation")
     @Nullable
     public static Enchantment getEnchantment(@NotNull final String name) {
         if (Version.isBehind(Version.V1_19_R3)) {

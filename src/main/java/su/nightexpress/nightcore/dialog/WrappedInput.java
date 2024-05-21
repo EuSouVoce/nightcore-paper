@@ -10,7 +10,6 @@ import su.nightexpress.nightcore.util.StringUtil;
 import su.nightexpress.nightcore.util.wrapper.UniDouble;
 import su.nightexpress.nightcore.util.wrapper.UniInt;
 
-@SuppressWarnings("deprecation")
 public class WrappedInput {
 
     private final String text;

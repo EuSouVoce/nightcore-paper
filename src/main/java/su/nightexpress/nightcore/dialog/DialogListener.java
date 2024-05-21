@@ -15,7 +15,6 @@ import su.nightexpress.nightcore.manager.AbstractListener;
 import su.nightexpress.nightcore.util.Colorizer;
 import su.nightexpress.nightcore.util.NumberUtil;
 
-@SuppressWarnings("deprecation")
 public class DialogListener extends AbstractListener<NightCore> {
 
     // TODO Timeout

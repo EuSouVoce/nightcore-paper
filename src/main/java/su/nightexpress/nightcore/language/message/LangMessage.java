@@ -253,7 +253,6 @@ public class LangMessage {
         this.send(this.plugin.getServer().getConsoleSender());
     }
 
-    @SuppressWarnings("deprecation")
     public void send(@NotNull final CommandSender sender) {
         if (this.isDisabled())
             return;
