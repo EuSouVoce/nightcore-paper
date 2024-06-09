@@ -120,17 +120,30 @@ public class Lists {
         final char[] chars = input.toCharArray();
         final List<String> goods = new ArrayList<>();
 
-        Result: for (final String sub : results) {
-            int lastIndex = -1;
+        Result: for (final String item : results) {
+            final int itemLength = item.length();
+            if (input.length() > itemLength)
+                continue;
 
+            int lastIndex = -1;
             for (final char letter : chars) {
-                final int index = sub.indexOf(letter, lastIndex == -1 ? 0 : lastIndex);
+                int nextIndex = lastIndex;
+
+                if (nextIndex < 0) {
+                    nextIndex = 0;
+                } else if (nextIndex < itemLength - 1) {
+                    nextIndex++; // This fixes an issue, where method fails for similar characters in a row, like
+                                 // 'oo'.
+                }
+
+                final int index = item.indexOf(letter, nextIndex);
                 if (index <= lastIndex) {
                     continue Result;
                 }
+
                 lastIndex = index;
             }
-            goods.add(sub);
+            goods.add(item);
         }
         return goods;
     }

@@ -5,34 +5,27 @@ import java.awt.Color;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import su.nightexpress.nightcore.util.text.decoration.DecoratorParser;
-import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;
+import su.nightexpress.nightcore.util.text.tag.api.ContentTag;
 import su.nightexpress.nightcore.util.text.tag.api.Tag;
+import su.nightexpress.nightcore.util.text.tag.decorator.BaseColorDecorator;
 
-@Deprecated
-public class ShortHexColorTag extends Tag implements DecoratorParser {
+public class ShortHexColorTag extends Tag implements ContentTag {
 
-    public ShortHexColorTag() { super("#"); }
+    public static final String NAME = "#";
 
-    @Override
-    public int getWeight() { return 10; }
-
-    @Override
-    public boolean conflictsWith(@NotNull final Tag tag) {
-        return super.conflictsWith(tag) || tag instanceof ColorTag || tag instanceof GradientTag;
-    }
+    public ShortHexColorTag() { super(ShortHexColorTag.NAME); }
 
     @Override
     @Nullable
-    public ParsedDecorator parse(@NotNull final String content) {
-        Color color;
+    public BaseColorDecorator parse(@NotNull final String tagContent) {
+        if (tagContent.length() < 7)
+            return null;
 
         try {
-            color = Color.decode(content);
+            final Color color = Color.decode(tagContent);
+            return new BaseColorDecorator(color);
         } catch (final NumberFormatException exception) {
             return null;
         }
-
-        return new ParsedDecorator(new ColorTag(color), 7);
     }
 }

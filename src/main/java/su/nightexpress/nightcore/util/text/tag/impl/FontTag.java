@@ -3,29 +3,15 @@ package su.nightexpress.nightcore.util.text.tag.impl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import su.nightexpress.nightcore.util.StringUtil;
-import su.nightexpress.nightcore.util.text.decoration.FontDecorator;
-import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;
+import su.nightexpress.nightcore.util.text.tag.api.ComplexTag;
 import su.nightexpress.nightcore.util.text.tag.api.ContentTag;
+import su.nightexpress.nightcore.util.text.tag.decorator.FontDecorator;
 
-public class FontTag extends ContentTag {
+public class FontTag extends ComplexTag implements ContentTag {
 
-    public static final String NAME = "font";
-
-    public FontTag() { super(FontTag.NAME); }
+    public FontTag() { super("font"); }
 
     @Override
     @Nullable
-    public ParsedDecorator onParse(@NotNull final String str) {
-        final String content = StringUtil.parseQuotedContent(str);
-        if (content == null)
-            return null;
-
-        final int length = content.length();// + 2; // 2 for quotes
-
-        return new ParsedDecorator(new FontDecorator(content), length);
-    }
-
-    @Override
-    public int getWeight() { return 0; }
+    public FontDecorator parse(@NotNull final String str) { return new FontDecorator(str); }
 }

@@ -1,5 +1,13 @@
 package su.nightexpress.nightcore.util.text.tag;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import su.nightexpress.nightcore.util.text.tag.api.Tag;
 import su.nightexpress.nightcore.util.text.tag.impl.ClickTag;
 import su.nightexpress.nightcore.util.text.tag.impl.ColorTag;
 import su.nightexpress.nightcore.util.text.tag.impl.FontStyleTag;
@@ -10,19 +18,21 @@ import su.nightexpress.nightcore.util.text.tag.impl.HoverTag;
 import su.nightexpress.nightcore.util.text.tag.impl.LineBreakTag;
 import su.nightexpress.nightcore.util.text.tag.impl.ResetTag;
 import su.nightexpress.nightcore.util.text.tag.impl.ShortHexColorTag;
-import su.nightexpress.nightcore.util.text.tag.impl.TranslateTag;
+import su.nightexpress.nightcore.util.text.tag.impl.TranslationTag;
 
 public class Tags {
 
-    public static final ClickTag CLICK = new ClickTag();
-    public static final FontTag FONT = new FontTag();
+    private static final Map<String, Tag> REGISTRY = new HashMap<>();
+
     public static final GradientTag GRADIENT = new GradientTag();
+    public static final LineBreakTag LINE_BREAK = new LineBreakTag();
+    public static final FontTag FONT = new FontTag();
+    public static final HoverTag HOVER = new HoverTag();
+    public static final ClickTag CLICK = new ClickTag();
+    public static final ResetTag RESET = new ResetTag();
     public static final HexColorTag HEX_COLOR = new HexColorTag();
     public static final ShortHexColorTag HEX_COLOR_SHORT = new ShortHexColorTag();
-    public static final HoverTag HOVER = new HoverTag();
-    public static final LineBreakTag LINE_BREAK = new LineBreakTag();
-    public static final ResetTag RESET = new ResetTag();
-    public static final TranslateTag TRANSLATE = new TranslateTag();
+    public static final TranslationTag TRANSLATE = new TranslationTag();
 
     public static final FontStyleTag BOLD = new FontStyleTag("b", FontStyleTag.Style.BOLD);
     public static final FontStyleTag ITALIC = new FontStyleTag("i", FontStyleTag.Style.ITALIC);
@@ -52,4 +62,36 @@ public class Tags {
     public static final ColorTag LIGHT_CYAN = new ColorTag("lcyan", new String[] { "light_cyan" }, "#5edefd");
     public static final ColorTag LIGHT_PURPLE = new ColorTag("lpurple", new String[] { "light_purple" }, "#e39fff");
     public static final ColorTag LIGHT_PINK = new ColorTag("lpink", new String[] { "light_pink" }, "#fd8ddb");
+
+    static {
+        Tags.registerTags(Tags.BLACK, Tags.WHITE, Tags.GRAY, Tags.GREEN, Tags.YELLOW, Tags.ORANGE, Tags.RED, Tags.BLUE, Tags.CYAN, Tags.PURPLE,
+                Tags.PINK,
+
+                Tags.DARK_GRAY, Tags.LIGHT_GRAY, Tags.LIGHT_GREEN, Tags.LIGHT_YELLOW, Tags.LIGHT_ORANGE, Tags.LIGHT_RED, Tags.LIGHT_BLUE,
+                Tags.LIGHT_CYAN, Tags.LIGHT_PURPLE, Tags.LIGHT_PINK);
+
+        Tags.registerTags(Tags.BOLD, Tags.ITALIC, Tags.OBFUSCATED, Tags.STRIKETHROUGH, Tags.UNDERLINED);
+
+        Tags.registerTags(Tags.GRADIENT, Tags.LINE_BREAK, Tags.FONT, Tags.HOVER, Tags.CLICK, Tags.RESET, Tags.HEX_COLOR, Tags.HEX_COLOR_SHORT,
+                Tags.TRANSLATE);
+    }
+
+    @NotNull
+    public static Collection<Tag> getTags() { return Tags.REGISTRY.values(); }
+
+    public static void registerTags(@NotNull final Tag... tags) {
+        for (final Tag tag : tags) {
+            Tags.registerTag(tag);
+        }
+    }
+
+    public static void registerTag(@NotNull final Tag tag) {
+        Tags.REGISTRY.put(tag.getName(), tag);
+        for (final String alias : tag.getAliases()) {
+            Tags.REGISTRY.put(alias, tag);
+        }
+    }
+
+    @Nullable
+    public static Tag getTag(@NotNull final String name) { return Tags.REGISTRY.get(name.toLowerCase()); }
 }

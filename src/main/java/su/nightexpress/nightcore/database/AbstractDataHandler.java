@@ -16,8 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import su.nightexpress.nightcore.NightCorePlugin;
-import su.nightexpress.nightcore.database.connection.MySQLConnector;
-import su.nightexpress.nightcore.database.connection.SQLiteConnector;
 import su.nightexpress.nightcore.database.serialize.ItemStackSerializer;
 import su.nightexpress.nightcore.database.sql.SQLColumn;
 import su.nightexpress.nightcore.database.sql.SQLCondition;
@@ -30,55 +28,51 @@ import su.nightexpress.nightcore.database.sql.executor.InsertQueryExecutor;
 import su.nightexpress.nightcore.database.sql.executor.RenameTableExecutor;
 import su.nightexpress.nightcore.database.sql.executor.SelectQueryExecutor;
 import su.nightexpress.nightcore.database.sql.executor.UpdateQueryExecutor;
-import su.nightexpress.nightcore.manager.SimpleManager;
-import su.nightexpress.nightcore.util.wrapper.UniTask;
+import su.nightexpress.nightcore.manager.AbstractManager;
 
-public abstract class AbstractDataHandler<P extends NightCorePlugin> extends SimpleManager<P> {
+public abstract class AbstractDataHandler<P extends NightCorePlugin> extends AbstractManager<P> {
 
     protected final DatabaseConfig config;
     protected final AbstractConnector connector;
     protected final Gson gson;
 
-    private UniTask syncTask;
-    private UniTask saveTask;
-
-    public AbstractDataHandler(@NotNull final P plugin) { this(plugin, DatabaseConfig.read(plugin)); }
+    public AbstractDataHandler(@NotNull final P plugin) { this(plugin, AbstractDataHandler.getDataConfig(plugin)); }
 
     public AbstractDataHandler(@NotNull final P plugin, @NotNull final DatabaseConfig config) {
         super(plugin);
-
         this.config = config;
-        if (this.getDatabaseType() == DatabaseType.MYSQL) {
-            this.connector = new MySQLConnector(plugin, config);
-        } else {
-            this.connector = new SQLiteConnector(plugin, config);
-        }
+        this.connector = AbstractConnector.create(plugin, config);
         this.gson = this.registerAdapters(new GsonBuilder().setPrettyPrinting()).create();
+    }
+
+    @NotNull
+    protected static DatabaseConfig getDataConfig(@NotNull final NightCorePlugin plugin) {
+        DatabaseConfig dataConfig = plugin.getDetails().getDatabaseConfig();
+        if (dataConfig == null) {
+            plugin.warn("The plugin didn't have database configuration. Fixing it now...");
+            dataConfig = DatabaseConfig.read(plugin);
+        }
+        return dataConfig;
     }
 
     @Override
     protected void onLoad() {
-        if (this.getConfig().getSaveInterval() > 0) {
-            this.saveTask = this.plugin.createAsyncTask(this::onSave).setSecondsInterval(this.getConfig().getSaveInterval() * 60).start();
+        if (this.config.getSaveInterval() > 0) {
+            this.addTask(this.plugin.createAsyncTask(this::onSave).setSecondsInterval(this.config.getSaveInterval() * 60));
         }
 
-        if (this.getConfig().getSyncInterval() > 0 && this.getDatabaseType() != DatabaseType.SQLITE) {
-            this.syncTask = this.plugin.createAsyncTask(this::onSynchronize).setSecondsInterval(this.getConfig().getSyncInterval()).start();
+        if (this.config.getSyncInterval() > 0 && this.getDatabaseType() != DatabaseType.SQLITE) {
+            this.addTask(this.plugin.createAsyncTask(this::onSynchronize).setSecondsInterval(this.config.getSyncInterval()));
             this.plugin.info("Enabled data synchronization with " + this.config.getSyncInterval() + " seconds interval.");
         }
 
-        if (this.getConfig().isPurgeEnabled() && this.getConfig().getPurgePeriod() > 0) {
+        if (this.config.isPurgeEnabled() && this.config.getPurgePeriod() > 0) {
             this.onPurge();
         }
     }
 
     @Override
     protected void onShutdown() {
-        if (this.syncTask != null)
-            this.syncTask.stop();
-        if (this.saveTask != null)
-            this.saveTask.stop();
-        // this.onSynchronize();
         this.onSave();
         this.getConnector().close();
     }
@@ -93,10 +87,10 @@ public abstract class AbstractDataHandler<P extends NightCorePlugin> extends Sim
     public DatabaseConfig getConfig() { return this.config; }
 
     @NotNull
-    public DatabaseType getDatabaseType() { return this.getConfig().getStorageType(); }
+    public DatabaseType getDatabaseType() { return this.config.getStorageType(); }
 
     @NotNull
-    public String getTablePrefix() { return this.getConfig().getTablePrefix(); }
+    public String getTablePrefix() { return this.config.getTablePrefix(); }
 
     @NotNull
     public AbstractConnector getConnector() { return this.connector; }

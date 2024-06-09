@@ -15,14 +15,15 @@ import su.nightexpress.nightcore.util.wrapper.UniPermission;
 
 public class ArgumentBuilder<T> {
 
-    private final String name;
-    private final Function<String, T> parser;
+    protected final String name;
+    protected final Function<String, T> parser;
 
-    private boolean required;
-    private String localized;
-    private String permission;
-    private Function<TabContext, List<String>> samples;
-    private LangMessage failureMessage;
+    protected boolean required;
+    protected boolean complex;
+    protected String localized;
+    protected String permission;
+    protected Function<TabContext, List<String>> samples;
+    protected LangMessage failureMessage;
 
     public ArgumentBuilder(@NotNull final String name, @NotNull final Function<String, T> parser) {
         this.name = name;
@@ -35,6 +36,12 @@ public class ArgumentBuilder<T> {
     @NotNull
     public ArgumentBuilder<T> required(final boolean required) {
         this.required = required;
+        return this;
+    }
+
+    @NotNull
+    public ArgumentBuilder<T> complex() {
+        this.complex = true;
         return this;
     }
 
@@ -73,7 +80,7 @@ public class ArgumentBuilder<T> {
 
     @NotNull
     public CommandArgument<T> build() {
-        return new CommandArgument<>(this.name, this.parser, this.required, this.localized, this.permission, this.failureMessage,
-                this.samples);
+        return new CommandArgument<>(this.name, this.parser, this.required, this.complex, this.localized, this.permission,
+                this.failureMessage, this.samples);
     }
 }

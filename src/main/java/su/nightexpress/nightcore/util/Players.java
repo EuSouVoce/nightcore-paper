@@ -25,7 +25,7 @@ import su.nightexpress.nightcore.core.CoreConfig;
 import su.nightexpress.nightcore.integration.VaultHook;
 import su.nightexpress.nightcore.util.message.NexParser;
 import su.nightexpress.nightcore.util.text.NightMessage;
-import su.nightexpress.nightcore.util.text.WrappedMessage;
+import su.nightexpress.nightcore.util.text.TextRoot;
 
 public class Players {
 
@@ -145,7 +145,7 @@ public class Players {
         Players.sendActionBar(player, NightMessage.create(message));
     }
 
-    public static void sendActionBar(@NotNull final Player player, @NotNull final WrappedMessage message) {
+    public static void sendActionBar(@NotNull final Player player, @NotNull final TextRoot message) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, message.parseIfAbsent());
     }
 

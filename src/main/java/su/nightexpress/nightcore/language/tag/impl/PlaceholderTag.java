@@ -1,18 +1,15 @@
 package su.nightexpress.nightcore.language.tag.impl;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import su.nightexpress.nightcore.language.message.MessageOptions;
-import su.nightexpress.nightcore.language.tag.MessageDecorator;
-import su.nightexpress.nightcore.util.text.tag.api.Tag;
+import su.nightexpress.nightcore.language.tag.MessageTag;
 
-public class PlaceholderTag extends Tag implements MessageDecorator {
+public class PlaceholderTag extends MessageTag {
 
     public PlaceholderTag() { super("papi"); }
 
     @Override
-    public int getWeight() { return 0; }
-
-    @Override
-    public void apply(@NotNull final MessageOptions options, @NotNull final String value) { options.setUsePlaceholderAPI(true); }
+    public void apply(@NotNull final MessageOptions options, @Nullable final String tagContent) { options.setUsePlaceholderAPI(true); }
 }

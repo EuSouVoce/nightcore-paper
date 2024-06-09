@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +71,21 @@ public class DirectNode extends CommandNode implements DirectExecutor {
                 return false;
             }
 
-            final String arg = args[index++];
+            String arg;
+            // must be last.
+            if (argument.isComplex()) {
+                /*
+                 * StringBuilder builder = new StringBuilder(); for (int textIndex = index;
+                 * textIndex < args.length; textIndex++) { String text = args[textIndex]; if
+                 * (text.charAt(0) == CommandFlag.PREFIX) break; if (!builder.isEmpty())
+                 * builder.append(" "); builder.append(text); index++; }
+                 */
+                arg = /* builder.toString(); */Stream.of(args).skip(index).collect(Collectors.joining(" "));
+            } else {
+                arg = args[index++];
+            }
+
+            // String
             final ParsedArgument<?> parsedArgument = argument.parse(arg);
             if (parsedArgument == null) {
                 return context.sendFailure(argument.getFailureMessage().replace(Placeholders.GENERIC_VALUE, arg)
@@ -130,6 +146,12 @@ public class DirectNode extends CommandNode implements DirectExecutor {
         // System.out.println("index = " + index);
         // System.out.println("arguments.size() = " + arguments.size());
         if (index >= this.arguments.size()) {
+            if (!this.arguments.isEmpty()) {
+                final CommandArgument<?> latestArgument = this.arguments.get(this.arguments.size() - 1);
+                if (latestArgument.isComplex())
+                    return this.getArgumentSamples(latestArgument, context);
+            }
+
             final List<String> samples = new ArrayList<>();
 
             this.getFlags().forEach(commandFlag -> {
@@ -146,6 +168,10 @@ public class DirectNode extends CommandNode implements DirectExecutor {
         }
 
         final CommandArgument<?> argument = this.arguments.get(index);
+        return this.getArgumentSamples(argument, context);
+    }
+
+    private List<String> getArgumentSamples(@NotNull final CommandArgument<?> argument, @NotNull final TabContext context) {
         if (!argument.hasPermission(context.getSender()))
             return Collections.emptyList();
 

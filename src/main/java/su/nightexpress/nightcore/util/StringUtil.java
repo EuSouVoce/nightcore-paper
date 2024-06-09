@@ -98,6 +98,16 @@ public class StringUtil {
         return buf.toString();
     }
 
+    /*
+     * @Nullable public static String parseQuotedContent(@NotNull String string) {
+     * char quote = string.charAt(0); if (quote != '\'' && quote != '"') return
+     * null; if (string.length() < 3) return null; int indexEnd = -1; for (int index
+     * = 1; index < string.length(); index++) { final char letter =
+     * string.charAt(index); if (letter == '\\') { index += 2; continue; } if
+     * (letter == quote) { indexEnd = index; break; } } if (indexEnd == -1) return
+     * null; return string.substring(1, indexEnd); }
+     */
+
     @Nullable
     public static String parseQuotedContent(@NotNull final String string) {
         final char quote = string.charAt(0);
@@ -106,22 +116,21 @@ public class StringUtil {
         if (string.length() < 3)
             return null;
 
-        int indexEnd = -1;
+        final StringBuilder builder = new StringBuilder();
+
         for (int index = 1; index < string.length(); index++) {
             final char letter = string.charAt(index);
             if (letter == '\\') {
-                index += 2;
+                // index++;
                 continue;
             }
             if (letter == quote) {
-                indexEnd = index;
                 break;
             }
+            builder.append(letter);
         }
-        if (indexEnd == -1)
-            return null;
 
-        return string.substring(1, indexEnd);
+        return builder.toString();
     }
 
     @NotNull

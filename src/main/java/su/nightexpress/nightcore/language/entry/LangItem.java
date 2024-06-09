@@ -13,7 +13,7 @@ import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.ItemUtil;
 import su.nightexpress.nightcore.util.Pair;
 import su.nightexpress.nightcore.util.text.NightMessage;
-import su.nightexpress.nightcore.util.text.WrappedMessage;
+import su.nightexpress.nightcore.util.text.TextRoot;
 import su.nightexpress.nightcore.util.text.tag.Tags;
 
 public class LangItem extends LangEntry<Pair<String, List<String>>> {
@@ -23,8 +23,8 @@ public class LangItem extends LangEntry<Pair<String, List<String>>> {
     private String localizedName;
     private List<String> localizedLore;
 
-    private WrappedMessage wrappedName;
-    private List<WrappedMessage> wrappedLore;
+    private TextRoot wrappedName;
+    private List<TextRoot> wrappedLore;
 
     public LangItem(@NotNull final String key, @NotNull final String defaultName, @NotNull final List<String> defaultLore) {
         super(key, defaultName);
@@ -62,7 +62,7 @@ public class LangItem extends LangEntry<Pair<String, List<String>>> {
     public void apply(@NotNull final ItemStack item) {
         ItemUtil.editMeta(item, meta -> {
             meta.setDisplayName(this.getWrappedName().toLegacy());
-            meta.setLore(this.getWrappedLore().stream().map(WrappedMessage::toLegacy).toList());
+            meta.setLore(this.getWrappedLore().stream().map(TextRoot::toLegacy).toList());
         });
     }
 
@@ -90,10 +90,10 @@ public class LangItem extends LangEntry<Pair<String, List<String>>> {
     }
 
     @NotNull
-    public WrappedMessage getWrappedName() { return this.wrappedName; }
+    public TextRoot getWrappedName() { return this.wrappedName; }
 
     @NotNull
-    public List<WrappedMessage> getWrappedLore() { return this.wrappedLore; }
+    public List<TextRoot> getWrappedLore() { return this.wrappedLore; }
 
     public static final String CLICK = "Click";
     public static final String LMB = "Left-Click";

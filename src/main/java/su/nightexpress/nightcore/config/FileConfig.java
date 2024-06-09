@@ -39,6 +39,7 @@ import su.nightexpress.nightcore.util.ItemUtil;
 import su.nightexpress.nightcore.util.LocationUtil;
 import su.nightexpress.nightcore.util.NumberUtil;
 import su.nightexpress.nightcore.util.Placeholders;
+import su.nightexpress.nightcore.util.Plugins;
 import su.nightexpress.nightcore.util.Reflex;
 import su.nightexpress.nightcore.util.StringUtil;
 import su.nightexpress.nightcore.util.text.NightMessage;
@@ -89,8 +90,7 @@ public class FileConfig extends YamlConfiguration {
 
         final File file = new File(plugin.getDataFolder() + filePath);
         if (FileUtil.create(file)) {
-            try {
-                final InputStream input = plugin.getClass().getResourceAsStream(filePath);
+            try (InputStream input = plugin.getClass().getResourceAsStream(filePath)) {
                 if (input != null)
                     FileUtil.copy(input, file);
             } catch (final Exception exception) {
@@ -247,7 +247,7 @@ public class FileConfig extends YamlConfiguration {
     }
 
     @NotNull
-    public String @NotNull [] getStringArray(@NotNull final String path, @NotNull final String[] def) {
+    public String[] getStringArray(@NotNull final String path, @NotNull final String[] def) {
         final String str = this.getString(path);
         return str == null ? def : str.split(",");
     }
@@ -303,19 +303,21 @@ public class FileConfig extends YamlConfiguration {
         if (!path.isEmpty() && !path.endsWith("."))
             path = path + ".";
 
-        final Material material = Material.getMaterial(this.getString(path + "Material", "").toUpperCase());
-        if (material == null || material == Material.AIR)
+        final Material material = BukkitThing.getMaterial(this.getString(path + "Material", BukkitThing.toString(Material.AIR)));
+        if (material == null || material.isAir())
             return new ItemStack(Material.AIR);
 
         final ItemStack item = new ItemStack(material);
         item.setAmount(this.getInt(path + "Amount", 1));
 
-        final String headSkin = this.getString(path + "SkinURL", "");
-        if (!headSkin.isEmpty()) {
+        final String headSkin = this.getString(path + "SkinURL");
+        if (headSkin != null) {
             ItemUtil.setHeadSkin(item, headSkin);
         } else {
             final String headTexture = this.getString(path + "Head_Texture", "");
             if (!headTexture.isEmpty()) {
+                Plugins.CORE.warn(
+                        "'Head_Texture' itemstack option is deprecated and will be removed soon. Please, use 'SkinURL' option instead.");
                 ItemUtil.setSkullTexture(item, headTexture);
             }
         }
@@ -330,19 +332,19 @@ public class FileConfig extends YamlConfiguration {
         }
 
         final String name = this.getString(path + "Name");
-        meta.setDisplayName(name != null ? NightMessage.asLegacy(Colorizer.apply(name)) : null);
-        meta.setLore(NightMessage.asLegacy(Colorizer.apply(this.getStringList(path + "Lore"))));
+        meta.setDisplayName(name != null ? NightMessage.asLegacy(name) : null);
+        meta.setLore(NightMessage.asLegacy(this.getStringList(path + "Lore")));
 
         for (final String sKey : this.getSection(path + "Enchants")) {
             final Enchantment enchantment = BukkitThing.getEnchantment(sKey);
             if (enchantment == null)
                 continue;
 
-            final int eLvl = this.getInt(path + "Enchants." + sKey);
-            if (eLvl <= 0)
+            final int level = this.getInt(path + "Enchants." + sKey);
+            if (level <= 0)
                 continue;
 
-            meta.addEnchant(enchantment, eLvl, true);
+            meta.addEnchant(enchantment, level, true);
         }
 
         final int model = this.getInt(path + "Custom_Model_Data");

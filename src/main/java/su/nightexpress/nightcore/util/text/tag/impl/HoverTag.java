@@ -4,42 +4,52 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.md_5.bungee.api.chat.HoverEvent;
-import su.nightexpress.nightcore.util.StringUtil;
-import su.nightexpress.nightcore.util.text.decoration.Decorator;
-import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;
-import su.nightexpress.nightcore.util.text.decoration.ShowItemDecorator;
-import su.nightexpress.nightcore.util.text.decoration.ShowTextDecorator;
+import su.nightexpress.nightcore.util.text.TextRoot;
+import su.nightexpress.nightcore.util.text.tag.api.ComplexTag;
 import su.nightexpress.nightcore.util.text.tag.api.ContentTag;
+import su.nightexpress.nightcore.util.text.tag.decorator.Decorator;
+import su.nightexpress.nightcore.util.text.tag.decorator.ShowItemDecorator;
+import su.nightexpress.nightcore.util.text.tag.decorator.ShowTextDecorator;
 
-public class HoverTag extends ContentTag {
+public class HoverTag extends ComplexTag implements ContentTag {
 
     public static final String NAME = "hover";
 
     public HoverTag() { super(HoverTag.NAME); }
 
-    @Override
-    public int getWeight() { return 50; }
-
-    /*
-     * @Override public boolean isDynamicSize() { return true; }
-     */
+    @NotNull
+    @Deprecated
+    public String enclose(@NotNull final String text, @NotNull final String hint) { return this.encloseHint(text, hint); }
 
     @NotNull
-    public String enclose(@NotNull final String text, @NotNull final String hint) {
-        return this.enclose(HoverEvent.Action.SHOW_TEXT, text, hint);
+    @Deprecated
+    public String enclose(@NotNull final HoverEvent.Action action, @NotNull final String text, @NotNull final String content) {
+        return this.enclose(text, action, content);
     }
 
     @NotNull
-    public String enclose(@NotNull final HoverEvent.Action action, @NotNull final String text, @NotNull final String hint) {
-        return this.enclose(action.name().toLowerCase(), hint, text);
+    public String encloseHint(@NotNull final String text, @NotNull final String hint) { return this.enclose(text, HoverEvent.Action.SHOW_TEXT, hint); }
+
+    @NotNull
+    public String enclose(@NotNull final String text, @NotNull final HoverEvent.Action action, @NotNull final String content) {
+        // content = content.replace("'", "\\'");
+
+        // String tagOpen = brackets(NAME + ":" + action.name().toLowerCase() + ":'" +
+        // content + "'");
+        // String tagClose = this.getClosingName();
+
+        final String data = action.name().toLowerCase() + ":'" + this.escapeQuotes(content) + "'";
+        return this.encloseContent(text, data);
+
+        // return tagOpen + text + tagClose;
     }
 
     @Override
     @Nullable
-    public ParsedDecorator onParse(@NotNull String sub) {
+    public Decorator parse(@NotNull String tagContent) {
         HoverEvent.Action action = null;
         for (final HoverEvent.Action global : HoverEvent.Action.values()) {
-            if (sub.startsWith(global.name().toLowerCase())) {
+            if (tagContent.startsWith(global.name().toLowerCase())) {
                 action = global;
                 break;
             }
@@ -48,28 +58,15 @@ public class HoverTag extends ContentTag {
             return null;
 
         final int prefixSize = action.name().toLowerCase().length() + 1; // 1 for ':', like "show_text:"
-        sub = sub.substring(prefixSize);
+        tagContent = tagContent.substring(prefixSize);
 
-        final String content = StringUtil.parseQuotedContent(sub);
-        if (content == null)
-            return null;
+        final String value = TextRoot.stripQuotesSlash(tagContent);
 
-        final int length = prefixSize + content.length();// + 2; // 2 for quotes
-
-        Decorator decorator;
         if (action == HoverEvent.Action.SHOW_TEXT) {
-            decorator = new ShowTextDecorator(content);
+            return new ShowTextDecorator(value);
         } else if (action == HoverEvent.Action.SHOW_ITEM) {
-            /*
-             * ItemStack item; Material material =
-             * Material.getMaterial(content.toUpperCase()); if (material != null) { item =
-             * new ItemStack(material); } else item = ItemUtil.decompress(content);
-             */
-
-            decorator = new ShowItemDecorator(content);
-        } else
-            return null;
-
-        return new ParsedDecorator(decorator, length);
+            return new ShowItemDecorator(value);
+        }
+        return null;
     }
 }

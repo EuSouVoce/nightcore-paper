@@ -6,10 +6,10 @@ import org.jetbrains.annotations.NotNull;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
-import su.nightexpress.nightcore.util.text.decoration.Decorator;
-import su.nightexpress.nightcore.util.text.tag.api.Tag;
+import su.nightexpress.nightcore.util.text.tag.api.SimpleTag;
+import su.nightexpress.nightcore.util.text.tag.decorator.ColorDecorator;
 
-public class ColorTag extends Tag implements Decorator {
+public class ColorTag extends SimpleTag implements ColorDecorator {
 
     protected final Color color;
 
@@ -32,14 +32,8 @@ public class ColorTag extends Tag implements Decorator {
         this.color = color;
     }
 
-    @Override
-    public int getWeight() { return 10; }
-
     @NotNull
     public Color getColor() { return this.color; }
-
-    @Override
-    public boolean conflictsWith(@NotNull final Tag tag) { return tag instanceof ColorTag; }
 
     @Override
     public void decorate(@NotNull final BaseComponent component) { component.setColor(ChatColor.of(this.getColor())); }

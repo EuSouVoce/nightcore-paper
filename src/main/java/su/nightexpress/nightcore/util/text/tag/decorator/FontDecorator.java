@@ -1,4 +1,4 @@
-package su.nightexpress.nightcore.util.text.decoration;
+package su.nightexpress.nightcore.util.text.tag.decorator;
 
 import org.jetbrains.annotations.NotNull;
 

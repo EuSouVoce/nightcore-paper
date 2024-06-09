@@ -38,8 +38,7 @@ public final class DeleteQueryExecutor extends SQLExecutor<Void> {
     @Override
     @NotNull
     public Void execute(@NotNull final AbstractConnector connector) {
-        if (this.wheres.isEmpty())
-            return null;
+        // if (this.wheres.isEmpty()) return null;
 
         final String whereCols = this.wheres.stream()
                 .map(where -> where.getValue().getColumn().getNameEscaped() + " " + where.getType().getOperator() + " ?")

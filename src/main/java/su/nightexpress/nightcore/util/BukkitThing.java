@@ -1,7 +1,9 @@
 package su.nightexpress.nightcore.util;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.bukkit.Keyed;
@@ -35,6 +37,14 @@ public class BukkitThing {
     }
 
     @NotNull
+    public static <T extends Keyed> List<String> getNames(@NotNull final Registry<T> registry) {
+        if (Version.isBehind(Version.V1_20_R2)) {
+            return StreamSupport.stream(registry.spliterator(), false).map(BukkitThing::toString).toList();
+        }
+        return registry.stream().map(BukkitThing::toString).toList();
+    }
+
+    @NotNull
     public static String toString(@NotNull final Keyed keyed) { return keyed.getKey().getKey(); }
 
     @Nullable
@@ -45,6 +55,14 @@ public class BukkitThing {
 
     @NotNull
     public static Set<Enchantment> getEnchantments() { return BukkitThing.allFromRegistry(Registry.ENCHANTMENT); }
+
+    @NotNull
+    public static Set<PotionEffectType> getEffectTypes() {
+        if (Version.isBehind(Version.V1_20_R2)) {
+            return Stream.of(PotionEffectType.values()).collect(Collectors.toSet());
+        }
+        return BukkitThing.allFromRegistry(Registry.EFFECT);
+    }
 
     @Nullable
     public static Enchantment getEnchantment(@NotNull final String name) {

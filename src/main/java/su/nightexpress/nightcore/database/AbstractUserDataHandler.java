@@ -37,7 +37,7 @@ public abstract class AbstractUserDataHandler<P extends NightDataPlugin<U>, U ex
     protected final Set<UUID> existIDs;
     protected final Set<String> existNames;
 
-    public AbstractUserDataHandler(@NotNull final P plugin) { this(plugin, DatabaseConfig.read(plugin)); }
+    public AbstractUserDataHandler(@NotNull final P plugin) { this(plugin, AbstractDataHandler.getDataConfig(plugin)); }
 
     public AbstractUserDataHandler(@NotNull final P plugin, @NotNull final DatabaseConfig config) {
         super(plugin, config);

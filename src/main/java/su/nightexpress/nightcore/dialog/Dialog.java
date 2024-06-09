@@ -1,11 +1,23 @@
 package su.nightexpress.nightcore.dialog;
 
+import static su.nightexpress.nightcore.util.text.tag.Tags.CLICK;
+import static su.nightexpress.nightcore.util.text.tag.Tags.CYAN;
+import static su.nightexpress.nightcore.util.text.tag.Tags.DARK_GRAY;
+import static su.nightexpress.nightcore.util.text.tag.Tags.GRAY;
+import static su.nightexpress.nightcore.util.text.tag.Tags.GREEN;
+import static su.nightexpress.nightcore.util.text.tag.Tags.HOVER;
+import static su.nightexpress.nightcore.util.text.tag.Tags.LIGHT_RED;
+import static su.nightexpress.nightcore.util.text.tag.Tags.ORANGE;
+import static su.nightexpress.nightcore.util.text.tag.Tags.YELLOW;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.bukkit.entity.Player;
@@ -16,14 +28,16 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import su.nightexpress.nightcore.core.CoreLang;
 import su.nightexpress.nightcore.menu.api.Menu;
 import su.nightexpress.nightcore.menu.impl.AbstractMenu;
-import su.nightexpress.nightcore.util.Colorizer;
+import su.nightexpress.nightcore.util.Placeholders;
+import su.nightexpress.nightcore.util.Players;
 import su.nightexpress.nightcore.util.text.NightMessage;
-import su.nightexpress.nightcore.util.text.WrappedMessage;
+import su.nightexpress.nightcore.util.text.TextRoot;
 import su.nightexpress.nightcore.util.text.tag.Tags;
 
 public class Dialog {
 
     private static final Map<UUID, Dialog> DIALOG_MAP = new ConcurrentHashMap<>();
+    private static final int DEFAULT_TIMEOUT = 60;
 
     public static final String EXIT = "#exit";
     public static final String VALUES = "#values";
@@ -33,12 +47,16 @@ public class Dialog {
 
     private Menu lastMenu;
     private List<String> suggestions;
+    private long timeoutDate;
 
     public Dialog(@NotNull final Player player, @NotNull final DialogHandler handler) {
         this.player = player;
         this.handler = handler;
         this.suggestions = new ArrayList<>();
+        this.setTimeout(Dialog.DEFAULT_TIMEOUT);
     }
+
+    public boolean isTimedOut() { return this.timeoutDate > 0 && System.currentTimeMillis() >= this.timeoutDate; }
 
     @NotNull
     public Player getPlayer() { return this.player; }
@@ -65,6 +83,12 @@ public class Dialog {
         return this;
     }
 
+    public long getTimeoutDate() { return this.timeoutDate; }
+
+    public void setTimeout(final int timeout) {
+        this.timeoutDate = System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(timeout, TimeUnit.SECONDS);
+    }
+
     public void displaySuggestions(final boolean autoRun, int page) {
         final List<String> values = this.getSuggestions();
         if (values.isEmpty())
@@ -83,69 +107,76 @@ public class Dialog {
         final List<String> items = values.stream().skip(skip).limit(perPage).toList();
         final ClickEvent.Action action = autoRun ? ClickEvent.Action.RUN_COMMAND : ClickEvent.Action.SUGGEST_COMMAND;
 
-        final NightMessage.Builder builder = NightMessage.builder();
-        builder.append("=".repeat(8) + "[ ", Tags.ORANGE);
-        builder.append("Value Helper", Tags.YELLOW);
-        builder.append("] " + "=".repeat(8), Tags.ORANGE);
-        builder.appendLineBreak();
+        final StringBuilder builder = new StringBuilder()
+                .append(Tags.ORANGE.enclose("=".repeat(8) + "[ " + Tags.YELLOW.enclose("Value Helper") + " ]" + "=".repeat(8)))
+                .append(Placeholders.TAG_LINE_BREAK);
 
         items.forEach(element -> {
-            final String value = element.charAt(0) == '/' ? element : '/' + element;
-            builder.append("> ", Tags.DARK_GRAY);
-            builder.append(element, Tags.GREEN).showText(Tags.GRAY.enclose("Click me to select " + Tags.CYAN.enclose(element) + "."))
-                    .clickEvent(action, value);
-            builder.appendLineBreak();
+            final String hoverHint = Tags.GRAY.enclose("Click me to select " + Tags.CYAN.enclose(element) + ".");
+            final String clickCommand = element.charAt(0) == '/' ? element : '/' + element;
+
+            builder.append(Tags.DARK_GRAY.enclose("> "))
+                    .append(Tags.GREEN.enclose(Tags.HOVER.encloseHint(Tags.CLICK.encloseRun(element, clickCommand), hoverHint)));
+            builder.append(Placeholders.TAG_LINE_BREAK);
         });
 
-        builder.append("=".repeat(9) + " ", Tags.ORANGE);
+        builder.append(Tags.ORANGE.enclose("=".repeat(9))).append(" ");
 
         if (isFirstPage) {
-            builder.append("[<]", Tags.GRAY);
+            builder.append(Tags.GRAY.enclose("[<]"));
         } else {
-            builder.append("[<]", Tags.LIGHT_RED).showText(Tags.GRAY.enclose("Previous Page"))
-                    .runCommand("/" + Dialog.VALUES + " " + (page - 1) + " " + autoRun);
+            builder.append(Tags.LIGHT_RED.enclose(Tags.HOVER.encloseHint(Tags.CLICK.encloseRun("[<]", "/" + Dialog.VALUES + " " + (page - 1) + " " + autoRun),
+                    Tags.GRAY.enclose("Previous Page"))));
         }
 
-        builder.append(" " + page, Tags.YELLOW);
-        builder.append("/", Tags.ORANGE);
-        builder.append(pages + " ", Tags.YELLOW);
+        builder.append(Tags.YELLOW.enclose(" " + page));
+        builder.append(Tags.ORANGE.enclose("/"));
+        builder.append(Tags.YELLOW.enclose(pages + " "));
 
         if (isLastPage) {
-            builder.append("[>]", Tags.GRAY);
+            builder.append(Tags.GRAY.enclose("[>]"));
         } else {
-            builder.append("[>]", Tags.LIGHT_RED).showText(Tags.GRAY.enclose("Next Page"))
-                    .runCommand("/" + Dialog.VALUES + " " + (page + 1) + " " + autoRun);
+            builder.append(Tags.LIGHT_RED.enclose(Tags.HOVER.encloseHint(Tags.CLICK.encloseRun("[>]", "/" + Dialog.VALUES + " " + (page + 1) + " " + autoRun),
+                    Tags.GRAY.enclose("Next Page"))));
+
         }
 
-        builder.append(" " + "=".repeat(9), Tags.ORANGE);
-        builder.send(this.getPlayer());
+        builder.append(Tags.ORANGE.enclose(" " + "=".repeat(9)));
+
+        Players.sendModernMessage(this.player, builder.toString());
     }
 
     @Deprecated
     public void prompt(@NotNull final String text) {
-        this.sendInfo(CoreLang.EDITOR_INPUT_HEADER_MAIN.getMessage().toLegacy(), Colorizer.apply(text));
+        this.sendInfo(CoreLang.EDITOR_INPUT_HEADER_MAIN.getMessage().toLegacy(), NightMessage.asLegacy(text));
     }
 
-    public void prompt(@NotNull final WrappedMessage text) { this.info(CoreLang.EDITOR_INPUT_HEADER_MAIN.getMessage(), text); }
+    public void prompt(@NotNull final TextRoot text) { this.info(CoreLang.EDITOR_INPUT_HEADER_MAIN.getMessage(), text); }
 
     @Deprecated
     public void error(@NotNull final String text) {
-        this.sendInfo(CoreLang.EDITOR_INPUT_HEADER_ERROR.getMessage().toLegacy(), Colorizer.apply(text));
+        this.sendInfo(CoreLang.EDITOR_INPUT_HEADER_ERROR.getMessage().toLegacy(), NightMessage.asLegacy(text));
     }
 
-    public void error(@NotNull final WrappedMessage text) { this.info(CoreLang.EDITOR_INPUT_HEADER_ERROR.getMessage(), text); }
+    public void error(@NotNull final TextRoot text) { this.info(CoreLang.EDITOR_INPUT_HEADER_ERROR.getMessage(), text); }
 
-    public void info(@NotNull final WrappedMessage title, @NotNull final WrappedMessage text) {
-        this.sendInfo(title.toLegacy(), text.toLegacy());
-    }
+    public void info(@NotNull final TextRoot title, @NotNull final TextRoot text) { this.sendInfo(title.toLegacy(), text.toLegacy()); }
 
     @Deprecated
     public void info(@NotNull final String title, @NotNull final String text) {
-        this.sendInfo(Colorizer.apply(title), Colorizer.apply(text));
+        this.sendInfo(NightMessage.asLegacy(title), NightMessage.asLegacy(text));
     }
 
     private void sendInfo(@NotNull final String title, @NotNull final String text) {
         this.getPlayer().sendTitle(title, text, 20, Short.MAX_VALUE, 20);
+    }
+
+    public static void checkTimeOut() {
+        new HashSet<>(Dialog.DIALOG_MAP.values()).forEach(dialog -> {
+            if (dialog.isTimedOut()) {
+                Dialog.stop(dialog.player);
+            }
+        });
     }
 
     @NotNull

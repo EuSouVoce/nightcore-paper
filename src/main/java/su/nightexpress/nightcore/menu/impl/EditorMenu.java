@@ -22,7 +22,7 @@ import su.nightexpress.nightcore.menu.link.Linked;
 import su.nightexpress.nightcore.menu.link.ViewLink;
 import su.nightexpress.nightcore.util.ItemReplacer;
 import su.nightexpress.nightcore.util.ItemUtil;
-import su.nightexpress.nightcore.util.text.WrappedMessage;
+import su.nightexpress.nightcore.util.text.TextRoot;
 
 public abstract class EditorMenu<P extends NightCorePlugin, T> extends AbstractMenu<P> implements Linked<T> {
 
@@ -75,7 +75,7 @@ public abstract class EditorMenu<P extends NightCorePlugin, T> extends AbstractM
 
     @NotNull
     protected MenuItem addReturn(final int slot, @NotNull final EditorHandler<T> handler) {
-        final ItemStack item = ItemUtil.getSkinHead("27548362a24c0fa8453e4d93e68c5969ddbde57bf6666c0319c1ed1e84d89065");
+        final ItemStack item = ItemUtil.getSkinHead("be9ae7a4be65fcbaee65181389a2f7d47e2e326db59ea3eb789a92c85ea46");
         return this.addItem(item, CoreLang.EDITOR_ITEM_RETURN, slot, handler);
     }
 
@@ -85,10 +85,20 @@ public abstract class EditorMenu<P extends NightCorePlugin, T> extends AbstractM
         return this.addItem(item, locale, slot, handler);
     }
 
+    /*
+     * @NotNull
+     * @Deprecated protected MenuItem addExit(int... slots) { //ItemStack item =
+     * ItemUtil.getSkinHead(
+     * "27548362a24c0fa8453e4d93e68c5969ddbde57bf6666c0319c1ed1e84d89065"); //return
+     * this.addItem(item, CoreLang.EDITOR_ITEM_CLOSE,
+     * slots).setHandler(ItemHandler.forClose(this)); return this.addExit(slots[0]);
+     * }
+     */
+
     @NotNull
-    protected MenuItem addExit(final int... slots) {
+    protected MenuItem addExit(final int slot) {
         final ItemStack item = ItemUtil.getSkinHead("27548362a24c0fa8453e4d93e68c5969ddbde57bf6666c0319c1ed1e84d89065");
-        return this.addItem(item, CoreLang.EDITOR_ITEM_CLOSE, slots).setHandler(ItemHandler.forClose(this));
+        return this.addItem(item, CoreLang.EDITOR_ITEM_CLOSE, slot, (viewer, event, obj) -> ItemHandler.forClose(this));
     }
 
     @NotNull
@@ -133,7 +143,7 @@ public abstract class EditorMenu<P extends NightCorePlugin, T> extends AbstractM
     }
 
     @NotNull
-    public Dialog handleInput(@NotNull final Player player, @NotNull final WrappedMessage prompt, @NotNull final DialogHandler handler) {
+    public Dialog handleInput(@NotNull final Player player, @NotNull final TextRoot prompt, @NotNull final DialogHandler handler) {
         this.runNextTick(player::closeInventory);
 
         final Dialog dialog = Dialog.create(player, handler);

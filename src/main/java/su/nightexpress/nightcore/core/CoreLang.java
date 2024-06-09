@@ -3,6 +3,7 @@ package su.nightexpress.nightcore.core;
 import org.jetbrains.annotations.NotNull;
 
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import su.nightexpress.nightcore.dialog.Dialog;
 import su.nightexpress.nightcore.language.entry.LangItem;
 import su.nightexpress.nightcore.language.entry.LangString;
@@ -138,12 +139,12 @@ public class CoreLang {
                     + Tags.YELLOW.enclose("/" + Placeholders.COMMAND_LABEL) + " " + Tags.ORANGE.enclose(Placeholders.COMMAND_USAGE),
             " ");
 
-    public static final LangText EDITOR_ACTION_EXIT = LangText
-            .of("Editor.Action.Exit", Placeholders.TAG_NO_PREFIX, "",
-                    Tags.GRAY.enclose("Click " + Tags.CLICK.enclose(ClickEvent.Action.RUN_COMMAND,
-                            Tags.HOVER.enclose(Tags.GREEN.enclose("[Here]"), Tags.GRAY.enclose("Click to cancel")), "/" + Dialog.EXIT)
-                            + " to leave input mode."),
-                    "");
+    public static final LangText EDITOR_ACTION_EXIT = LangText.of("Editor.Action.Exit", Placeholders.TAG_NO_PREFIX, "",
+            Tags.GRAY.enclose("Click "
+                    + Tags.CLICK.enclose(Tags.HOVER.enclose(Tags.GREEN.enclose("[Here]"), HoverEvent.Action.SHOW_TEXT,
+                            Tags.GRAY.enclose("Click to cancel")), ClickEvent.Action.RUN_COMMAND, "/" + Dialog.EXIT)
+                    + " to leave input mode."),
+            "");
 
     public static final LangString EDITOR_INPUT_HEADER_MAIN = LangString.of("Editor.Input.Header.Main",
             Tags.GREEN.enclose(Tags.BOLD.enclose("Input Mode")));

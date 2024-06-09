@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import su.nightexpress.nightcore.NightCorePlugin;
+import su.nightexpress.nightcore.NightDataPlugin;
+import su.nightexpress.nightcore.database.DatabaseConfig;
 import su.nightexpress.nightcore.language.LangManager;
 import su.nightexpress.nightcore.util.text.tag.Tags;
 
@@ -15,6 +17,8 @@ public class PluginDetails {
     private final String prefix;
     private final String[] commandAliases;
     private final String language;
+
+    private DatabaseConfig databaseConfig;
 
     private Class<?> configClass;
     private Class<?> langClass;
@@ -30,7 +34,7 @@ public class PluginDetails {
 
     @NotNull
     public static PluginDetails create(@NotNull final String name, @NotNull final String[] commandAliases) {
-        final String prefix = Tags.LIGHT_YELLOW.enclose(Tags.BOLD.enclose(name)) + Tags.DARK_GRAY.enclose(" » ") + Tags.GRAY.getFullName();
+        final String prefix = Tags.LIGHT_YELLOW.enclose(Tags.BOLD.enclose(name)) + Tags.DARK_GRAY.enclose(" » ") + Tags.GRAY.getBracketsName();
         final String language = Locale.getDefault().getLanguage();
 
         return new PluginDetails(name, prefix, commandAliases, language);
@@ -58,8 +62,15 @@ public class PluginDetails {
                         "If specified language is not available, default one (English) will be used instead.", "[Default is System Locale]")
                 .read(config);
 
-        return new PluginDetails(pluginName, pluginPrefix, commandAliases, languageCode).setConfigClass(defaults.getConfigClass())
-                .setLangClass(defaults.getLangClass()).setPermissionsClass(defaults.getPermissionsClass());
+        DatabaseConfig dataConfig = null;
+        if (plugin instanceof NightDataPlugin<?>) {
+            plugin.info("Read database configuration...");
+            dataConfig = DatabaseConfig.read(plugin);
+        }
+
+        return new PluginDetails(pluginName, pluginPrefix, commandAliases, languageCode).setDatabaseConfig(dataConfig)
+                .setConfigClass(defaults.getConfigClass()).setLangClass(defaults.getLangClass())
+                .setPermissionsClass(defaults.getPermissionsClass());
     }
 
     @NotNull
@@ -73,6 +84,15 @@ public class PluginDetails {
 
     @NotNull
     public String getLanguage() { return this.language; }
+
+    @Nullable
+    public DatabaseConfig getDatabaseConfig() { return this.databaseConfig; }
+
+    @NotNull
+    public PluginDetails setDatabaseConfig(@Nullable final DatabaseConfig databaseConfig) {
+        this.databaseConfig = databaseConfig;
+        return this;
+    }
 
     @Nullable
     public Class<?> getConfigClass() { return this.configClass; }

@@ -1,44 +1,58 @@
 package su.nightexpress.nightcore.util.text.tag.api;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jetbrains.annotations.NotNull;
 
-public abstract class Tag {
+public class Tag {
 
     public static final char OPEN_BRACKET = '<';
     public static final char CLOSE_BRACKET = '>';
-    public static final char CLOSE_MARK = '/';
+    public static final char CLOSE_SLASH = '/';
 
     protected final String name;
-    protected final String[] aliases;
+    protected final Set<String> aliases;
 
     public Tag(@NotNull final String name) { this(name, new String[0]); }
 
     public Tag(@NotNull final String name, @NotNull final String[] aliases) {
         this.name = name.toLowerCase();
-        this.aliases = aliases;
+        this.aliases = new HashSet<>();
+
+        for (final String alias : aliases) {
+            this.aliases.add(alias.toLowerCase());
+        }
     }
 
     @NotNull
     public static String brackets(@NotNull final String str) { return Tag.OPEN_BRACKET + str + Tag.CLOSE_BRACKET; }
 
-    @NotNull
-    public String getName() { return this.name; }
+    /*
+     * @NotNull
+     * @Deprecated public String enclose(@NotNull String text) { return
+     * this.getBracketsName() + text + this.getClosingName(); }
+     */
 
     @NotNull
-    public String[] getAliases() { return this.aliases; }
+    @Deprecated
+    public final String getFullName() { return this.getBracketsName(); }
 
     @NotNull
-    public String enclose(@NotNull final String text) { return this.getFullName() + text + this.getClosingName(); }
+    public final String getClosingName() { return Tag.brackets(Tag.CLOSE_SLASH + this.getName()); }
 
-    public abstract int getWeight();
+    public final boolean isNamed(@NotNull final String name) {
+        return this.name.equalsIgnoreCase(name) || this.aliases.contains(name.toLowerCase());
+    }
 
     @NotNull
-    public final String getFullName() { return Tag.brackets(this.getName()); }
+    public final String getBracketsName() { return Tag.brackets(this.getName()); }
 
     @NotNull
-    public final String getClosingName() { return Tag.brackets(Tag.CLOSE_MARK + this.getName()); }
+    public final String getName() { return this.name; }
 
-    public boolean conflictsWith(@NotNull final Tag tag) { return tag.getName().equalsIgnoreCase(this.getName()); }
+    @NotNull
+    public final Set<String> getAliases() { return this.aliases; }
 
     @Override
     public String toString() { return "Tag{" + "name='" + this.name + '\'' + '}'; }

@@ -5,12 +5,12 @@ import org.jetbrains.annotations.NotNull;
 import su.nightexpress.nightcore.NightCorePlugin;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.text.NightMessage;
-import su.nightexpress.nightcore.util.text.WrappedMessage;
+import su.nightexpress.nightcore.util.text.TextRoot;
 
 public class LangString extends LangEntry<String> {
 
     private String string;
-    private WrappedMessage message;
+    private TextRoot message;
 
     public LangString(@NotNull final String path, @NotNull final String defaultText) { super(path, defaultText); }
 
@@ -48,7 +48,7 @@ public class LangString extends LangEntry<String> {
     }
 
     @NotNull
-    public WrappedMessage getMessage() { return this.message; }
+    public TextRoot getMessage() { return this.message; }
 
     @NotNull
     public String getLegacy() { return this.getMessage().toLegacy(); }

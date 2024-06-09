@@ -157,6 +157,7 @@ public abstract class NightPlugin extends JavaPlugin implements NightCorePlugin 
 
         this.getCommandManager().shutdown();
         this.getLangManager().shutdown();
+        this.details = null; // Reset so it will use default ones on config read.
     }
 
     @Override

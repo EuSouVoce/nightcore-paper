@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 import su.nightexpress.nightcore.NightCore;
 import su.nightexpress.nightcore.config.FileConfig;
 import su.nightexpress.nightcore.util.BukkitThing;
-import su.nightexpress.nightcore.util.Colorizer;
 import su.nightexpress.nightcore.util.FileUtil;
 import su.nightexpress.nightcore.util.Placeholders;
 import su.nightexpress.nightcore.util.Plugins;
@@ -94,7 +93,7 @@ public class LangAssets {
 
     @NotNull
     public static Optional<String> getAsset(@NotNull final String path) {
-        return Optional.ofNullable(LangAssets.config.getString(path)).map(Colorizer::apply);
+        return Optional.ofNullable(LangAssets.config.getString(path));// .map(NightMessage::asLegacy);
     }
 
     @NotNull

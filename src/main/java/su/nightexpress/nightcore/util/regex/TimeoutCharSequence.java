@@ -26,10 +26,12 @@ public class TimeoutCharSequence implements CharSequence {
     public int length() { return this.chars.length(); }
 
     @Override
+    @NotNull
     public CharSequence subSequence(final int start, final int end) {
         return new TimeoutCharSequence(this.chars.subSequence(start, end), this.timeout);
     }
 
     @Override
+    @NotNull
     public String toString() { return this.chars.toString(); }
 }

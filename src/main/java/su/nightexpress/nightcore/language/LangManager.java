@@ -1,6 +1,7 @@
 package su.nightexpress.nightcore.language;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +41,12 @@ public class LangManager extends SimpleManager<NightCorePlugin> {
             filePath = "/" + filePath;
         }
 
-        return this.plugin.getClass().getResourceAsStream(filePath) != null;
+        try (InputStream inputStream = this.plugin.getClass().getResourceAsStream(filePath)) {
+            return inputStream != null;
+        } catch (final Exception ignored) {
+        }
+
+        return false;
     }
 
     @NotNull

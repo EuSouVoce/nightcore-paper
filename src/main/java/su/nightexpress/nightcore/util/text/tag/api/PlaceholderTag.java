@@ -2,8 +2,8 @@ package su.nightexpress.nightcore.util.text.tag.api;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface OrphanTag {
+public interface PlaceholderTag {
 
     @NotNull
-    String getContent();
+    String getValue();
 }

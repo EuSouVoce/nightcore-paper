@@ -56,49 +56,53 @@ public class DatabaseConfig {
     }
 
     @NotNull
-    public static DatabaseConfig read(@NotNull final FileConfig cfg, @NotNull final String defaultPrefix) {
-        // FileConfig cfg = plugin.getConfig();
+    public static DatabaseConfig read(@NotNull final FileConfig config, @NotNull final String defaultPrefix) {
+        return DatabaseConfig.read(config, defaultPrefix, "data.db");
+    }
+
+    @NotNull
+    public static DatabaseConfig read(@NotNull final FileConfig config, @NotNull final String defaultPrefix, @NotNull final String defFileName) {
         String path = "Database.";
 
         final DatabaseType databaseType = ConfigValue.create(path + "Type", DatabaseType.class, DatabaseType.SQLITE, "Sets database type.",
-                "Available values: " + String.join(",", Stream.of(DatabaseType.values()).map(Enum::name).toList())).read(cfg);
+                "Available values: " + String.join(",", Stream.of(DatabaseType.values()).map(Enum::name).toList())).read(config);
 
         final int saveInterval = ConfigValue.create(path + "Auto_Save_Interval", 20,
                 "Sets how often (in minutes) plugin data of online players will be saved to the database.", "Set to '-1' to disable.")
-                .read(cfg);
+                .read(config);
 
         final int syncInterval = ConfigValue.create(path + "Sync_Interval", -1,
                 "Sets how often (in seconds) plugin data will be fetched and loaded from the remote database.",
-                "Useless for " + DatabaseType.SQLITE.name() + ".", "Set to '-1' to disable.").read(cfg);
+                "Useless for " + DatabaseType.SQLITE.name() + ".", "Set to '-1' to disable.").read(config);
 
         final String tablePrefix = ConfigValue.create(path + "Table_Prefix", defaultPrefix, "Custom prefix for plugin tables in database.")
-                .read(cfg);
+                .read(config);
 
-        final String mysqlUser = ConfigValue.create(path + "MySQL.Username", "root", "Database user name.").read(cfg);
+        final String mysqlUser = ConfigValue.create(path + "MySQL.Username", "root", "Database user name.").read(config);
 
-        final String mysqlPassword = ConfigValue.create(path + "MySQL.Password", "root", "Database password.").read(cfg);
+        final String mysqlPassword = ConfigValue.create(path + "MySQL.Password", "root", "Database password.").read(config);
 
         final String mysqlHost = ConfigValue.create(path + "MySQL.Host", "localhost:3306", "Database address. Like http://127.0.0.1:3306/")
-                .read(cfg);
+                .read(config);
 
         final String mysqlBase = ConfigValue
-                .create(path + "MySQL.Database", "minecraft", "Name of the MySQL database where plugin will create tables.").read(cfg);
+                .create(path + "MySQL.Database", "minecraft", "Name of the MySQL database where plugin will create tables.").read(config);
 
         final String urlOptions = ConfigValue.create(path + "MySQL.Options", "?allowPublicKeyRetrieval=true&useSSL=false",
-                "Connection options. Do not touch unless you know what you're doing.").read(cfg);
+                "Connection options. Do not touch unless you know what you're doing.").read(config);
 
-        final String sqliteFilename = ConfigValue.create(path + "SQLite.FileName", "data.db", "File name for the SQLite database file.",
-                "Actually it's a path to the file, so you can use directories here.").read(cfg);
+        final String sqliteFilename = ConfigValue.create(path + "SQLite.FileName", defFileName, "File name for the SQLite database file.",
+                "Actually it's a path to the file, so you can use directories here.").read(config);
 
         path = "Database.Purge.";
         final boolean purgeEnabled = ConfigValue.create(path + "Enabled", false, "Enables the purge feature.",
-                "Purge will remove all records from the plugin tables that are 'old' enough.").read(cfg);
+                "Purge will remove all records from the plugin tables that are 'old' enough.").read(config);
 
         final int purgePeriod = ConfigValue
                 .create(path + "For_Period", 60, "Sets maximal 'age' for the database records before they will be purged.",
                         "This option may have different behavior depends on the plugin.",
                         "By default it's days of inactivity for the plugin users.")
-                .read(cfg);
+                .read(config);
 
         return new DatabaseConfig(saveInterval, syncInterval, databaseType, tablePrefix, purgeEnabled, purgePeriod,
 

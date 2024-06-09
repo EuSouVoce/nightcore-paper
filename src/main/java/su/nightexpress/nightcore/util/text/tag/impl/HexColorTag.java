@@ -5,34 +5,25 @@ import java.awt.Color;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import su.nightexpress.nightcore.util.text.decoration.ColorDecorator;
-import su.nightexpress.nightcore.util.text.decoration.DecoratorParser;
-import su.nightexpress.nightcore.util.text.decoration.ParsedDecorator;
+import su.nightexpress.nightcore.util.text.tag.api.ContentTag;
 import su.nightexpress.nightcore.util.text.tag.api.Tag;
+import su.nightexpress.nightcore.util.text.tag.decorator.BaseColorDecorator;
 
-public class HexColorTag extends Tag implements DecoratorParser {
+public class HexColorTag extends Tag implements ContentTag {
 
     public static final String NAME = "color";
 
     public HexColorTag() { super(HexColorTag.NAME); }
 
     @Override
-    public int getWeight() { return 10; }
-
-    @Override
-    public boolean conflictsWith(@NotNull final Tag tag) { return tag instanceof ColorTag || tag instanceof HexColorTag; }
-
-    @Override
     @Nullable
-    public ParsedDecorator parse(@NotNull String content) {
-        final int tagLength = this.getName().length() + 1; // 1 for semicolon
-        content = content.substring(tagLength);
+    public BaseColorDecorator parse(@NotNull final String tagContent) {
+        if (tagContent.length() < 7)
+            return null;
 
         try {
-            final Color color = Color.decode(content);
-            final ColorDecorator decorator = new ColorDecorator(color);
-
-            return new ParsedDecorator(decorator, 7 + tagLength);
+            final Color color = Color.decode(tagContent);
+            return new BaseColorDecorator(color);
         } catch (final NumberFormatException exception) {
             return null;
         }

@@ -1,63 +1,48 @@
 package su.nightexpress.nightcore.util.text.tag;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Predicate;
 
 import org.jetbrains.annotations.NotNull;
 
-import su.nightexpress.nightcore.util.Placeholders;
 import su.nightexpress.nightcore.util.text.tag.api.Tag;
+import su.nightexpress.nightcore.util.text.tag.decorator.ColorDecorator;
+import su.nightexpress.nightcore.util.text.tag.impl.FontStyleTag;
+import su.nightexpress.nightcore.util.text.tag.impl.GradientTag;
+import su.nightexpress.nightcore.util.text.tag.impl.HexColorTag;
+import su.nightexpress.nightcore.util.text.tag.impl.ShortHexColorTag;
 
 public class TagPool {
 
-    public static final TagPool ALL = new TagPool(Mode.BLACKLIST, Collections.emptySet());
-    public static final TagPool NONE = new TagPool(Mode.WHITELIST, Collections.emptySet());
+    public static final TagPool ALL = new TagPool(tag -> true);
+    public static final TagPool NONE = new TagPool(tag -> false);
 
-    private final Mode mode;
-    private final Set<String> tags;
+    public static final TagPool ALL_COLORS = new TagPool(tag -> tag instanceof ColorDecorator || tag instanceof GradientTag
+            || tag instanceof HexColorTag || tag instanceof ShortHexColorTag);
+
+    public static final TagPool ALL_COLORS_AND_STYLES = new TagPool(tag -> tag instanceof ColorDecorator || tag instanceof GradientTag
+            || tag instanceof HexColorTag || tag instanceof ShortHexColorTag || tag instanceof FontStyleTag);
+
+    public static final TagPool BASE_COLORS = new TagPool(
+            tag -> tag instanceof ColorDecorator || tag instanceof HexColorTag || tag instanceof ShortHexColorTag);
+
+    public static final TagPool BASE_COLORS_AND_STYLES = new TagPool(tag -> tag instanceof ColorDecorator || tag instanceof HexColorTag
+            || tag instanceof ShortHexColorTag || tag instanceof FontStyleTag);
+
+    private Predicate<Tag> predicate;
+
+    public TagPool(@NotNull final Predicate<Tag> predicate) { this.predicate = predicate; }
 
     @NotNull
-    public static TagPool whitelisted(@NotNull final Tag... tags) { return TagPool.create(Mode.WHITELIST, tags); }
-
-    @NotNull
-    public static TagPool blacklisted(@NotNull final Tag... tags) { return TagPool.create(Mode.BLACKLIST, tags); }
-
-    @NotNull
-    public static TagPool create(@NotNull final Mode mode, @NotNull final Tag... tags) {
-        return new TagPool(mode, Stream.of(tags).map(Tag::getName).collect(Collectors.toSet()));
-    }
-
-    public TagPool(@NotNull final Mode mode, @NotNull final Set<String> tags) {
-        this.mode = mode;
-        this.tags = new HashSet<>(tags);
-    }
-
-    public enum Mode {
-        WHITELIST, BLACKLIST
-    }
-
-    public boolean isWhitelist() { return this.getMode() == Mode.WHITELIST; }
-
-    public boolean isBlacklist() { return this.getMode() == Mode.BLACKLIST; }
-
-    public boolean isGoodTag(@NotNull final Tag tag) { return this.isGoodTag(tag.getName()); }
-
-    public boolean isGoodTag(@NotNull String name) {
-        name = name.toLowerCase();
-
-        if (this.isWhitelist()) {
-            return this.getTags().contains(name) || this.getTags().contains(Placeholders.WILDCARD);
-        } else {
-            return !this.getTags().contains(name);
-        }
+    public TagPool and(@NotNull final Predicate<Tag> more) {
+        this.predicate = this.predicate.and(more);
+        return this;
     }
 
     @NotNull
-    public Mode getMode() { return this.mode; }
+    public TagPool or(@NotNull final Predicate<Tag> more) {
+        this.predicate = this.predicate.or(more);
+        return this;
+    }
 
-    @NotNull
-    public Set<String> getTags() { return this.tags; }
+    public boolean isGoodTag(@NotNull final Tag tag) { return this.predicate.test(tag); }
 }
